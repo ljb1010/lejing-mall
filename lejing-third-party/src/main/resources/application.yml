@@ -5,16 +5,7 @@ spring:
     name: lejing-third-party
   #运行环境: dev|test|prod
   profiles:
-    active: dev
+    active: lwj
   jackson:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
-#阿里云OSS参数
-alibaba:
-  cloud:
-    access-key: LTAI4GFKKZSC4w9gCLfTcAZY
-    secret-key: Vc8yXYHrVs9ioJ4AUNKFZZ4SykCTfA
-    bucket-name: alphahub-test-bucket
-    host-prefix: https://${alibaba.cloud.bucket-name}.${alibaba.cloud.oss.endpoint}
-    oss:
-      endpoint: oss-cn-shanghai.aliyuncs.com
