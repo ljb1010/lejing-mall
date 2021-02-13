@@ -1,15 +1,14 @@
 package cn.alphahub.mall.product.service.impl;
 
+import cn.alphahub.common.core.page.PageDomain;
+import cn.alphahub.common.core.page.PageResult;
+import cn.alphahub.mall.product.domain.SkuInfo;
+import cn.alphahub.mall.product.mapper.SkuInfoMapper;
+import cn.alphahub.mall.product.service.SkuInfoService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
-import cn.alphahub.common.core.page.PageDomain;
-import cn.alphahub.common.core.page.PageResult;
-
-import cn.alphahub.mall.product.mapper.SkuInfoMapper;
-import cn.alphahub.mall.product.domain.SkuInfo;
-import cn.alphahub.mall.product.service.SkuInfoService;
 
 import java.util.List;
 
@@ -26,8 +25,8 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoMapper, SkuInfo> impl
     /**
      * 查询sku信息分页列表
      *
-     * @param pageDomain   分页数据
-     * @param skuInfo 分页对象
+     * @param pageDomain 分页数据
+     * @param skuInfo    分页对象
      * @return sku信息分页数据
      */
     @Override

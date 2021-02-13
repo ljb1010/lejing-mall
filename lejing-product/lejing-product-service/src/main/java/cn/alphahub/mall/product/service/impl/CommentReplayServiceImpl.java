@@ -1,15 +1,14 @@
 package cn.alphahub.mall.product.service.impl;
 
+import cn.alphahub.common.core.page.PageDomain;
+import cn.alphahub.common.core.page.PageResult;
+import cn.alphahub.mall.product.domain.CommentReplay;
+import cn.alphahub.mall.product.mapper.CommentReplayMapper;
+import cn.alphahub.mall.product.service.CommentReplayService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
-import cn.alphahub.common.core.page.PageDomain;
-import cn.alphahub.common.core.page.PageResult;
-
-import cn.alphahub.mall.product.mapper.CommentReplayMapper;
-import cn.alphahub.mall.product.domain.CommentReplay;
-import cn.alphahub.mall.product.service.CommentReplayService;
 
 import java.util.List;
 
@@ -26,7 +25,7 @@ public class CommentReplayServiceImpl extends ServiceImpl<CommentReplayMapper, C
     /**
      * 查询商品评价回复关系分页列表
      *
-     * @param pageDomain   分页数据
+     * @param pageDomain    分页数据
      * @param commentReplay 分页对象
      * @return 商品评价回复关系分页数据
      */

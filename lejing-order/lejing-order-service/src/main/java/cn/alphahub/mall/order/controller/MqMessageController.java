@@ -98,7 +98,7 @@ public class MqMessageController extends BaseController {
      * @param messageIds MQ消息表id集合
      * @return 成功返回true,失败返回false
      */
-    @DeleteMapping("/{ids}")
+    @DeleteMapping("/{messageIds}")
     //@RequiresPermissions("order:mqmessage:delete")
     public BaseResult<Boolean> delete(@PathVariable String[] messageIds){
         boolean delete = mqMessageService.removeByIds(Arrays.asList(messageIds));

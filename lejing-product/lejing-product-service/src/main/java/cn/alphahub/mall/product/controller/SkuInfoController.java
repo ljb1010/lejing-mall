@@ -1,16 +1,15 @@
 package cn.alphahub.mall.product.controller;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 
 import cn.alphahub.common.core.controller.BaseController;
 import cn.alphahub.common.core.domain.BaseResult;
 import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
-
 import cn.alphahub.mall.product.domain.SkuInfo;
 import cn.alphahub.mall.product.service.SkuInfoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 
@@ -30,11 +29,11 @@ public class SkuInfoController extends BaseController {
     /**
      * 查询sku信息列表
      *
-     * @param page         当前页码,默认第1页
-     * @param rows         显示行数,默认10条
-     * @param orderColumn  排序排序字段,默认不排序
-     * @param isAsc        排序方式,desc或者asc
-     * @param skuInfo sku信息,字段选择性传入,默认为等值查询
+     * @param page        当前页码,默认第1页
+     * @param rows        显示行数,默认10条
+     * @param orderColumn 排序排序字段,默认不排序
+     * @param isAsc       排序方式,desc或者asc
+     * @param skuInfo     sku信息,字段选择性传入,默认为等值查询
      * @return sku信息分页数据
      */
     @GetMapping("/list")
@@ -61,7 +60,7 @@ public class SkuInfoController extends BaseController {
     @GetMapping("/{id}")
     @SuppressWarnings("unchecked")
     //@RequiresPermissions("product:skuinfo:info")
-    public BaseResult<SkuInfo> info(@PathVariable("skuId") Long skuId){
+    public BaseResult<SkuInfo> info(@PathVariable("skuId") Long skuId) {
         SkuInfo skuInfo = skuInfoService.getById(skuId);
         return (BaseResult<SkuInfo>) toResponseResult(skuInfo);
     }
@@ -70,7 +69,7 @@ public class SkuInfoController extends BaseController {
      * 新增sku信息
      *
      * @param skuInfo sku信息元数据
-     * @return 成功返回true,失败返回false
+     * @return 成功返回true, 失败返回false
      */
     @PostMapping("/save")
     //@RequiresPermissions("product:skuinfo:save")
@@ -83,7 +82,7 @@ public class SkuInfoController extends BaseController {
      * 修改sku信息
      *
      * @param skuInfo sku信息,根据主键id选择性更新
-     * @return 成功返回true,失败返回false
+     * @return 成功返回true, 失败返回false
      */
     @PutMapping("/update")
     //@RequiresPermissions("product:skuinfo:update")
@@ -96,11 +95,11 @@ public class SkuInfoController extends BaseController {
      * 批量删除sku信息
      *
      * @param skuIds sku信息id集合
-     * @return 成功返回true,失败返回false
+     * @return 成功返回true, 失败返回false
      */
-    @DeleteMapping("/{ids}")
+    @DeleteMapping("/{skuIds}")
     //@RequiresPermissions("product:skuinfo:delete")
-    public BaseResult<Boolean> delete(@PathVariable Long[] skuIds){
+    public BaseResult<Boolean> delete(@PathVariable Long[] skuIds) {
         boolean delete = skuInfoService.removeByIds(Arrays.asList(skuIds));
         return toOperationResult(delete);
     }

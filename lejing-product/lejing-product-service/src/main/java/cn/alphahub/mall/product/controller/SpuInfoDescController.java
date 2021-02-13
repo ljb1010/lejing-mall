@@ -98,7 +98,7 @@ public class SpuInfoDescController extends BaseController {
      * @param spuIds spu信息介绍id集合
      * @return 成功返回true,失败返回false
      */
-    @DeleteMapping("/{ids}")
+    @DeleteMapping("/{spuIds}")
     //@RequiresPermissions("product:spuinfodesc:delete")
     public BaseResult<Boolean> delete(@PathVariable Long[] spuIds){
         boolean delete = spuInfoDescService.removeByIds(Arrays.asList(spuIds));

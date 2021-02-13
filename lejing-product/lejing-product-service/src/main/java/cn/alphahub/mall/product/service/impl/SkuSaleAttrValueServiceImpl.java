@@ -1,15 +1,14 @@
 package cn.alphahub.mall.product.service.impl;
 
+import cn.alphahub.common.core.page.PageDomain;
+import cn.alphahub.common.core.page.PageResult;
+import cn.alphahub.mall.product.domain.SkuSaleAttrValue;
+import cn.alphahub.mall.product.mapper.SkuSaleAttrValueMapper;
+import cn.alphahub.mall.product.service.SkuSaleAttrValueService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
-import cn.alphahub.common.core.page.PageDomain;
-import cn.alphahub.common.core.page.PageResult;
-
-import cn.alphahub.mall.product.mapper.SkuSaleAttrValueMapper;
-import cn.alphahub.mall.product.domain.SkuSaleAttrValue;
-import cn.alphahub.mall.product.service.SkuSaleAttrValueService;
 
 import java.util.List;
 
@@ -26,7 +25,7 @@ public class SkuSaleAttrValueServiceImpl extends ServiceImpl<SkuSaleAttrValueMap
     /**
      * 查询sku销售属性&值分页列表
      *
-     * @param pageDomain   分页数据
+     * @param pageDomain       分页数据
      * @param skuSaleAttrValue 分页对象
      * @return sku销售属性&值分页数据
      */

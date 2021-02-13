@@ -6,10 +6,10 @@ import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.common.util.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
-import org.springframework.lang.Nullable;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
+import javax.validation.constraints.NotNull;
 import java.beans.PropertyEditorSupport;
 import java.util.Date;
 
@@ -31,8 +31,7 @@ public class BaseController {
      * @since 2021年2月8日23:09:20
      */
     @SuppressWarnings("unchecked")
-    protected <T> T doConvertType(BaseResult<?> result, @Nullable Class<T> requiredType) {
-        assert requiredType != null;
+    protected <T> T doConvertType(@NotNull BaseResult<?> result, @NotNull Class<T> requiredType) {
         Object data = result.getData();
         if (requiredType.isInstance(data)) {
             return (T) data;

@@ -1,16 +1,15 @@
 package cn.alphahub.mall.product.controller;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 
 import cn.alphahub.common.core.controller.BaseController;
 import cn.alphahub.common.core.domain.BaseResult;
 import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
-
 import cn.alphahub.mall.product.domain.Attr;
 import cn.alphahub.mall.product.service.AttrService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 
@@ -30,11 +29,11 @@ public class AttrController extends BaseController {
     /**
      * 查询商品属性列表
      *
-     * @param page         当前页码,默认第1页
-     * @param rows         显示行数,默认10条
-     * @param orderColumn  排序排序字段,默认不排序
-     * @param isAsc        排序方式,desc或者asc
-     * @param attr 商品属性,字段选择性传入,默认为等值查询
+     * @param page        当前页码,默认第1页
+     * @param rows        显示行数,默认10条
+     * @param orderColumn 排序排序字段,默认不排序
+     * @param isAsc       排序方式,desc或者asc
+     * @param attr        商品属性,字段选择性传入,默认为等值查询
      * @return 商品属性分页数据
      */
     @GetMapping("/list")
@@ -61,7 +60,7 @@ public class AttrController extends BaseController {
     @GetMapping("/{id}")
     @SuppressWarnings("unchecked")
     //@RequiresPermissions("product:attr:info")
-    public BaseResult<Attr> info(@PathVariable("attrId") Long attrId){
+    public BaseResult<Attr> info(@PathVariable("attrId") Long attrId) {
         Attr attr = attrService.getById(attrId);
         return (BaseResult<Attr>) toResponseResult(attr);
     }
@@ -70,7 +69,7 @@ public class AttrController extends BaseController {
      * 新增商品属性
      *
      * @param attr 商品属性元数据
-     * @return 成功返回true,失败返回false
+     * @return 成功返回true, 失败返回false
      */
     @PostMapping("/save")
     //@RequiresPermissions("product:attr:save")
@@ -83,7 +82,7 @@ public class AttrController extends BaseController {
      * 修改商品属性
      *
      * @param attr 商品属性,根据主键id选择性更新
-     * @return 成功返回true,失败返回false
+     * @return 成功返回true, 失败返回false
      */
     @PutMapping("/update")
     //@RequiresPermissions("product:attr:update")
@@ -96,11 +95,11 @@ public class AttrController extends BaseController {
      * 批量删除商品属性
      *
      * @param attrIds 商品属性id集合
-     * @return 成功返回true,失败返回false
+     * @return 成功返回true, 失败返回false
      */
-    @DeleteMapping("/{ids}")
+    @DeleteMapping("/{attrIds}")
     //@RequiresPermissions("product:attr:delete")
-    public BaseResult<Boolean> delete(@PathVariable Long[] attrIds){
+    public BaseResult<Boolean> delete(@PathVariable Long[] attrIds) {
         boolean delete = attrService.removeByIds(Arrays.asList(attrIds));
         return toOperationResult(delete);
     }

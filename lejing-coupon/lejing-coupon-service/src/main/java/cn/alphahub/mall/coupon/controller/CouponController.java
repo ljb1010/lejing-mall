@@ -32,11 +32,6 @@ public class CouponController extends BaseController {
     @Autowired
     private CouponService couponService;
 
-    @Value("${lejing.user.name}")
-    private String name;
-    @Value("${lejing.user.age}")
-    private int age;
-
     /**
      * 查询优惠券信息列表
      *
@@ -108,13 +103,5 @@ public class CouponController extends BaseController {
     public BaseResult<Boolean> delete(@PathVariable Long[] ids) {
         boolean delete = couponService.removeByIds(Arrays.asList(ids));
         return toOperationResult(delete);
-    }
-
-    @GetMapping("test")
-    public Map<String, Object> getTest() {
-        HashMap<String, Object> map = Maps.newHashMap();
-        map.put("name", this.name);
-        map.put("age", this.age);
-        return map;
     }
 }

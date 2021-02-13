@@ -8,3 +8,7 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:884
+  web:
+    resources:
+      #控制api文档访问, smart-doc生成的html静态api文档
+      add-mappings: on

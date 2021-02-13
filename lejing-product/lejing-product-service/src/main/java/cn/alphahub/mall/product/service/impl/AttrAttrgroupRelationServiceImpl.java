@@ -1,15 +1,14 @@
 package cn.alphahub.mall.product.service.impl;
 
+import cn.alphahub.common.core.page.PageDomain;
+import cn.alphahub.common.core.page.PageResult;
+import cn.alphahub.mall.product.domain.AttrAttrgroupRelation;
+import cn.alphahub.mall.product.mapper.AttrAttrgroupRelationMapper;
+import cn.alphahub.mall.product.service.AttrAttrgroupRelationService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
-import cn.alphahub.common.core.page.PageDomain;
-import cn.alphahub.common.core.page.PageResult;
-
-import cn.alphahub.mall.product.mapper.AttrAttrgroupRelationMapper;
-import cn.alphahub.mall.product.domain.AttrAttrgroupRelation;
-import cn.alphahub.mall.product.service.AttrAttrgroupRelationService;
 
 import java.util.List;
 
@@ -26,7 +25,7 @@ public class AttrAttrgroupRelationServiceImpl extends ServiceImpl<AttrAttrgroupR
     /**
      * 查询属性&属性分组关联分页列表
      *
-     * @param pageDomain   分页数据
+     * @param pageDomain            分页数据
      * @param attrAttrgroupRelation 分页对象
      * @return 属性&属性分组关联分页数据
      */

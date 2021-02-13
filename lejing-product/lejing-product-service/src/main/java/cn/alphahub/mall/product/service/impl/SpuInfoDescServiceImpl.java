@@ -1,15 +1,14 @@
 package cn.alphahub.mall.product.service.impl;
 
+import cn.alphahub.common.core.page.PageDomain;
+import cn.alphahub.common.core.page.PageResult;
+import cn.alphahub.mall.product.domain.SpuInfoDesc;
+import cn.alphahub.mall.product.mapper.SpuInfoDescMapper;
+import cn.alphahub.mall.product.service.SpuInfoDescService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
-import cn.alphahub.common.core.page.PageDomain;
-import cn.alphahub.common.core.page.PageResult;
-
-import cn.alphahub.mall.product.mapper.SpuInfoDescMapper;
-import cn.alphahub.mall.product.domain.SpuInfoDesc;
-import cn.alphahub.mall.product.service.SpuInfoDescService;
 
 import java.util.List;
 
@@ -26,7 +25,7 @@ public class SpuInfoDescServiceImpl extends ServiceImpl<SpuInfoDescMapper, SpuIn
     /**
      * 查询spu信息介绍分页列表
      *
-     * @param pageDomain   分页数据
+     * @param pageDomain  分页数据
      * @param spuInfoDesc 分页对象
      * @return spu信息介绍分页数据
      */

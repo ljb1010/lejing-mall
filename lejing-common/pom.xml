@@ -60,10 +60,10 @@
             <artifactId>fastjson</artifactId>
             <version>${fastjson.version}</version>
         </dependency>
-        <!-- mybatis plus依赖, 功能强大包括其自带的一些工具类-->
+        <!-- mybatis plus依赖, 功能强大包括其自带的一些工具类 -->
         <dependency>
             <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <artifactId>mybatis-plus-core</artifactId>
         </dependency>
         <!-- pagehelper 分页插件 -->
         <dependency>

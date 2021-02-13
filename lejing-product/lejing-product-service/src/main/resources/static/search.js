@@ -147,18 +147,26 @@ api[5].list.push({
 });
 api[5].list.push({
     order: '2',
-    desc: '获取商品三级分类详情',
+    desc: '查出所有分类及其子分类， 树形结构组装',
 });
 api[5].list.push({
     order: '3',
-    desc: '新增商品三级分类',
+    desc: '获取商品三级分类详情',
 });
 api[5].list.push({
     order: '4',
-    desc: '修改商品三级分类',
+    desc: '新增商品三级分类',
 });
 api[5].list.push({
     order: '5',
+    desc: '修改商品三级分类',
+});
+api[5].list.push({
+    order: '6',
+    desc: '批量修改三级分类排序',
+});
+api[5].list.push({
+    order: '7',
     desc: '批量删除商品三级分类',
 });
 api.push({

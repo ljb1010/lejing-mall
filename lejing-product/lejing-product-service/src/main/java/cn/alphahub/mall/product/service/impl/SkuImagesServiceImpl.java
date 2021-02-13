@@ -1,15 +1,14 @@
 package cn.alphahub.mall.product.service.impl;
 
+import cn.alphahub.common.core.page.PageDomain;
+import cn.alphahub.common.core.page.PageResult;
+import cn.alphahub.mall.product.domain.SkuImages;
+import cn.alphahub.mall.product.mapper.SkuImagesMapper;
+import cn.alphahub.mall.product.service.SkuImagesService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
-import cn.alphahub.common.core.page.PageDomain;
-import cn.alphahub.common.core.page.PageResult;
-
-import cn.alphahub.mall.product.mapper.SkuImagesMapper;
-import cn.alphahub.mall.product.domain.SkuImages;
-import cn.alphahub.mall.product.service.SkuImagesService;
 
 import java.util.List;
 
@@ -26,8 +25,8 @@ public class SkuImagesServiceImpl extends ServiceImpl<SkuImagesMapper, SkuImages
     /**
      * 查询sku图片分页列表
      *
-     * @param pageDomain   分页数据
-     * @param skuImages 分页对象
+     * @param pageDomain 分页数据
+     * @param skuImages  分页对象
      * @return sku图片分页数据
      */
     @Override

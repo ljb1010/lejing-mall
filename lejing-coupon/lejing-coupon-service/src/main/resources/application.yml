@@ -20,11 +20,10 @@ mybatis-plus:
 #全局跨域设置
 cors:
   config:
-    #是否允许所有域名跨域：true|false
     is-allows-all-domain: true
-    #允许跨域的域名集合
     allowed-origins:
       - http://127.0.0.1
       - http://127.0.0.1:7000
-      - http://api.alphahub.cn
       - http://www.alphahub.cn
+      - http://www.leyou.com
+      - http://www.leyou.com:7000

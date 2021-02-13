@@ -1,15 +1,14 @@
 package cn.alphahub.mall.ware.service.impl;
 
+import cn.alphahub.common.core.page.PageDomain;
+import cn.alphahub.common.core.page.PageResult;
+import cn.alphahub.mall.ware.domain.UndoLog;
+import cn.alphahub.mall.ware.mapper.UndoLogMapper;
+import cn.alphahub.mall.ware.service.UndoLogService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
-import cn.alphahub.common.core.page.PageDomain;
-import cn.alphahub.common.core.page.PageResult;
-
-import cn.alphahub.mall.ware.mapper.UndoLogMapper;
-import cn.alphahub.mall.ware.domain.UndoLog;
-import cn.alphahub.mall.ware.service.UndoLogService;
 
 import java.util.List;
 
@@ -26,8 +25,8 @@ public class UndoLogServiceImpl extends ServiceImpl<UndoLogMapper, UndoLog> impl
     /**
      * 查询撤销日志表分页列表
      *
-     * @param pageDomain   分页数据
-     * @param undoLog 分页对象
+     * @param pageDomain 分页数据
+     * @param undoLog    分页对象
      * @return 撤销日志表分页数据
      */
     @Override

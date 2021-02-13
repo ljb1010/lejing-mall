@@ -98,7 +98,7 @@ public class AttrGroupController extends BaseController {
      * @param attrGroupIds 属性分组id集合
      * @return 成功返回true,失败返回false
      */
-    @DeleteMapping("/{ids}")
+    @DeleteMapping("/{attrGroupIds}")
     //@RequiresPermissions("product:attrgroup:delete")
     public BaseResult<Boolean> delete(@PathVariable Long[] attrGroupIds){
         boolean delete = attrGroupService.removeByIds(Arrays.asList(attrGroupIds));

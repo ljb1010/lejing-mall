@@ -22,3 +22,47 @@ spring:
           uri: https://im.qq.com
           predicates:
             - Query=url,qq
+        #商品服务路由
+        - id: product_route
+          uri: lb://lejing-product
+          predicates:
+            - Path=/api/product/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+        #三方服务路由: SMS, OSS
+        - id: third_party_route
+          uri: lb://lejing-third-party
+          predicates:
+            - Path=/api/thirdparty/**
+          filters:
+            - RewritePath=/api/thirdparty/(?<segment>.*),/$\{segment}
+        #后台管理路由
+        - id: admin_route
+          uri: lb://renren-fast
+          # 前端项目: /api
+          predicates:
+            # 将当前请求转发到http://127.0.0.1:8080/api/1
+            - Path=/api/**
+            #配置路由过滤器,将当前请求http://127.0.0.1:8080/api/product/1 --> http://127.0.0.1:8080/renren-fast/1
+          filters:
+            - RewritePath=/api/(?<segment>.*),/renren-fast/$\{segment}
+      #spring cloud gateway 跨域配置
+      globalcors:
+        add-to-simple-url-handler-mapping: on
+        cors-configurations:
+          '[/**]':
+            allowedOriginPatterns: '*'
+            allowCredentials: true
+            allowedMethods: '*'
+            allowedHeaders: '*'
+            exposedHeaders: '*'
+            max-age: 3600
+#全局跨域设置
+cors:
+  config:
+    is-allows-all-domain: true
+    allowed-origins:
+      - http://127.0.0.1
+      - http://127.0.0.1:7000
+      - http://*.alphahub.cn
+      - http://*.leyou.com

@@ -23,7 +23,7 @@ public abstract class AbstractResult<T> implements Serializable {
     private String message;
 
     /**
-     * 返回结果
+     * 是否成功
      */
     private Boolean success = false;
 
@@ -38,7 +38,8 @@ public abstract class AbstractResult<T> implements Serializable {
     private Integer code;
 
     /**
-     * 响应数据对象
+     * 响应数据
      */
     private T data;
+
 }

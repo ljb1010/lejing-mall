@@ -1,15 +1,14 @@
 package cn.alphahub.mall.ware.service.impl;
 
+import cn.alphahub.common.core.page.PageDomain;
+import cn.alphahub.common.core.page.PageResult;
+import cn.alphahub.mall.ware.domain.PurchaseDetail;
+import cn.alphahub.mall.ware.mapper.PurchaseDetailMapper;
+import cn.alphahub.mall.ware.service.PurchaseDetailService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
-import cn.alphahub.common.core.page.PageDomain;
-import cn.alphahub.common.core.page.PageResult;
-
-import cn.alphahub.mall.ware.mapper.PurchaseDetailMapper;
-import cn.alphahub.mall.ware.domain.PurchaseDetail;
-import cn.alphahub.mall.ware.service.PurchaseDetailService;
 
 import java.util.List;
 
@@ -26,7 +25,7 @@ public class PurchaseDetailServiceImpl extends ServiceImpl<PurchaseDetailMapper,
     /**
      * 查询仓储采购表分页列表
      *
-     * @param pageDomain   分页数据
+     * @param pageDomain     分页数据
      * @param purchaseDetail 分页对象
      * @return 仓储采购表分页数据
      */

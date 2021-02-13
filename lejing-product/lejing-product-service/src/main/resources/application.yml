@@ -15,5 +15,18 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: auto
+      # 逻辑已删除值(默认为 1)
+      logic-delete-value: 1
+      # 逻辑未删除值(默认为 0)
+      logic-not-delete-value: 0
   configuration:
     map-underscore-to-camel-case: true
+#阿里云OSS参数
+alibaba:
+  cloud:
+    access-key: LTAI4GFKKZSC4w9gCLfTcAZY
+    secret-key: Vc8yXYHrVs9ioJ4AUNKFZZ4SykCTfA
+    bucket-name: alphahub-test-bucket
+    url-prefix: https://${alibaba.cloud.bucket-name}.${alibaba.cloud.oss.endpoint}/
+    oss:
+      endpoint: oss-cn-shanghai.aliyuncs.com

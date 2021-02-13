@@ -1,6 +1,5 @@
 package ${package}.${moduleName}.controller;
 
-//import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,7 +38,6 @@ public class ${className}Controller extends BaseController {
      */
     @GetMapping("/list")
     @SuppressWarnings("unchecked")
-    //@RequiresPermissions("${moduleName}:${pathName}:list")
     public BaseResult<PageResult<${className}>> list(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             @RequestParam(value = "rows", defaultValue = "10") Integer rows,
@@ -58,9 +56,8 @@ public class ${className}Controller extends BaseController {
      * @param ${pk.attrname} ${comments}主键id
      * @return ${comments}详细信息
      */
-    @GetMapping("/{id}")
+    @GetMapping("/info/{${pk.attrname}}")
     @SuppressWarnings("unchecked")
-    //@RequiresPermissions("${moduleName}:${pathName}:info")
     public BaseResult<${className}> info(@PathVariable("${pk.attrname}") ${pk.attrType} ${pk.attrname}){
         ${className} ${classname} = ${classname}Service.getById(${pk.attrname});
         return (BaseResult<${className}>) toResponseResult(${classname});
@@ -73,7 +70,6 @@ public class ${className}Controller extends BaseController {
      * @return 成功返回true,失败返回false
      */
     @PostMapping("/save")
-    //@RequiresPermissions("${moduleName}:${pathName}:save")
     public BaseResult<Boolean> save(@RequestBody ${className} ${classname}) {
         boolean save = ${classname}Service.save(${classname});
         return toOperationResult(save);
@@ -86,7 +82,6 @@ public class ${className}Controller extends BaseController {
      * @return 成功返回true,失败返回false
      */
     @PutMapping("/update")
-    //@RequiresPermissions("${moduleName}:${pathName}:update")
     public BaseResult<Boolean> update(@RequestBody ${className} ${classname}) {
         boolean update = ${classname}Service.updateById(${classname});
         return toOperationResult(update);
@@ -98,8 +93,7 @@ public class ${className}Controller extends BaseController {
      * @param ${pk.attrname}s ${comments}id集合
      * @return 成功返回true,失败返回false
      */
-    @DeleteMapping("/{ids}")
-    //@RequiresPermissions("${moduleName}:${pathName}:delete")
+    @DeleteMapping("/delete/{${pk.attrname}s}")
     public BaseResult<Boolean> delete(@PathVariable ${pk.attrType}[] ${pk.attrname}s){
         boolean delete = ${classname}Service.removeByIds(Arrays.asList(${pk.attrname}s));
         return toOperationResult(delete);

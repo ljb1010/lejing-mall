@@ -1,16 +1,15 @@
 package cn.alphahub.mall.ware.controller;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 
 import cn.alphahub.common.core.controller.BaseController;
 import cn.alphahub.common.core.domain.BaseResult;
 import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
-
 import cn.alphahub.mall.ware.domain.WareInfo;
 import cn.alphahub.mall.ware.service.WareInfoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 
@@ -30,11 +29,11 @@ public class WareInfoController extends BaseController {
     /**
      * 查询仓库信息列表
      *
-     * @param page         当前页码,默认第1页
-     * @param rows         显示行数,默认10条
-     * @param orderColumn  排序排序字段,默认不排序
-     * @param isAsc        排序方式,desc或者asc
-     * @param wareInfo 仓库信息,字段选择性传入,默认为等值查询
+     * @param page        当前页码,默认第1页
+     * @param rows        显示行数,默认10条
+     * @param orderColumn 排序排序字段,默认不排序
+     * @param isAsc       排序方式,desc或者asc
+     * @param wareInfo    仓库信息,字段选择性传入,默认为等值查询
      * @return 仓库信息分页数据
      */
     @GetMapping("/list")
@@ -61,7 +60,7 @@ public class WareInfoController extends BaseController {
     @GetMapping("/{id}")
     @SuppressWarnings("unchecked")
     //@RequiresPermissions("ware:wareinfo:info")
-    public BaseResult<WareInfo> info(@PathVariable("id") Long id){
+    public BaseResult<WareInfo> info(@PathVariable("id") Long id) {
         WareInfo wareInfo = wareInfoService.getById(id);
         return (BaseResult<WareInfo>) toResponseResult(wareInfo);
     }
@@ -70,7 +69,7 @@ public class WareInfoController extends BaseController {
      * 新增仓库信息
      *
      * @param wareInfo 仓库信息元数据
-     * @return 成功返回true,失败返回false
+     * @return 成功返回true, 失败返回false
      */
     @PostMapping("/save")
     //@RequiresPermissions("ware:wareinfo:save")
@@ -83,7 +82,7 @@ public class WareInfoController extends BaseController {
      * 修改仓库信息
      *
      * @param wareInfo 仓库信息,根据主键id选择性更新
-     * @return 成功返回true,失败返回false
+     * @return 成功返回true, 失败返回false
      */
     @PutMapping("/update")
     //@RequiresPermissions("ware:wareinfo:update")
@@ -96,11 +95,11 @@ public class WareInfoController extends BaseController {
      * 批量删除仓库信息
      *
      * @param ids 仓库信息id集合
-     * @return 成功返回true,失败返回false
+     * @return 成功返回true, 失败返回false
      */
     @DeleteMapping("/{ids}")
     //@RequiresPermissions("ware:wareinfo:delete")
-    public BaseResult<Boolean> delete(@PathVariable Long[] ids){
+    public BaseResult<Boolean> delete(@PathVariable Long[] ids) {
         boolean delete = wareInfoService.removeByIds(Arrays.asList(ids));
         return toOperationResult(delete);
     }

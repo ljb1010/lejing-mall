@@ -1,15 +1,14 @@
 package cn.alphahub.mall.ware.service.impl;
 
+import cn.alphahub.common.core.page.PageDomain;
+import cn.alphahub.common.core.page.PageResult;
+import cn.alphahub.mall.ware.domain.WareOrderTask;
+import cn.alphahub.mall.ware.mapper.WareOrderTaskMapper;
+import cn.alphahub.mall.ware.service.WareOrderTaskService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
-import cn.alphahub.common.core.page.PageDomain;
-import cn.alphahub.common.core.page.PageResult;
-
-import cn.alphahub.mall.ware.mapper.WareOrderTaskMapper;
-import cn.alphahub.mall.ware.domain.WareOrderTask;
-import cn.alphahub.mall.ware.service.WareOrderTaskService;
 
 import java.util.List;
 
@@ -26,7 +25,7 @@ public class WareOrderTaskServiceImpl extends ServiceImpl<WareOrderTaskMapper, W
     /**
      * 查询库存工作单分页列表
      *
-     * @param pageDomain   分页数据
+     * @param pageDomain    分页数据
      * @param wareOrderTask 分页对象
      * @return 库存工作单分页数据
      */

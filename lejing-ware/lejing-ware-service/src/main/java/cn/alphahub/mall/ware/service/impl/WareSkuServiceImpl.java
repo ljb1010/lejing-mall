@@ -1,15 +1,14 @@
 package cn.alphahub.mall.ware.service.impl;
 
+import cn.alphahub.common.core.page.PageDomain;
+import cn.alphahub.common.core.page.PageResult;
+import cn.alphahub.mall.ware.domain.WareSku;
+import cn.alphahub.mall.ware.mapper.WareSkuMapper;
+import cn.alphahub.mall.ware.service.WareSkuService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
-import cn.alphahub.common.core.page.PageDomain;
-import cn.alphahub.common.core.page.PageResult;
-
-import cn.alphahub.mall.ware.mapper.WareSkuMapper;
-import cn.alphahub.mall.ware.domain.WareSku;
-import cn.alphahub.mall.ware.service.WareSkuService;
 
 import java.util.List;
 
@@ -26,8 +25,8 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuMapper, WareSku> impl
     /**
      * 查询商品库存分页列表
      *
-     * @param pageDomain   分页数据
-     * @param wareSku 分页对象
+     * @param pageDomain 分页数据
+     * @param wareSku    分页对象
      * @return 商品库存分页数据
      */
     @Override

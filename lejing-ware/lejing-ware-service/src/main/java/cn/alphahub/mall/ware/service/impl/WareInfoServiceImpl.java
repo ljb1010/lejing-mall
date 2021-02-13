@@ -1,15 +1,14 @@
 package cn.alphahub.mall.ware.service.impl;
 
+import cn.alphahub.common.core.page.PageDomain;
+import cn.alphahub.common.core.page.PageResult;
+import cn.alphahub.mall.ware.domain.WareInfo;
+import cn.alphahub.mall.ware.mapper.WareInfoMapper;
+import cn.alphahub.mall.ware.service.WareInfoService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
-import cn.alphahub.common.core.page.PageDomain;
-import cn.alphahub.common.core.page.PageResult;
-
-import cn.alphahub.mall.ware.mapper.WareInfoMapper;
-import cn.alphahub.mall.ware.domain.WareInfo;
-import cn.alphahub.mall.ware.service.WareInfoService;
 
 import java.util.List;
 
@@ -26,8 +25,8 @@ public class WareInfoServiceImpl extends ServiceImpl<WareInfoMapper, WareInfo> i
     /**
      * 查询仓库信息分页列表
      *
-     * @param pageDomain   分页数据
-     * @param wareInfo 分页对象
+     * @param pageDomain 分页数据
+     * @param wareInfo   分页对象
      * @return 仓库信息分页数据
      */
     @Override

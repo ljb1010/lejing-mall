@@ -1,6 +1,8 @@
 server:
   port: 11000
 spring:
+  application:
+    name: lejing-ware
   profiles:
     #运行环境: dev|test|prod
     active: dev

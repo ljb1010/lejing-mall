@@ -1,0 +1,9 @@
+#阿里云OSS参数
+alibaba:
+  cloud:
+    access-key: LTAI4GFKKZSC4w9gCLfTcAZY
+    secret-key: Vc8yXYHrVs9ioJ4AUNKFZZ4SykCTfA
+    bucket-name: alphahub-test-bucket
+    url-prefix: https://${alibaba.cloud.bucket-name}.${alibaba.cloud.oss.endpoint}/
+    oss:
+      endpoint: oss-cn-shanghai.aliyuncs.com

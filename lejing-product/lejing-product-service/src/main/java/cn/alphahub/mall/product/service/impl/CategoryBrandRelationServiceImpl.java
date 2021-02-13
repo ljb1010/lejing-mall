@@ -1,15 +1,14 @@
 package cn.alphahub.mall.product.service.impl;
 
+import cn.alphahub.common.core.page.PageDomain;
+import cn.alphahub.common.core.page.PageResult;
+import cn.alphahub.mall.product.domain.CategoryBrandRelation;
+import cn.alphahub.mall.product.mapper.CategoryBrandRelationMapper;
+import cn.alphahub.mall.product.service.CategoryBrandRelationService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
-import cn.alphahub.common.core.page.PageDomain;
-import cn.alphahub.common.core.page.PageResult;
-
-import cn.alphahub.mall.product.mapper.CategoryBrandRelationMapper;
-import cn.alphahub.mall.product.domain.CategoryBrandRelation;
-import cn.alphahub.mall.product.service.CategoryBrandRelationService;
 
 import java.util.List;
 
@@ -26,7 +25,7 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
     /**
      * 查询品牌分类关联分页列表
      *
-     * @param pageDomain   分页数据
+     * @param pageDomain            分页数据
      * @param categoryBrandRelation 分页对象
      * @return 品牌分类关联分页数据
      */
