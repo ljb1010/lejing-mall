@@ -1,13 +1,13 @@
 package cn.alphahub.mall.product.controller;
 
-//import org.apache.shiro.authz.annotation.RequiresPermissions;
-
+import cn.alphahub.common.constant.HttpStatus;
 import cn.alphahub.common.core.controller.BaseController;
 import cn.alphahub.common.core.domain.BaseResult;
 import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.mall.product.domain.Category;
 import cn.alphahub.mall.product.service.CategoryService;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +19,7 @@ import java.util.List;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-07 22:46:24
+ * @date 2021-02-14 19:02:16
  */
 @RestController
 @RequestMapping("product/category")
@@ -34,11 +34,10 @@ public class CategoryController extends BaseController {
      * @param rows        显示行数,默认10条
      * @param orderColumn 排序排序字段,默认不排序
      * @param isAsc       排序方式,desc或者asc
-     * @param category    商品三级分类,字段选择性传入,默认为等值查询
+     * @param category    商品三级分类,查询字段选择性传入,默认为等值查询
      * @return 商品三级分类分页数据
      */
     @GetMapping("/list")
-    @SuppressWarnings("unchecked")
     public BaseResult<PageResult<Category>> list(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             @RequestParam(value = "rows", defaultValue = "10") Integer rows,
@@ -48,7 +47,10 @@ public class CategoryController extends BaseController {
     ) {
         PageDomain pageDomain = new PageDomain(page, rows, orderColumn, isAsc);
         PageResult<Category> pageResult = categoryService.queryPage(pageDomain, category);
-        return (BaseResult<PageResult<Category>>) toPageableResult(pageResult);
+        if (ObjectUtils.isNotEmpty(pageResult.getItems())) {
+            return BaseResult.ok(pageResult);
+        }
+        return BaseResult.fail(HttpStatus.NOT_FOUND, "查询结果为空");
     }
 
     /**
@@ -68,11 +70,10 @@ public class CategoryController extends BaseController {
      * @param catId 商品三级分类主键id
      * @return 商品三级分类详细信息
      */
-    @GetMapping("/{catId}")
-    @SuppressWarnings("unchecked")
+    @GetMapping("/info/{catId}")
     public BaseResult<Category> info(@PathVariable("catId") Long catId) {
         Category category = categoryService.getById(catId);
-        return (BaseResult<Category>) toResponseResult(category);
+        return ObjectUtils.anyNotNull(category) ? BaseResult.ok(category) : BaseResult.fail();
     }
 
     /**
@@ -90,7 +91,7 @@ public class CategoryController extends BaseController {
     /**
      * 修改商品三级分类
      *
-     * @param category 商品三级分类,根据主键id选择性更新
+     * @param category 商品三级分类,根据id选择性更新
      * @return 成功返回true, 失败返回false
      */
     @PutMapping("/update")
@@ -117,9 +118,8 @@ public class CategoryController extends BaseController {
      * @param catIds 商品三级分类id集合
      * @return 成功返回true, 失败返回false
      */
-    @DeleteMapping("/{catIds}")
+    @DeleteMapping("/delete/{catIds}")
     public BaseResult<Boolean> delete(@PathVariable Long[] catIds) {
-        //boolean delete = categoryService.removeByIds(Arrays.asList(catIds));
         boolean delete = categoryService.removeMenusByIds(Arrays.asList(catIds));
         return toOperationResult(delete);
     }

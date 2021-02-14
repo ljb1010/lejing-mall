@@ -1,16 +1,15 @@
 package cn.alphahub.mall.product.controller;
 
-//import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
+import cn.alphahub.common.constant.HttpStatus;
 import cn.alphahub.common.core.controller.BaseController;
 import cn.alphahub.common.core.domain.BaseResult;
 import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
-
 import cn.alphahub.mall.product.domain.AttrAttrgroupRelation;
 import cn.alphahub.mall.product.service.AttrAttrgroupRelationService;
+import org.apache.commons.lang3.ObjectUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 
@@ -19,7 +18,7 @@ import java.util.Arrays;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-07 22:46:24
+ * @date 2021-02-14 19:02:16
  */
 @RestController
 @RequestMapping("product/attrattrgrouprelation")
@@ -30,16 +29,14 @@ public class AttrAttrgroupRelationController extends BaseController {
     /**
      * 查询属性&属性分组关联列表
      *
-     * @param page         当前页码,默认第1页
-     * @param rows         显示行数,默认10条
-     * @param orderColumn  排序排序字段,默认不排序
-     * @param isAsc        排序方式,desc或者asc
-     * @param attrAttrgroupRelation 属性&属性分组关联,字段选择性传入,默认为等值查询
+     * @param page                  当前页码,默认第1页
+     * @param rows                  显示行数,默认10条
+     * @param orderColumn           排序排序字段,默认不排序
+     * @param isAsc                 排序方式,desc或者asc
+     * @param attrAttrgroupRelation 属性&属性分组关联,查询字段选择性传入,默认为等值查询
      * @return 属性&属性分组关联分页数据
      */
     @GetMapping("/list")
-    @SuppressWarnings("unchecked")
-    //@RequiresPermissions("product:attrattrgrouprelation:list")
     public BaseResult<PageResult<AttrAttrgroupRelation>> list(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             @RequestParam(value = "rows", defaultValue = "10") Integer rows,
@@ -49,7 +46,10 @@ public class AttrAttrgroupRelationController extends BaseController {
     ) {
         PageDomain pageDomain = new PageDomain(page, rows, orderColumn, isAsc);
         PageResult<AttrAttrgroupRelation> pageResult = attrAttrgroupRelationService.queryPage(pageDomain, attrAttrgroupRelation);
-        return (BaseResult<PageResult<AttrAttrgroupRelation>>) toPageableResult(pageResult);
+        if (ObjectUtils.isNotEmpty(pageResult.getItems())) {
+            return BaseResult.ok(pageResult);
+        }
+        return BaseResult.fail(HttpStatus.NOT_FOUND, "查询结果为空");
     }
 
     /**
@@ -58,22 +58,19 @@ public class AttrAttrgroupRelationController extends BaseController {
      * @param id 属性&属性分组关联主键id
      * @return 属性&属性分组关联详细信息
      */
-    @GetMapping("/{id}")
-    @SuppressWarnings("unchecked")
-    //@RequiresPermissions("product:attrattrgrouprelation:info")
-    public BaseResult<AttrAttrgroupRelation> info(@PathVariable("id") Long id){
+    @GetMapping("/info/{id}")
+    public BaseResult<AttrAttrgroupRelation> info(@PathVariable("id") Long id) {
         AttrAttrgroupRelation attrAttrgroupRelation = attrAttrgroupRelationService.getById(id);
-        return (BaseResult<AttrAttrgroupRelation>) toResponseResult(attrAttrgroupRelation);
+        return ObjectUtils.anyNotNull(attrAttrgroupRelation) ? BaseResult.ok(attrAttrgroupRelation) : BaseResult.fail();
     }
 
     /**
      * 新增属性&属性分组关联
      *
      * @param attrAttrgroupRelation 属性&属性分组关联元数据
-     * @return 成功返回true,失败返回false
+     * @return 成功返回true, 失败返回false
      */
     @PostMapping("/save")
-    //@RequiresPermissions("product:attrattrgrouprelation:save")
     public BaseResult<Boolean> save(@RequestBody AttrAttrgroupRelation attrAttrgroupRelation) {
         boolean save = attrAttrgroupRelationService.save(attrAttrgroupRelation);
         return toOperationResult(save);
@@ -82,11 +79,10 @@ public class AttrAttrgroupRelationController extends BaseController {
     /**
      * 修改属性&属性分组关联
      *
-     * @param attrAttrgroupRelation 属性&属性分组关联,根据主键id选择性更新
-     * @return 成功返回true,失败返回false
+     * @param attrAttrgroupRelation 属性&属性分组关联,根据id选择性更新
+     * @return 成功返回true, 失败返回false
      */
     @PutMapping("/update")
-    //@RequiresPermissions("product:attrattrgrouprelation:update")
     public BaseResult<Boolean> update(@RequestBody AttrAttrgroupRelation attrAttrgroupRelation) {
         boolean update = attrAttrgroupRelationService.updateById(attrAttrgroupRelation);
         return toOperationResult(update);
@@ -96,11 +92,10 @@ public class AttrAttrgroupRelationController extends BaseController {
      * 批量删除属性&属性分组关联
      *
      * @param ids 属性&属性分组关联id集合
-     * @return 成功返回true,失败返回false
+     * @return 成功返回true, 失败返回false
      */
-    @DeleteMapping("/{ids}")
-    //@RequiresPermissions("product:attrattrgrouprelation:delete")
-    public BaseResult<Boolean> delete(@PathVariable Long[] ids){
+    @DeleteMapping("/delete/{ids}")
+    public BaseResult<Boolean> delete(@PathVariable Long[] ids) {
         boolean delete = attrAttrgroupRelationService.removeByIds(Arrays.asList(ids));
         return toOperationResult(delete);
     }

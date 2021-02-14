@@ -8,7 +8,7 @@
   "packageFilters": "cn.alphahub.mall.thirdparty.controller",
   "md5EncryptedHtmlName": false,
   "style": "xt256",
-  "projectName": "coupon-service后端接口文档",
+  "projectName": "第三方服务后端接口文档",
   "skipTransientField": true,
   "sortByTitle": false,
   "showAuthor": true,

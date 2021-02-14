@@ -1,13 +1,13 @@
 package cn.alphahub.mall.ware.controller;
 
-//import org.apache.shiro.authz.annotation.RequiresPermissions;
-
+import cn.alphahub.common.constant.HttpStatus;
 import cn.alphahub.common.core.controller.BaseController;
 import cn.alphahub.common.core.domain.BaseResult;
 import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.mall.ware.domain.PurchaseDetail;
 import cn.alphahub.mall.ware.service.PurchaseDetailService;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +18,7 @@ import java.util.Arrays;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-07 22:47:37
+ * @date 2021-02-14 19:03:09
  */
 @RestController
 @RequestMapping("ware/purchasedetail")
@@ -33,12 +33,10 @@ public class PurchaseDetailController extends BaseController {
      * @param rows           显示行数,默认10条
      * @param orderColumn    排序排序字段,默认不排序
      * @param isAsc          排序方式,desc或者asc
-     * @param purchaseDetail 仓储采购表,字段选择性传入,默认为等值查询
+     * @param purchaseDetail 仓储采购表,查询字段选择性传入,默认为等值查询
      * @return 仓储采购表分页数据
      */
     @GetMapping("/list")
-    @SuppressWarnings("unchecked")
-    //@RequiresPermissions("ware:purchasedetail:list")
     public BaseResult<PageResult<PurchaseDetail>> list(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             @RequestParam(value = "rows", defaultValue = "10") Integer rows,
@@ -48,7 +46,10 @@ public class PurchaseDetailController extends BaseController {
     ) {
         PageDomain pageDomain = new PageDomain(page, rows, orderColumn, isAsc);
         PageResult<PurchaseDetail> pageResult = purchaseDetailService.queryPage(pageDomain, purchaseDetail);
-        return (BaseResult<PageResult<PurchaseDetail>>) toPageableResult(pageResult);
+        if (ObjectUtils.isNotEmpty(pageResult.getItems())) {
+            return BaseResult.ok(pageResult);
+        }
+        return BaseResult.fail(HttpStatus.NOT_FOUND, "查询结果为空");
     }
 
     /**
@@ -57,12 +58,10 @@ public class PurchaseDetailController extends BaseController {
      * @param id 仓储采购表主键id
      * @return 仓储采购表详细信息
      */
-    @GetMapping("/{id}")
-    @SuppressWarnings("unchecked")
-    //@RequiresPermissions("ware:purchasedetail:info")
+    @GetMapping("/info/{id}")
     public BaseResult<PurchaseDetail> info(@PathVariable("id") Long id) {
         PurchaseDetail purchaseDetail = purchaseDetailService.getById(id);
-        return (BaseResult<PurchaseDetail>) toResponseResult(purchaseDetail);
+        return ObjectUtils.anyNotNull(purchaseDetail) ? BaseResult.ok(purchaseDetail) : BaseResult.fail();
     }
 
     /**
@@ -72,7 +71,6 @@ public class PurchaseDetailController extends BaseController {
      * @return 成功返回true, 失败返回false
      */
     @PostMapping("/save")
-    //@RequiresPermissions("ware:purchasedetail:save")
     public BaseResult<Boolean> save(@RequestBody PurchaseDetail purchaseDetail) {
         boolean save = purchaseDetailService.save(purchaseDetail);
         return toOperationResult(save);
@@ -81,11 +79,10 @@ public class PurchaseDetailController extends BaseController {
     /**
      * 修改仓储采购表
      *
-     * @param purchaseDetail 仓储采购表,根据主键id选择性更新
+     * @param purchaseDetail 仓储采购表,根据id选择性更新
      * @return 成功返回true, 失败返回false
      */
     @PutMapping("/update")
-    //@RequiresPermissions("ware:purchasedetail:update")
     public BaseResult<Boolean> update(@RequestBody PurchaseDetail purchaseDetail) {
         boolean update = purchaseDetailService.updateById(purchaseDetail);
         return toOperationResult(update);
@@ -97,8 +94,7 @@ public class PurchaseDetailController extends BaseController {
      * @param ids 仓储采购表id集合
      * @return 成功返回true, 失败返回false
      */
-    @DeleteMapping("/{ids}")
-    //@RequiresPermissions("ware:purchasedetail:delete")
+    @DeleteMapping("/delete/{ids}")
     public BaseResult<Boolean> delete(@PathVariable Long[] ids) {
         boolean delete = purchaseDetailService.removeByIds(Arrays.asList(ids));
         return toOperationResult(delete);

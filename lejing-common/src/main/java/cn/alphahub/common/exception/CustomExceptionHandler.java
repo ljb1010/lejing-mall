@@ -13,6 +13,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 @Slf4j
 @RestControllerAdvice
 public class CustomExceptionHandler {
+
     /**
      * 处理自定义异常
      */
@@ -22,7 +23,7 @@ public class CustomExceptionHandler {
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)
-    public BaseResult<CustomException> notFoundExceptionHandler(java.lang.Exception e) {
+    public BaseResult<CustomException> notFoundExceptionHandler(Exception e) {
         log.error(e.getMessage(), e);
         return BaseResult.fail(404, "路径不存在，请检查路径是否正确");
     }
@@ -38,8 +39,7 @@ public class CustomExceptionHandler {
     public BaseResult<CustomException> handleAuthorizationException(AuthorizationException e) {
         log.error(e.getMessage(), e);
         return BaseResult.fail("没有权限，请联系管理员授权");
-    }
-    */
+    }*/
 
     @ExceptionHandler(Exception.class)
     public BaseResult<CustomException> exceptionHandler(Exception e) {

@@ -15,6 +15,6 @@ alibaba:
     access-key: your-access-key
     secret-key: your-secret-key
     bucket-name: your-bucket-name
-    url-prefix: https://${alibaba.cloud.bucket-name}.${alibaba.cloud.oss.endpoint}/
+    host-prefix: https://${alibaba.cloud.bucket-name}.${alibaba.cloud.oss.endpoint}
     oss:
       endpoint: oss-cn-shanghai.aliyuncs.com

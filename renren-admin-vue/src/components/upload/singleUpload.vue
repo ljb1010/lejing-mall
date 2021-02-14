@@ -61,7 +61,7 @@ export default {
         ossaccessKeyId: '',
         dir: '',
         host: '',
-        // callback:'',
+        //callback:'',
       },
       dialogVisible: false
     };
@@ -83,9 +83,10 @@ export default {
           _self.dataObj.policy = response.data.policy;
           _self.dataObj.signature = response.data.signature;
           _self.dataObj.ossaccessKeyId = response.data.accessId;
-          _self.dataObj.key = response.data.dir + '/' + getUUID() + '_${filename}';
+          _self.dataObj.key = response.data.dir + "/" + getUUID().replaceAll("-", "") + "-${filename}";
           _self.dataObj.dir = response.data.dir;
           _self.dataObj.host = response.data.host;
+          console.log("------------------------------")
           console.log("响应的数据111:", response);
           console.log("响应的数据222:", _self.dataObj);
           resolve(true)

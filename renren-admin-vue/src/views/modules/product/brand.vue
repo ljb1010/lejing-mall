@@ -155,8 +155,8 @@ export default {
     },
     deleteCateRelationHandle(id, brandId) {
       this.$http({
-        url: this.$http.adornUrl("/product/categorybrandrelation/delete"),
-        method: "post",
+        url: this.$http.adornUrl(`/product/categorybrandrelation/delete/${[id].join(",")}`),
+        method: "delete",
         data: this.$http.adornData([id], false)
       }).then(({data}) => {
         this.getCateRelation();
@@ -248,7 +248,7 @@ export default {
         type: 'warning'
       }).then(() => {
         this.$http({
-          url: this.$http.adornUrl(`/product/brand/${ids.join(",")}`),
+          url: this.$http.adornUrl(`/product/brand/delete/${ids.join(",")}`),
           method: 'delete',
           data: this.$http.adornData(ids, false)
         }).then(({data}) => {

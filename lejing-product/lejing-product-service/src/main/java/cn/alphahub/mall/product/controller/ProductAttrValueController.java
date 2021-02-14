@@ -1,16 +1,15 @@
 package cn.alphahub.mall.product.controller;
 
-//import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
+import cn.alphahub.common.constant.HttpStatus;
 import cn.alphahub.common.core.controller.BaseController;
 import cn.alphahub.common.core.domain.BaseResult;
 import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
-
 import cn.alphahub.mall.product.domain.ProductAttrValue;
 import cn.alphahub.mall.product.service.ProductAttrValueService;
+import org.apache.commons.lang3.ObjectUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 
@@ -19,7 +18,7 @@ import java.util.Arrays;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-07 22:46:24
+ * @date 2021-02-14 19:02:16
  */
 @RestController
 @RequestMapping("product/productattrvalue")
@@ -30,16 +29,14 @@ public class ProductAttrValueController extends BaseController {
     /**
      * 查询spu属性值列表
      *
-     * @param page         当前页码,默认第1页
-     * @param rows         显示行数,默认10条
-     * @param orderColumn  排序排序字段,默认不排序
-     * @param isAsc        排序方式,desc或者asc
-     * @param productAttrValue spu属性值,字段选择性传入,默认为等值查询
+     * @param page             当前页码,默认第1页
+     * @param rows             显示行数,默认10条
+     * @param orderColumn      排序排序字段,默认不排序
+     * @param isAsc            排序方式,desc或者asc
+     * @param productAttrValue spu属性值,查询字段选择性传入,默认为等值查询
      * @return spu属性值分页数据
      */
     @GetMapping("/list")
-    @SuppressWarnings("unchecked")
-    //@RequiresPermissions("product:productattrvalue:list")
     public BaseResult<PageResult<ProductAttrValue>> list(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             @RequestParam(value = "rows", defaultValue = "10") Integer rows,
@@ -49,7 +46,10 @@ public class ProductAttrValueController extends BaseController {
     ) {
         PageDomain pageDomain = new PageDomain(page, rows, orderColumn, isAsc);
         PageResult<ProductAttrValue> pageResult = productAttrValueService.queryPage(pageDomain, productAttrValue);
-        return (BaseResult<PageResult<ProductAttrValue>>) toPageableResult(pageResult);
+        if (ObjectUtils.isNotEmpty(pageResult.getItems())) {
+            return BaseResult.ok(pageResult);
+        }
+        return BaseResult.fail(HttpStatus.NOT_FOUND, "查询结果为空");
     }
 
     /**
@@ -58,22 +58,19 @@ public class ProductAttrValueController extends BaseController {
      * @param id spu属性值主键id
      * @return spu属性值详细信息
      */
-    @GetMapping("/{id}")
-    @SuppressWarnings("unchecked")
-    //@RequiresPermissions("product:productattrvalue:info")
-    public BaseResult<ProductAttrValue> info(@PathVariable("id") Long id){
+    @GetMapping("/info/{id}")
+    public BaseResult<ProductAttrValue> info(@PathVariable("id") Long id) {
         ProductAttrValue productAttrValue = productAttrValueService.getById(id);
-        return (BaseResult<ProductAttrValue>) toResponseResult(productAttrValue);
+        return ObjectUtils.anyNotNull(productAttrValue) ? BaseResult.ok(productAttrValue) : BaseResult.fail();
     }
 
     /**
      * 新增spu属性值
      *
      * @param productAttrValue spu属性值元数据
-     * @return 成功返回true,失败返回false
+     * @return 成功返回true, 失败返回false
      */
     @PostMapping("/save")
-    //@RequiresPermissions("product:productattrvalue:save")
     public BaseResult<Boolean> save(@RequestBody ProductAttrValue productAttrValue) {
         boolean save = productAttrValueService.save(productAttrValue);
         return toOperationResult(save);
@@ -82,11 +79,10 @@ public class ProductAttrValueController extends BaseController {
     /**
      * 修改spu属性值
      *
-     * @param productAttrValue spu属性值,根据主键id选择性更新
-     * @return 成功返回true,失败返回false
+     * @param productAttrValue spu属性值,根据id选择性更新
+     * @return 成功返回true, 失败返回false
      */
     @PutMapping("/update")
-    //@RequiresPermissions("product:productattrvalue:update")
     public BaseResult<Boolean> update(@RequestBody ProductAttrValue productAttrValue) {
         boolean update = productAttrValueService.updateById(productAttrValue);
         return toOperationResult(update);
@@ -96,11 +92,10 @@ public class ProductAttrValueController extends BaseController {
      * 批量删除spu属性值
      *
      * @param ids spu属性值id集合
-     * @return 成功返回true,失败返回false
+     * @return 成功返回true, 失败返回false
      */
-    @DeleteMapping("/{ids}")
-    //@RequiresPermissions("product:productattrvalue:delete")
-    public BaseResult<Boolean> delete(@PathVariable Long[] ids){
+    @DeleteMapping("/delete/{ids}")
+    public BaseResult<Boolean> delete(@PathVariable Long[] ids) {
         boolean delete = productAttrValueService.removeByIds(Arrays.asList(ids));
         return toOperationResult(delete);
     }

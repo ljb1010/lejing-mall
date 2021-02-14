@@ -3,6 +3,7 @@ package cn.alphahub.common.core.controller;
 import cn.alphahub.common.constant.HttpStatus;
 import cn.alphahub.common.core.domain.BaseResult;
 import cn.alphahub.common.core.page.PageResult;
+import cn.alphahub.common.exception.CustomException;
 import cn.alphahub.common.util.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
@@ -35,6 +36,9 @@ public class BaseController {
         Object data = result.getData();
         if (requiredType.isInstance(data)) {
             return (T) data;
+        }
+        if (ObjectUtils.allNull(data)) {
+            throw new CustomException("传入数据为空！");
         }
         throw new RuntimeException("类型换换异常，请检查转换的类型与所需类型是否一致！");
     }

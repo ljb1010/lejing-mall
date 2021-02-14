@@ -1,13 +1,13 @@
 package cn.alphahub.mall.ware.controller;
 
-//import org.apache.shiro.authz.annotation.RequiresPermissions;
-
+import cn.alphahub.common.constant.HttpStatus;
 import cn.alphahub.common.core.controller.BaseController;
 import cn.alphahub.common.core.domain.BaseResult;
 import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.mall.ware.domain.WareOrderTaskDetail;
 import cn.alphahub.mall.ware.service.WareOrderTaskDetailService;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +18,7 @@ import java.util.Arrays;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-07 22:47:37
+ * @date 2021-02-14 19:03:09
  */
 @RestController
 @RequestMapping("ware/wareordertaskdetail")
@@ -33,12 +33,10 @@ public class WareOrderTaskDetailController extends BaseController {
      * @param rows                显示行数,默认10条
      * @param orderColumn         排序排序字段,默认不排序
      * @param isAsc               排序方式,desc或者asc
-     * @param wareOrderTaskDetail 库存工作单,字段选择性传入,默认为等值查询
+     * @param wareOrderTaskDetail 库存工作单,查询字段选择性传入,默认为等值查询
      * @return 库存工作单分页数据
      */
     @GetMapping("/list")
-    @SuppressWarnings("unchecked")
-    //@RequiresPermissions("ware:wareordertaskdetail:list")
     public BaseResult<PageResult<WareOrderTaskDetail>> list(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             @RequestParam(value = "rows", defaultValue = "10") Integer rows,
@@ -48,7 +46,10 @@ public class WareOrderTaskDetailController extends BaseController {
     ) {
         PageDomain pageDomain = new PageDomain(page, rows, orderColumn, isAsc);
         PageResult<WareOrderTaskDetail> pageResult = wareOrderTaskDetailService.queryPage(pageDomain, wareOrderTaskDetail);
-        return (BaseResult<PageResult<WareOrderTaskDetail>>) toPageableResult(pageResult);
+        if (ObjectUtils.isNotEmpty(pageResult.getItems())) {
+            return BaseResult.ok(pageResult);
+        }
+        return BaseResult.fail(HttpStatus.NOT_FOUND, "查询结果为空");
     }
 
     /**
@@ -57,12 +58,10 @@ public class WareOrderTaskDetailController extends BaseController {
      * @param id 库存工作单主键id
      * @return 库存工作单详细信息
      */
-    @GetMapping("/{id}")
-    @SuppressWarnings("unchecked")
-    //@RequiresPermissions("ware:wareordertaskdetail:info")
+    @GetMapping("/info/{id}")
     public BaseResult<WareOrderTaskDetail> info(@PathVariable("id") Long id) {
         WareOrderTaskDetail wareOrderTaskDetail = wareOrderTaskDetailService.getById(id);
-        return (BaseResult<WareOrderTaskDetail>) toResponseResult(wareOrderTaskDetail);
+        return ObjectUtils.anyNotNull(wareOrderTaskDetail) ? BaseResult.ok(wareOrderTaskDetail) : BaseResult.fail();
     }
 
     /**
@@ -72,7 +71,6 @@ public class WareOrderTaskDetailController extends BaseController {
      * @return 成功返回true, 失败返回false
      */
     @PostMapping("/save")
-    //@RequiresPermissions("ware:wareordertaskdetail:save")
     public BaseResult<Boolean> save(@RequestBody WareOrderTaskDetail wareOrderTaskDetail) {
         boolean save = wareOrderTaskDetailService.save(wareOrderTaskDetail);
         return toOperationResult(save);
@@ -81,11 +79,10 @@ public class WareOrderTaskDetailController extends BaseController {
     /**
      * 修改库存工作单
      *
-     * @param wareOrderTaskDetail 库存工作单,根据主键id选择性更新
+     * @param wareOrderTaskDetail 库存工作单,根据id选择性更新
      * @return 成功返回true, 失败返回false
      */
     @PutMapping("/update")
-    //@RequiresPermissions("ware:wareordertaskdetail:update")
     public BaseResult<Boolean> update(@RequestBody WareOrderTaskDetail wareOrderTaskDetail) {
         boolean update = wareOrderTaskDetailService.updateById(wareOrderTaskDetail);
         return toOperationResult(update);
@@ -97,8 +94,7 @@ public class WareOrderTaskDetailController extends BaseController {
      * @param ids 库存工作单id集合
      * @return 成功返回true, 失败返回false
      */
-    @DeleteMapping("/{ids}")
-    //@RequiresPermissions("ware:wareordertaskdetail:delete")
+    @DeleteMapping("/delete/{ids}")
     public BaseResult<Boolean> delete(@PathVariable Long[] ids) {
         boolean delete = wareOrderTaskDetailService.removeByIds(Arrays.asList(ids));
         return toOperationResult(delete);

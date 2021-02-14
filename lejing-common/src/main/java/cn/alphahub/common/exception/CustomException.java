@@ -17,6 +17,7 @@ public class CustomException extends RuntimeException {
      * 异常消息
      */
     private String msg;
+
     /**
      * 错误码, 默认500
      */

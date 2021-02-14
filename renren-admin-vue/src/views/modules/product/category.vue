@@ -106,7 +106,7 @@ export default {
       this.$http({
         url: this.$http.adornUrl("/product/category/list/tree"),
         method: "get"
-      }).then(({ data }) => {
+      }).then(({data}) => {
         console.log("成功获取到菜单数据...", data.data);
         this.menus = data.data;
       });
@@ -125,7 +125,7 @@ export default {
       })
         .then(() => {
           this.$http({
-            url: this.$http.adornUrl(`/product/category/${catIds.join(",")}`),
+            url: this.$http.adornUrl(`/product/category/delete/${catIds.join(",")}`),
             method: "delete",
             data: this.$http.adornData(catIds, false)
           }).then(({data}) => {
@@ -252,7 +252,7 @@ export default {
 
       //发送请求获取当前节点最新的数据
       this.$http({
-        url: this.$http.adornUrl(`/product/category/${data.catId}`),
+        url: this.$http.adornUrl(`/product/category/info/${data.catId}`),
         method: "get"
       }).then(({data}) => {
         //请求成功
@@ -346,7 +346,7 @@ export default {
       })
         .then(() => {
           this.$http({
-            url: this.$http.adornUrl(`/product/category/${ids.join(",")}`),
+            url: this.$http.adornUrl(`/product/category/delete/${ids.join(",")}`),
             method: "delete",
             data: this.$http.adornData(ids, false)
           }).then(({data}) => {

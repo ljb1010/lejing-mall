@@ -33,7 +33,7 @@ public class OssController {
     private OssProperties ossProperties;
 
     /**
-     * 获取OSS服务端签名
+     * 获取OSS文件上传服务端签名
      *
      * @return OSS服务端签名
      */
@@ -81,7 +81,7 @@ public class OssController {
                     .build();
 
             //下面是跨域设置，在网关统一解决跨域
-            /**
+            /*
              JSONObject jasonCallback = new JSONObject();
              jasonCallback.put("callbackUrl", callbackUrl);
              jasonCallback.put("callbackBody",

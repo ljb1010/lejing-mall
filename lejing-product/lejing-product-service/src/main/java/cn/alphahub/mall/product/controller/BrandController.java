@@ -1,13 +1,13 @@
 package cn.alphahub.mall.product.controller;
 
-//import org.apache.shiro.authz.annotation.RequiresPermissions;
-
+import cn.alphahub.common.constant.HttpStatus;
 import cn.alphahub.common.core.controller.BaseController;
 import cn.alphahub.common.core.domain.BaseResult;
 import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.mall.product.domain.Brand;
 import cn.alphahub.mall.product.service.BrandService;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +18,7 @@ import java.util.Arrays;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-07 22:46:24
+ * @date 2021-02-14 19:02:16
  */
 @RestController
 @RequestMapping("product/brand")
@@ -33,12 +33,10 @@ public class BrandController extends BaseController {
      * @param rows        显示行数,默认10条
      * @param orderColumn 排序排序字段,默认不排序
      * @param isAsc       排序方式,desc或者asc
-     * @param brand       品牌,字段选择性传入,默认为等值查询
+     * @param brand       品牌,查询字段选择性传入,默认为等值查询
      * @return 品牌分页数据
      */
     @GetMapping("/list")
-    @SuppressWarnings("unchecked")
-    //@RequiresPermissions("product:brand:list")
     public BaseResult<PageResult<Brand>> list(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             @RequestParam(value = "rows", defaultValue = "10") Integer rows,
@@ -48,7 +46,10 @@ public class BrandController extends BaseController {
     ) {
         PageDomain pageDomain = new PageDomain(page, rows, orderColumn, isAsc);
         PageResult<Brand> pageResult = brandService.queryPage(pageDomain, brand);
-        return (BaseResult<PageResult<Brand>>) toPageableResult(pageResult);
+        if (ObjectUtils.isNotEmpty(pageResult.getItems())) {
+            return BaseResult.ok(pageResult);
+        }
+        return BaseResult.fail(HttpStatus.NOT_FOUND, "查询结果为空");
     }
 
     /**
@@ -57,12 +58,10 @@ public class BrandController extends BaseController {
      * @param brandId 品牌主键id
      * @return 品牌详细信息
      */
-    @GetMapping("/{brandId}")
-    @SuppressWarnings("unchecked")
-    //@RequiresPermissions("product:brand:info")
+    @GetMapping("/info/{brandId}")
     public BaseResult<Brand> info(@PathVariable("brandId") Long brandId) {
         Brand brand = brandService.getById(brandId);
-        return (BaseResult<Brand>) toResponseResult(brand);
+        return ObjectUtils.anyNotNull(brand) ? BaseResult.ok(brand) : BaseResult.fail();
     }
 
     /**
@@ -72,7 +71,6 @@ public class BrandController extends BaseController {
      * @return 成功返回true, 失败返回false
      */
     @PostMapping("/save")
-    //@RequiresPermissions("product:brand:save")
     public BaseResult<Boolean> save(@RequestBody Brand brand) {
         boolean save = brandService.save(brand);
         return toOperationResult(save);
@@ -81,11 +79,10 @@ public class BrandController extends BaseController {
     /**
      * 修改品牌
      *
-     * @param brand 品牌,根据主键id选择性更新
+     * @param brand 品牌,根据id选择性更新
      * @return 成功返回true, 失败返回false
      */
     @PutMapping("/update")
-    //@RequiresPermissions("product:brand:update")
     public BaseResult<Boolean> update(@RequestBody Brand brand) {
         boolean update = brandService.updateById(brand);
         return toOperationResult(update);
@@ -97,8 +94,7 @@ public class BrandController extends BaseController {
      * @param brandIds 品牌id集合
      * @return 成功返回true, 失败返回false
      */
-    @DeleteMapping("/{brandIds}")
-    //@RequiresPermissions("product:brand:delete")
+    @DeleteMapping("/delete/{brandIds}")
     public BaseResult<Boolean> delete(@PathVariable Long[] brandIds) {
         boolean delete = brandService.removeByIds(Arrays.asList(brandIds));
         return toOperationResult(delete);

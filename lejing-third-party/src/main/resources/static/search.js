@@ -8,7 +8,7 @@ api.push({
 })
 api[0].list.push({
     order: '1',
-    desc: '获取OSS服务端签名',
+    desc: '获取OSS文件上传服务端签名',
 });
 api.push({
     alias: 'dict',

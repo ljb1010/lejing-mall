@@ -1,13 +1,13 @@
 package cn.alphahub.mall.ware.controller;
 
-//import org.apache.shiro.authz.annotation.RequiresPermissions;
-
+import cn.alphahub.common.constant.HttpStatus;
 import cn.alphahub.common.core.controller.BaseController;
 import cn.alphahub.common.core.domain.BaseResult;
 import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.mall.ware.domain.Purchase;
 import cn.alphahub.mall.ware.service.PurchaseService;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +18,7 @@ import java.util.Arrays;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-07 22:47:37
+ * @date 2021-02-14 19:03:09
  */
 @RestController
 @RequestMapping("ware/purchase")
@@ -33,12 +33,10 @@ public class PurchaseController extends BaseController {
      * @param rows        显示行数,默认10条
      * @param orderColumn 排序排序字段,默认不排序
      * @param isAsc       排序方式,desc或者asc
-     * @param purchase    采购信息,字段选择性传入,默认为等值查询
+     * @param purchase    采购信息,查询字段选择性传入,默认为等值查询
      * @return 采购信息分页数据
      */
     @GetMapping("/list")
-    @SuppressWarnings("unchecked")
-    //@RequiresPermissions("ware:purchase:list")
     public BaseResult<PageResult<Purchase>> list(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             @RequestParam(value = "rows", defaultValue = "10") Integer rows,
@@ -48,7 +46,10 @@ public class PurchaseController extends BaseController {
     ) {
         PageDomain pageDomain = new PageDomain(page, rows, orderColumn, isAsc);
         PageResult<Purchase> pageResult = purchaseService.queryPage(pageDomain, purchase);
-        return (BaseResult<PageResult<Purchase>>) toPageableResult(pageResult);
+        if (ObjectUtils.isNotEmpty(pageResult.getItems())) {
+            return BaseResult.ok(pageResult);
+        }
+        return BaseResult.fail(HttpStatus.NOT_FOUND, "查询结果为空");
     }
 
     /**
@@ -57,12 +58,10 @@ public class PurchaseController extends BaseController {
      * @param id 采购信息主键id
      * @return 采购信息详细信息
      */
-    @GetMapping("/{id}")
-    @SuppressWarnings("unchecked")
-    //@RequiresPermissions("ware:purchase:info")
+    @GetMapping("/info/{id}")
     public BaseResult<Purchase> info(@PathVariable("id") Long id) {
         Purchase purchase = purchaseService.getById(id);
-        return (BaseResult<Purchase>) toResponseResult(purchase);
+        return ObjectUtils.anyNotNull(purchase) ? BaseResult.ok(purchase) : BaseResult.fail();
     }
 
     /**
@@ -72,7 +71,6 @@ public class PurchaseController extends BaseController {
      * @return 成功返回true, 失败返回false
      */
     @PostMapping("/save")
-    //@RequiresPermissions("ware:purchase:save")
     public BaseResult<Boolean> save(@RequestBody Purchase purchase) {
         boolean save = purchaseService.save(purchase);
         return toOperationResult(save);
@@ -81,11 +79,10 @@ public class PurchaseController extends BaseController {
     /**
      * 修改采购信息
      *
-     * @param purchase 采购信息,根据主键id选择性更新
+     * @param purchase 采购信息,根据id选择性更新
      * @return 成功返回true, 失败返回false
      */
     @PutMapping("/update")
-    //@RequiresPermissions("ware:purchase:update")
     public BaseResult<Boolean> update(@RequestBody Purchase purchase) {
         boolean update = purchaseService.updateById(purchase);
         return toOperationResult(update);
@@ -97,8 +94,7 @@ public class PurchaseController extends BaseController {
      * @param ids 采购信息id集合
      * @return 成功返回true, 失败返回false
      */
-    @DeleteMapping("/{ids}")
-    //@RequiresPermissions("ware:purchase:delete")
+    @DeleteMapping("/delete/{ids}")
     public BaseResult<Boolean> delete(@PathVariable Long[] ids) {
         boolean delete = purchaseService.removeByIds(Arrays.asList(ids));
         return toOperationResult(delete);
