@@ -1,12 +1,22 @@
 package cn.alphahub.mall.product.domain;
 
+import cn.alphahub.common.valid.InsertGroup;
+import cn.alphahub.common.valid.UpdateGroup;
+import cn.alphahub.common.valid.UpdateStatusGroup;
+import cn.alphahub.common.valid.custom.ListValue;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.URL;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 /**
@@ -22,42 +32,53 @@ import java.io.Serializable;
 @AllArgsConstructor
 @TableName("pms_brand")
 public class Brand implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * 品牌id
-	 */
+    /**
+     * 品牌id
+     */
+    @Null(message = "新增不能指定id", groups = {InsertGroup.class})
+    @NotNull(message = "修改必须指定id", groups = {UpdateGroup.class})
     @TableId
     private Long brandId;
 
-	/**
-	 * 品牌名
-	 */
+    /**
+     * 品牌名
+     */
+    @NotBlank(message = "品牌名不能为空", groups = {InsertGroup.class, UpdateGroup.class})
     private String name;
 
-	/**
-	 * 品牌logo地址
-	 */
+    /**
+     * 品牌logo地址
+     */
+    @NotBlank(groups = {InsertGroup.class})
+    @URL(message = "logo必须是一个合法的URL链接", groups = {InsertGroup.class, UpdateGroup.class})
     private String logo;
 
-	/**
-	 * 介绍
-	 */
+    /**
+     * 介绍
+     */
     private String descript;
 
-	/**
-	 * 显示状态[0-不显示；1-显示]
-	 */
+    /**
+     * 显示状态[0-不显示；1-显示]
+     */
+    @NotNull(groups = {InsertGroup.class, UpdateStatusGroup.class})
+    @ListValue(values = {0, 1}, groups = {InsertGroup.class, UpdateStatusGroup.class})
     private Integer showStatus;
 
-	/**
-	 * 检索首字母
-	 */
+    /**
+     * 检索首字母
+     */
+    @NotBlank(groups = {InsertGroup.class})
+    @Pattern(regexp = "^[a-zA-Z]$", message = "检索首字母必须是一个a-z或A-Z的字母", groups = {InsertGroup.class, UpdateGroup.class})
     private String firstLetter;
 
-	/**
-	 * 排序
-	 */
+    /**
+     * 排序
+     */
+    @NotNull(groups = {InsertGroup.class})
+    @Min(value = 0, message = "排序值必须≥0", groups = {InsertGroup.class, UpdateGroup.class})
     private Integer sort;
 
 }

@@ -199,6 +199,31 @@ public class BaseResult<T> extends AbstractResult<T> implements Serializable {
     }
 
     /**
+     * 返回错误消息
+     *
+     * @param <T>  数据对象
+     * @param msg  响应消息
+     * @param data 响应失败的消息体
+     * @return 错误消息
+     */
+    public static <T> BaseResult<T> fail(String msg, T data) {
+        return preCreate(HttpStatus.BAD_REQUEST, msg, false, data);
+    }
+
+    /**
+     * 返回错误消息
+     *
+     * @param <T>  数据对象
+     * @param code 响应状态码
+     * @param msg  响应消息
+     * @param data 响应失败的消息体
+     * @return 错误消息
+     */
+    public static <T> BaseResult<T> fail(Integer code, String msg, T data) {
+        return preCreate(code, msg, false, data);
+    }
+
+    /**
      * 返回成功消息
      *
      * @return 成功消息

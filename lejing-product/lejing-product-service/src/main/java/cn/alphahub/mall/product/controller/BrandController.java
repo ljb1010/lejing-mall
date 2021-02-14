@@ -5,10 +5,14 @@ import cn.alphahub.common.core.controller.BaseController;
 import cn.alphahub.common.core.domain.BaseResult;
 import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
+import cn.alphahub.common.valid.UpdateStatusGroup;
+import cn.alphahub.common.valid.InsertGroup;
+import cn.alphahub.common.valid.UpdateGroup;
 import cn.alphahub.mall.product.domain.Brand;
 import cn.alphahub.mall.product.service.BrandService;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -71,9 +75,9 @@ public class BrandController extends BaseController {
      * @return 成功返回true, 失败返回false
      */
     @PostMapping("/save")
-    public BaseResult<Boolean> save(@RequestBody Brand brand) {
+    public BaseResult<Boolean> save(@Validated({InsertGroup.class}) @RequestBody Brand brand) {
         boolean save = brandService.save(brand);
-        return toOperationResult(save);
+        return BaseResult.ok(save);
     }
 
     /**
@@ -83,7 +87,19 @@ public class BrandController extends BaseController {
      * @return 成功返回true, 失败返回false
      */
     @PutMapping("/update")
-    public BaseResult<Boolean> update(@RequestBody Brand brand) {
+    public BaseResult<Boolean> update(@Validated({UpdateGroup.class}) @RequestBody Brand brand) {
+        boolean update = brandService.updateById(brand);
+        return toOperationResult(update);
+    }
+
+    /**
+     * 修改品牌状态
+     *
+     * @param brand 品牌,根据id选择性更新
+     * @return 成功返回true, 失败返回false
+     */
+    @PutMapping("/update/status")
+    public BaseResult<Boolean> updateStatus(@Validated({UpdateStatusGroup.class}) @RequestBody Brand brand) {
         boolean update = brandService.updateById(brand);
         return toOperationResult(update);
     }
