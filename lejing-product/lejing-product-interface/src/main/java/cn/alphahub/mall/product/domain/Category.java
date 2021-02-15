@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -70,5 +71,6 @@ public class Category implements Serializable {
      * 子分类
      */
     @TableField(exist = false)
+    @JsonInclude(value = JsonInclude.Include.NON_EMPTY)
     private List<Category> children;
 }

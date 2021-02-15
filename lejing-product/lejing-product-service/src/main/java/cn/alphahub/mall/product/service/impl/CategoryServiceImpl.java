@@ -4,6 +4,7 @@ import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.mall.product.domain.Category;
 import cn.alphahub.mall.product.mapper.CategoryMapper;
+import cn.alphahub.mall.product.service.CategoryBrandRelationService;
 import cn.alphahub.mall.product.service.CategoryService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
@@ -13,8 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -28,6 +32,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 
     @Autowired
     private CategoryMapper categoryMapper;
+
+    @Autowired
+    private CategoryBrandRelationService categoryBrandRelationService;
 
     /**
      * 查询商品三级分类分页列表
@@ -72,6 +79,50 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         //TODO 1. 检查当前删除的菜单是否被别的地方引用
         int batchIds = categoryMapper.deleteBatchIds(ids);
         return batchIds >= 1;
+    }
+
+    /**
+     * 找到catelogId所属分类的完整路径
+     *
+     * @param catelogId 所属分类id
+     * @return [父, 子, 孙], [2,25,166]
+     */
+    @Override
+    public Long[] getCatelogFullPath(Long catelogId) {
+        List<Long> list = new ArrayList<>();
+        List<Long> parentPath = getParentPath(catelogId, list);
+        return parentPath.toArray(new Long[parentPath.size()]);
+    }
+
+    /**
+     * 级联更新-商品三级分类
+     *
+     * @param category 商品三级分类,根据id选择性更新
+     * @return 成功返回true, 失败返回false
+     */
+    @Override
+    public boolean updateCasecade(Category category) {
+        boolean b1 = this.updateById(category);
+        boolean b2 = this.categoryBrandRelationService.updateCategory(category.getCatId(), category.getName());
+        return b1 && b2;
+    }
+
+    /**
+     * 递归方法找父路径
+     *
+     * @param catelogId 分类id
+     * @return
+     */
+    private List<Long> getParentPath(Long catelogId, List<Long> initialList) {
+        // 收集当前节点的id
+        initialList.add(catelogId);
+        Category category = this.getById(catelogId);
+        if (!Objects.equals(category.getParentCid(), 0L)) {
+            getParentPath(category.getParentCid(), initialList);
+        }
+        //找到的是逆序的,使用Collections转换一下: [225,25,2] -> [2,25,225]
+        Collections.reverse(initialList);
+        return initialList;
     }
 
     /**

@@ -13,4 +13,29 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface CategoryBrandRelationService extends IService<CategoryBrandRelation>, PageService<CategoryBrandRelation> {
 
+    /**
+     * 新增品牌分类关联
+     *
+     * @param categoryBrandRelation 品牌分类关联元数据
+     * @return 成功返回true, 失败返回false
+     */
+    boolean saveDetail(CategoryBrandRelation categoryBrandRelation);
+
+    /**
+     * 更新品牌信息
+     *
+     * @param brandId 品牌id
+     * @param name    品牌名称
+     * @return
+     */
+    boolean updateBrand(Long brandId, String name);
+
+    /**
+     * 级联更新-商品三级分类
+     *
+     * @param catId 商品三级分类id
+     * @param name  分类名称
+     * @return 成功返回true, 失败返回false
+     */
+    boolean updateCategory(Long catId, String name);
 }

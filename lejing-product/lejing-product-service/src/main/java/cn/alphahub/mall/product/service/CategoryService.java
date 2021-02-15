@@ -29,4 +29,21 @@ public interface CategoryService extends IService<Category>, PageService<Categor
      * @return
      */
     boolean removeMenusByIds(List<Long> ids);
+
+    /**
+     * 所属分类路径
+     *
+     * @param catelogId 所属分类id
+     * @return
+     */
+    Long[] getCatelogFullPath(Long catelogId);
+
+
+    /**
+     * 级联更新-商品三级分类
+     *
+     * @param category 商品三级分类,根据id选择性更新
+     * @return 成功返回true, 失败返回false
+     */
+    boolean updateCasecade(Category category);
 }

@@ -7,11 +7,13 @@ import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.mall.product.domain.CategoryBrandRelation;
 import cn.alphahub.mall.product.service.CategoryBrandRelationService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * 品牌分类关联Controller
@@ -53,6 +55,19 @@ public class CategoryBrandRelationController extends BaseController {
     }
 
     /**
+     * 获取当前品牌关联的分类列表
+     *
+     * @param brandId 品牌id
+     * @return 品牌分类关联列表
+     */
+    @GetMapping("/catelog/list")
+    public BaseResult<List<CategoryBrandRelation>> catelogList(@RequestParam(value = "brandId") Long brandId) {
+        QueryWrapper<CategoryBrandRelation> wrapper = new QueryWrapper<CategoryBrandRelation>().eq("brand_id", brandId);
+        List<CategoryBrandRelation> categoryBrandRelations = categoryBrandRelationService.list(wrapper);
+        return BaseResult.ok(categoryBrandRelations);
+    }
+
+    /**
      * 获取品牌分类关联详情
      *
      * @param id 品牌分类关联主键id
@@ -72,7 +87,7 @@ public class CategoryBrandRelationController extends BaseController {
      */
     @PostMapping("/save")
     public BaseResult<Boolean> save(@RequestBody CategoryBrandRelation categoryBrandRelation) {
-        boolean save = categoryBrandRelationService.save(categoryBrandRelation);
+        boolean save = categoryBrandRelationService.saveDetail(categoryBrandRelation);
         return toOperationResult(save);
     }
 

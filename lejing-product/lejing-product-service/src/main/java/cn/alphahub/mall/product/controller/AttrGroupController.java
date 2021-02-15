@@ -7,11 +7,13 @@ import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.mall.product.domain.AttrGroup;
 import cn.alphahub.mall.product.service.AttrGroupService;
+import cn.alphahub.mall.product.service.CategoryService;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * 属性分组Controller
@@ -25,6 +27,8 @@ import java.util.Arrays;
 public class AttrGroupController extends BaseController {
     @Autowired
     private AttrGroupService attrGroupService;
+    @Autowired
+    private CategoryService categoryService;
 
     /**
      * 查询属性分组列表
@@ -33,7 +37,7 @@ public class AttrGroupController extends BaseController {
      * @param rows        显示行数,默认10条
      * @param orderColumn 排序排序字段,默认不排序
      * @param isAsc       排序方式,desc或者asc
-     * @param attrGroup   属性分组,查询字段选择性传入,默认为等值查询
+     * @param attrGroup   属性分组元数据
      * @return 属性分组分页数据
      */
     @GetMapping("/list")
@@ -53,6 +57,36 @@ public class AttrGroupController extends BaseController {
     }
 
     /**
+     * 根据catelogId查询属性分组列表
+     *
+     * @param page        当前页码,默认第1页
+     * @param rows        显示行数,默认10条
+     * @param orderColumn 排序排序字段,默认不排序
+     * @param isAsc       排序方式,desc或者asc
+     * @param catelogId   所属分类id
+     * @param key         检索关键字
+     * @return 属性分组分页数据
+     */
+    @GetMapping("/list/{catelogId}")
+    public BaseResult<PageResult<AttrGroup>> listByCatelogId(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "rows", defaultValue = "10") Integer rows,
+            @RequestParam(value = "orderColumn", defaultValue = "") String orderColumn,
+            @RequestParam(value = "isAsc", defaultValue = "") String isAsc,
+            @PathVariable(value = "catelogId") Long catelogId,
+            @RequestParam(value = "key", defaultValue = "") String key
+    ) {
+        PageResult<AttrGroup> pageResult = attrGroupService.queryPage(
+                new PageDomain(page, rows, orderColumn, isAsc),
+                AttrGroup.builder()
+                        .catelogId(Objects.equals(catelogId, 0L) ? null : catelogId)
+                        .build(),
+                key
+        );
+        return BaseResult.ok(pageResult);
+    }
+
+    /**
      * 获取属性分组详情
      *
      * @param attrGroupId 属性分组主键id
@@ -61,6 +95,9 @@ public class AttrGroupController extends BaseController {
     @GetMapping("/info/{attrGroupId}")
     public BaseResult<AttrGroup> info(@PathVariable("attrGroupId") Long attrGroupId) {
         AttrGroup attrGroup = attrGroupService.getById(attrGroupId);
+        Long catelogId = attrGroup.getCatelogId();
+        Long[] catelogPath = categoryService.getCatelogFullPath(catelogId);
+        attrGroup.setCatelogPath(catelogPath);
         return ObjectUtils.anyNotNull(attrGroup) ? BaseResult.ok(attrGroup) : BaseResult.fail();
     }
 

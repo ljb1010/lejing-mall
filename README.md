@@ -66,7 +66,7 @@ JVM参数: `-Xms512m -Xmx512m -Xmn200m -Xlog:gc*`
 
 **![image-20210205024941585](https://alphahub-test-bucket.oss-cn-shanghai.aliyuncs.com/image/image-20210205024941585.png)**
 
-- [x] 项目改造完成,集成:业务代码自动生成->执行mvn package,自动输出可调式的高可读性api文档->分层架构->以最小的代价迎合业务的重大变更
+- [x] 项目改造完成, 集成: 业务代码自动生成 -> 执行: `mvn package`, 自动输出可调式的高可读性api文档 -> 分层架构 -> 以最小的代价迎合业务的重大变更
 
 
 
@@ -74,8 +74,10 @@ JVM参数: `-Xms512m -Xmx512m -Xmn200m -Xlog:gc*`
 
 # 4 待完成清单
 
-- [x] 整合人人框架，提供：domain--> dao --> service --> controller --> 全自动api文档在线输出**&**在线调试，
+- [x] 整合人人框架，提供：domain--> dao --> service --> controller --> 全自动api文档在线输出&在线调试，
 
   目的：让今后因业务变动影响数据库的变动只需要码农修改数据库对应的领域模型即可，节省更多的时间
 
-- [ ] 微服务计划
+- [ ] 微服务计划-ing
+
+- [x] 移除`spring-cloud-alibaba 2.2.5.RELEASE` 版本中微服务中通过`feign`远程调用时使用`ribbon`负载均衡的支持, 采用`spring-cloud 2020.0.1`的`spring cloud loadbalancer`代替

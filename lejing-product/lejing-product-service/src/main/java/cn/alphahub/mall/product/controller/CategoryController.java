@@ -89,14 +89,14 @@ public class CategoryController extends BaseController {
     }
 
     /**
-     * 修改商品三级分类
+     * 级联更新-商品三级分类
      *
      * @param category 商品三级分类,根据id选择性更新
      * @return 成功返回true, 失败返回false
      */
     @PutMapping("/update")
     public BaseResult<Boolean> update(@RequestBody Category category) {
-        boolean update = categoryService.updateById(category);
+        boolean update = categoryService.updateCasecade(category);
         return toOperationResult(update);
     }
 

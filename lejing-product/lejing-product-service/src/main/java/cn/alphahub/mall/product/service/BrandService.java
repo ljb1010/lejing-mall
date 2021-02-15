@@ -1,5 +1,7 @@
 package cn.alphahub.mall.product.service;
 
+import cn.alphahub.common.core.page.PageDomain;
+import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.common.core.service.PageService;
 import cn.alphahub.mall.product.domain.Brand;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -13,4 +15,21 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface BrandService extends IService<Brand>, PageService<Brand> {
 
+    /**
+     * 根据关键字查询品牌分页列表
+     *
+     * @param pageDomain 分页数据
+     * @param brand      分页对象
+     * @param searchKey  查询关键字
+     * @return 品牌分页数据
+     */
+    PageResult<Brand> queryPage(PageDomain pageDomain, Brand brand, String searchKey);
+
+    /**
+     * 修改品牌状态
+     *
+     * @param brand 品牌,根据id选择性更新
+     * @return 成功返回true, 失败返回false
+     */
+    boolean updateDetailById(Brand brand);
 }

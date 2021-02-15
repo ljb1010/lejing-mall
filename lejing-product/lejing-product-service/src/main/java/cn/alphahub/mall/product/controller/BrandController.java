@@ -38,6 +38,7 @@ public class BrandController extends BaseController {
      * @param orderColumn 排序排序字段,默认不排序
      * @param isAsc       排序方式,desc或者asc
      * @param brand       品牌,查询字段选择性传入,默认为等值查询
+     * @param key         查询关键字
      * @return 品牌分页数据
      */
     @GetMapping("/list")
@@ -46,10 +47,11 @@ public class BrandController extends BaseController {
             @RequestParam(value = "rows", defaultValue = "10") Integer rows,
             @RequestParam(value = "orderColumn", defaultValue = "") String orderColumn,
             @RequestParam(value = "isAsc", defaultValue = "") String isAsc,
+            @RequestParam(value = "key", defaultValue = "") String key,
             Brand brand
     ) {
         PageDomain pageDomain = new PageDomain(page, rows, orderColumn, isAsc);
-        PageResult<Brand> pageResult = brandService.queryPage(pageDomain, brand);
+        PageResult<Brand> pageResult = brandService.queryPage(pageDomain, brand, key);
         if (ObjectUtils.isNotEmpty(pageResult.getItems())) {
             return BaseResult.ok(pageResult);
         }
@@ -88,7 +90,7 @@ public class BrandController extends BaseController {
      */
     @PutMapping("/update")
     public BaseResult<Boolean> update(@Validated({UpdateGroup.class}) @RequestBody Brand brand) {
-        boolean update = brandService.updateById(brand);
+        boolean update = brandService.updateDetailById(brand);
         return toOperationResult(update);
     }
 

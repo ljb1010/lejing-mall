@@ -14,9 +14,15 @@ mybatis-plus:
   type-aliases-package: com.**.coupon.domain,cn.**.coupon.domain,com.**.coupon.entity,cn.**.coupon.entity
   global-config:
     db-config:
+      #主键类型  AUTO:"数据库ID自增", INPUT:"用户输入ID", ID_WORKER:"全局唯一ID (数字类型唯一ID)", UUID:"全局唯一ID UUID"
       id-type: auto
   configuration:
     map-underscore-to-camel-case: on
+# PageHelper分页插件
+pagehelper:
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
 #全局跨域设置
 cors:
   config:

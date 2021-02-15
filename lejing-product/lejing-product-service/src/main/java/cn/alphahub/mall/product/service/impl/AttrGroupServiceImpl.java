@@ -8,9 +8,11 @@ import cn.alphahub.mall.product.service.AttrGroupService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 属性分组Service业务层处理
@@ -33,6 +35,29 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupMapper, AttrGroup
     public PageResult<AttrGroup> queryPage(PageDomain pageDomain, AttrGroup attrGroup) {
         pageDomain.startPage();
         QueryWrapper<AttrGroup> wrapper = new QueryWrapper<>(attrGroup);
+        return getAttrGroupPageResult(wrapper);
+    }
+
+    /**
+     * 根据catelogId查询属性分组列表
+     *
+     * @param pageDomain 分页数据
+     * @param attrGroup  分页对象
+     * @param key        查询关键字
+     * @return
+     */
+    @Override
+    public PageResult<AttrGroup> queryPage(PageDomain pageDomain, AttrGroup attrGroup, String key) {
+        pageDomain.startPage();
+        QueryWrapper<AttrGroup> wrapper = new QueryWrapper<>(attrGroup);
+        //select * from pms_attr_group where catelog_id=? and (attr_group_id=key or attr_group_name like %key%)
+        if (StringUtils.isNotBlank(key)) {
+            wrapper.and(qw -> qw.eq("attr_group_id", key).or().like("attr_group_name", key));
+        }
+        return getAttrGroupPageResult(wrapper);
+    }
+
+    private PageResult<AttrGroup> getAttrGroupPageResult(QueryWrapper<AttrGroup> wrapper) {
         List<AttrGroup> list = this.list(wrapper);
         PageInfo<AttrGroup> pageInfo = new PageInfo<>(list);
         PageResult<AttrGroup> pageResult = PageResult.<AttrGroup>builder()
@@ -42,5 +67,4 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupMapper, AttrGroup
                 .build();
         return pageResult;
     }
-
 }
