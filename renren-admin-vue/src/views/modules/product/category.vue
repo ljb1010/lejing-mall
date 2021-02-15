@@ -4,31 +4,31 @@
     <el-button v-if="draggable" @click="batchSave">批量保存</el-button>
     <el-button type="danger" @click="batchDelete">批量删除</el-button>
     <el-tree
+      ref="menuTree"
+      :allow-drop="allowDrop"
       :data="menus"
-      :props="defaultProps"
-      :expand-on-click-node="false"
-      show-checkbox
-      node-key="catId"
       :default-expanded-keys="expandedKey"
       :draggable="draggable"
-      :allow-drop="allowDrop"
+      :expand-on-click-node="false"
+      :props="defaultProps"
+      node-key="catId"
+      show-checkbox
       @node-drop="handleDrop"
-      ref="menuTree"
     >
-      <span class="custom-tree-node" slot-scope="{ node, data }">
+      <span slot-scope="{ node, data }" class="custom-tree-node">
         <span>{{ node.label }}</span>
         <span>
           <el-button
             v-if="node.level <=2"
-            type="text"
             size="mini"
+            type="text"
             @click="() => append(data)"
           >Append</el-button>
-          <el-button type="text" size="mini" @click="edit(data)">edit</el-button>
+          <el-button size="mini" type="text" @click="edit(data)">edit</el-button>
           <el-button
             v-if="node.childNodes.length==0"
-            type="text"
             size="mini"
+            type="text"
             @click="() => remove(node, data)"
           >Delete</el-button>
         </span>
@@ -36,10 +36,10 @@
     </el-tree>
 
     <el-dialog
+      :close-on-click-modal="false"
       :title="title"
       :visible.sync="dialogVisible"
       width="30%"
-      :close-on-click-modal="false"
     >
       <el-form :model="category">
         <el-form-item label="分类名称">

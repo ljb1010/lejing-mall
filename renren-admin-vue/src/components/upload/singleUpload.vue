@@ -96,12 +96,13 @@ export default {
       })
     },
     handleUploadSuccess(res, file) {
+      let filename = file.name;
       console.log("上传成功...")
       this.showFileList = true;
       this.fileList.pop();
       this.fileList.push({
-        name: file.name,
-        url: this.dataObj.host + '/' + this.dataObj.key.replace("${filename}", file.name)
+        name: filename,
+        url: this.dataObj.host + '/' + this.dataObj.key.replace("${filename}", filename)
       });
       this.emitInput(this.fileList[0].url);
     }

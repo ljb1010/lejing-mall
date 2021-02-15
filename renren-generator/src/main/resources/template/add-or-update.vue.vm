@@ -58,11 +58,12 @@
               method: 'get',
               #[[params: this.$http.adornParams()]]#
             }).then(({data}) => {
-              if (data && data.code === 0) {
+              if (data && data.code === 200) {
+                  data.${classname} = data.data;
 #foreach($column in $columns)
-#if($column.columnName != $pk.columnName)
-                this.dataForm.${column.attrname} = data.${classname}.${column.attrname}
-#end
+ #if($column.columnName != $pk.columnName)
+                this.dataForm.${column.attrname} = data.${classname}.${column.attrname};
+ #end
 #end
               }
             })
@@ -75,7 +76,7 @@
           if (valid) {
             this.$http({
               url: #[[this.$http.adornUrl]]#(`/${moduleName}/${pathName}/${!this.dataForm.${pk.attrname} ? 'save' : 'update'}`),
-              method: 'post',
+              method: !this.dataForm.brandId ? 'post' : 'put',
               #[[data: this.$http.adornData({]]#
 #foreach($column in $columns)
 #if($column.columnName == $pk.columnName)
@@ -87,7 +88,7 @@
 #end
               })
             }).then(({data}) => {
-              if (data && data.code === 0) {
+              if (data && data.code === 200) {
                 #[[this.$message({]]#
                   message: '操作成功',
                   type: 'success',

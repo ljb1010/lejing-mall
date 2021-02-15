@@ -106,10 +106,10 @@ export default {
       });
     },
     handleUploadSuccess(res, file) {
+      let filename = file.name;
       this.fileList.push({
-        name: file.name,
-        // url: this.dataObj.host + "/" + this.dataObj.dir + "/" + file.name； 替换${filename}为真正的文件名
-        url: this.dataObj.host + "/" + this.dataObj.key.replace("${filename}", file.name)
+        name: filename,
+        url: this.dataObj.host + "/" + this.dataObj.key.replace("${filename}", filename)
       });
       this.emitInput(this.fileList);
     },
