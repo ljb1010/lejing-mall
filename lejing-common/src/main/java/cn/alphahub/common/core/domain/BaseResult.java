@@ -13,11 +13,11 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * 通用Controller数据返回封装
+ * Controller数据返回封装
  *
  * @param <T> 返回对象
  * @author liuwenjing
- * @date 2021年2月2日22:58:59
+ * @date 2021年2月17日
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -228,8 +228,8 @@ public class BaseResult<T> extends AbstractResult<T> implements Serializable {
      *
      * @return 成功消息
      */
-    public BaseResult<T> success() {
-        return new BaseResult<T>().success("操作成功");
+    public static <T> BaseResult<T> success() {
+        return BaseResult.success("操作成功");
     }
 
     /**
@@ -238,8 +238,8 @@ public class BaseResult<T> extends AbstractResult<T> implements Serializable {
      * @param data 封装返回的数据对象
      * @return 成功消息
      */
-    public BaseResult<T> success(T data) {
-        return new BaseResult<T>().success("操作成功", data);
+    public static <T> BaseResult<T> success(T data) {
+        return BaseResult.success("操作成功", data);
     }
 
     /**
@@ -248,8 +248,8 @@ public class BaseResult<T> extends AbstractResult<T> implements Serializable {
      * @param msg 返回内容
      * @return 成功消息
      */
-    public BaseResult<T> success(String msg) {
-        return new BaseResult<T>().success(msg, null);
+    public static <T> BaseResult<T> success(String msg) {
+        return BaseResult.success(msg, null);
     }
 
     /**
@@ -259,7 +259,7 @@ public class BaseResult<T> extends AbstractResult<T> implements Serializable {
      * @param data 数据对象
      * @return 成功消息
      */
-    public BaseResult<T> success(String msg, T data) {
+    public static <T> BaseResult<T> success(String msg, T data) {
         return new BaseResult<>(HttpStatus.SUCCESS, msg, data);
     }
 
@@ -268,8 +268,8 @@ public class BaseResult<T> extends AbstractResult<T> implements Serializable {
      *
      * @return 错误消息
      */
-    public BaseResult<T> error() {
-        return new BaseResult<T>().error("操作失败");
+    public static <T> BaseResult<T> error() {
+        return BaseResult.error("操作失败");
     }
 
     /**
@@ -278,8 +278,8 @@ public class BaseResult<T> extends AbstractResult<T> implements Serializable {
      * @param msg 返回内容
      * @return 警告消息
      */
-    public BaseResult<T> error(String msg) {
-        return new BaseResult<T>().error(msg, null);
+    public static <T> BaseResult<T> error(String msg) {
+        return BaseResult.error(msg, null);
     }
 
     /**
@@ -289,7 +289,7 @@ public class BaseResult<T> extends AbstractResult<T> implements Serializable {
      * @param data 数据对象
      * @return 警告消息
      */
-    public BaseResult<T> error(String msg, T data) {
+    public static <T> BaseResult<T> error(String msg, T data) {
         return new BaseResult<>(HttpStatus.ERROR, msg, data);
     }
 
@@ -300,7 +300,7 @@ public class BaseResult<T> extends AbstractResult<T> implements Serializable {
      * @param msg  返回内容
      * @return 警告消息
      */
-    public BaseResult<T> error(int code, String msg) {
+    public static <T> BaseResult<T> error(int code, String msg) {
         return new BaseResult<>(code, msg, null);
     }
 
@@ -319,9 +319,9 @@ public class BaseResult<T> extends AbstractResult<T> implements Serializable {
                 .items(items)
                 .build();
         if (Objects.nonNull(pageResult)) {
-            return new BaseResult<PageResult<T>>().success("查询成功", pageResult);
+            return BaseResult.success("查询成功", pageResult);
         }
-        return new BaseResult<PageResult<T>>().error("查询失败");
+        return BaseResult.error("查询失败");
     }
 
     public BaseResult<T> setResult(T data) {

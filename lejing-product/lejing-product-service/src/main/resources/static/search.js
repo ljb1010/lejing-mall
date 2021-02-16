@@ -66,18 +66,22 @@ api[2].list.push({
 });
 api[2].list.push({
     order: '2',
-    desc: '获取属性分组详情',
+    desc: '根据catelogId查询属性分组列表',
 });
 api[2].list.push({
     order: '3',
-    desc: '新增属性分组',
+    desc: '获取属性分组详情',
 });
 api[2].list.push({
     order: '4',
-    desc: '修改属性分组',
+    desc: '新增属性分组',
 });
 api[2].list.push({
     order: '5',
+    desc: '修改属性分组',
+});
+api[2].list.push({
+    order: '6',
     desc: '批量删除属性分组',
 });
 api.push({
@@ -105,6 +109,10 @@ api[3].list.push({
 });
 api[3].list.push({
     order: '5',
+    desc: '修改品牌状态',
+});
+api[3].list.push({
+    order: '6',
     desc: '批量删除品牌',
 });
 api.push({
@@ -120,18 +128,22 @@ api[4].list.push({
 });
 api[4].list.push({
     order: '2',
-    desc: '获取品牌分类关联详情',
+    desc: '获取当前品牌关联的分类列表',
 });
 api[4].list.push({
     order: '3',
-    desc: '新增品牌分类关联',
+    desc: '获取品牌分类关联详情',
 });
 api[4].list.push({
     order: '4',
-    desc: '修改品牌分类关联',
+    desc: '新增品牌分类关联',
 });
 api[4].list.push({
     order: '5',
+    desc: '修改品牌分类关联',
+});
+api[4].list.push({
+    order: '6',
     desc: '批量删除品牌分类关联',
 });
 api.push({
@@ -159,7 +171,7 @@ api[5].list.push({
 });
 api[5].list.push({
     order: '5',
-    desc: '修改商品三级分类',
+    desc: '级联更新-商品三级分类',
 });
 api[5].list.push({
     order: '6',

@@ -34,6 +34,20 @@ public class ${className}ServiceImpl extends ServiceImpl<${className}Mapper, ${c
     public PageResult<${className}> queryPage(PageDomain pageDomain, ${className} ${classname}) {
         pageDomain.startPage();
         QueryWrapper<${className}> wrapper = new QueryWrapper<>(${classname});
+
+        // 这里可编写自己的业务查询wrapper，如果需要。
+        // ...
+
+        return getPageResult(wrapper);
+    }
+
+    /**
+     * 根据查询构造器条件查询分页查询结果
+     *
+     * @param wrapper <b>${comments}<b/>实体对象封装操作类
+     * @return 实体对象分页查询结果
+     */
+    private PageResult<${className}> getPageResult(QueryWrapper<${className}> wrapper) {
         List<${className}> list = this.list(wrapper);
         PageInfo<${className}> pageInfo = new PageInfo<>(list);
         PageResult<${className}> pageResult = PageResult.<${className}>builder()

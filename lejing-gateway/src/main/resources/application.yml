@@ -12,12 +12,12 @@ spring:
         server-addr: 127.0.0.1:8848
     gateway:
       routes:
-        #第1个路由
+        #测试路由1
         - id: bd_route
           uri: https://www.baidu.com
           predicates:
             - Query=url,baidu
-        #第2个路由
+        #测试路由2
         - id: qq_route
           uri: https://im.qq.com
           predicates:
@@ -34,6 +34,13 @@ spring:
           uri: lb://lejing-member
           predicates:
             - Path=/api/member/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+        #场地预约服务路由
+        - id: site_reserve_route
+          uri: lb://lejing-site-reserve
+          predicates:
+            - Path=/api/site/**
           filters:
             - RewritePath=/api/(?<segment>.*),/$\{segment}
         #三方服务路由: SMS, OSS

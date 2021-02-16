@@ -74,6 +74,12 @@ public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements
         return b1 && b2;
     }
 
+    /**
+     * 根据查询构造器条件查询分页查询结果
+     *
+     * @param wrapper 实体对象封装操作类
+     * @return 实体对象分页查询结果
+     */
     private PageResult<Brand> getBrandPageResult(QueryWrapper<Brand> wrapper) {
         List<Brand> list = this.list(wrapper);
         PageInfo<Brand> pageInfo = new PageInfo<>(list);

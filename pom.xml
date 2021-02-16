@@ -24,6 +24,7 @@
         <module>lejing-member</module>
         <module>lejing-common</module>
         <module>lejing-gateway</module>
+        <module>lejing-site-reserve</module>
         <module>lejing-third-party</module>
         <module>renren-admin</module>
         <module>renren-generator</module>
@@ -231,6 +232,7 @@
 
     <build>
         <finalName>${project.artifactId}</finalName>
+
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -255,6 +257,7 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
