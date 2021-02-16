@@ -48,9 +48,9 @@ public class CategoryController extends BaseController {
         PageDomain pageDomain = new PageDomain(page, rows, orderColumn, isAsc);
         PageResult<Category> pageResult = categoryService.queryPage(pageDomain, category);
         if (ObjectUtils.isNotEmpty(pageResult.getItems())) {
-            return BaseResult.ok(pageResult);
+            return BaseResult.success(pageResult);
         }
-        return BaseResult.fail(HttpStatus.NOT_FOUND, "查询结果为空");
+        return BaseResult.error(HttpStatus.NOT_FOUND, "查询结果为空");
     }
 
     /**

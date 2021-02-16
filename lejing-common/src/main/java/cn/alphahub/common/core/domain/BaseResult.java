@@ -139,7 +139,7 @@ public class BaseResult<T> extends AbstractResult<T> implements Serializable {
      * @return 数据对象
      */
     public static <T> BaseResult<T> ok(T data) {
-        return preCreate(HttpStatus.SUCCESS, "操作成功", Boolean.TRUE, data);
+        return preCreate(HttpStatus.SUCCESS, "操作成功", true, data);
     }
 
     /**
@@ -151,7 +151,7 @@ public class BaseResult<T> extends AbstractResult<T> implements Serializable {
      * @return 封装的数据
      */
     public static <T> BaseResult<T> ok(String msg, T data) {
-        return preCreate(HttpStatus.SUCCESS, msg, Boolean.TRUE, data);
+        return preCreate(HttpStatus.SUCCESS, msg, true, data);
     }
 
     /**
@@ -162,7 +162,7 @@ public class BaseResult<T> extends AbstractResult<T> implements Serializable {
      * @return 数据对象
      */
     public static <T> BaseResult<T> ok(String msg) {
-        return preCreate(HttpStatus.SUCCESS, msg, Boolean.TRUE, null);
+        return preCreate(HttpStatus.SUCCESS, msg, true, null);
     }
 
     /**
@@ -260,7 +260,7 @@ public class BaseResult<T> extends AbstractResult<T> implements Serializable {
      * @return 成功消息
      */
     public static <T> BaseResult<T> success(String msg, T data) {
-        return new BaseResult<>(HttpStatus.SUCCESS, msg, data);
+        return preCreate(HttpStatus.SUCCESS, msg, true, data);
     }
 
     /**
@@ -290,7 +290,19 @@ public class BaseResult<T> extends AbstractResult<T> implements Serializable {
      * @return 警告消息
      */
     public static <T> BaseResult<T> error(String msg, T data) {
-        return new BaseResult<>(HttpStatus.ERROR, msg, data);
+        return preCreate(HttpStatus.ERROR, msg, false, data);
+    }
+
+    /**
+     * 返回错误消息
+     *
+     * @param msg  返回内容
+     * @param data 数据对象
+     * @param code 状态码
+     * @return 警告消息
+     */
+    public static <T> BaseResult<T> error(int code, String msg, T data) {
+        return preCreate(code, msg, false, data);
     }
 
     /**
@@ -301,7 +313,7 @@ public class BaseResult<T> extends AbstractResult<T> implements Serializable {
      * @return 警告消息
      */
     public static <T> BaseResult<T> error(int code, String msg) {
-        return new BaseResult<>(code, msg, null);
+        return preCreate(code, msg, false, null);
     }
 
     /**

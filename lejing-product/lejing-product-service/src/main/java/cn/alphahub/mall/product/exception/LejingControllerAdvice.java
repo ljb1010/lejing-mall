@@ -36,7 +36,7 @@ public class LejingControllerAdvice {
             errorMap.putIfAbsent(errorField, errorMessage);
         });
         log.error("数据校验异常：{}，异常类型：{}", e.getMessage(), e.getClass());
-        return BaseResult.fail(
+        return BaseResult.error(
                 BusinessCodeEnum.VALID_EXCEPTION.getCode(),
                 BusinessCodeEnum.VALID_EXCEPTION.getMessage(),
                 errorMap
@@ -52,7 +52,7 @@ public class LejingControllerAdvice {
     @ExceptionHandler(value = Throwable.class)
     public BaseResult<Object> handleException(Throwable throwable) {
         log.error("错误信息: ", throwable);
-        return BaseResult.fail(
+        return BaseResult.error(
                 BusinessCodeEnum.UNKNOWN_EXCEPTION.getCode(),
                 BusinessCodeEnum.UNKNOWN_EXCEPTION.getMessage(),
                 throwable.getStackTrace()
