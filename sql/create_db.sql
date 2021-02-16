@@ -5,3 +5,4 @@ CREATE DATABASE IF NOT EXISTS `lejing_ums` CHARACTER SET 'utf8mb4' COLLATE 'utf8
 CREATE DATABASE IF NOT EXISTS `lejing_wms` CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_general_ci';
 CREATE DATABASE IF NOT EXISTS `lejing_admin` CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_general_ci';
 CREATE DATABASE IF NOT EXISTS `lejing_site` CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_general_ci';
+CREATE DATABASE IF NOT EXISTS `nacos_config` CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_general_ci';
