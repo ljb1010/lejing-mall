@@ -7,6 +7,7 @@ import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.mall.product.domain.Attr;
 import cn.alphahub.mall.product.service.AttrService;
+import cn.alphahub.mall.product.vo.AttrVo;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,32 @@ import java.util.Arrays;
 public class AttrController extends BaseController {
     @Autowired
     private AttrService attrService;
+
+    /**
+     * 查询属性base list
+     *
+     * @param page        当前页码,默认第1页
+     * @param rows        显示行数,默认10条
+     * @param orderColumn 排序排序字段,默认不排序
+     * @param isAsc       排序方式,desc或者asc
+     * @param key         搜索关键字
+     * @param catelogId   三级分类id
+     * @return 分页列表
+     */
+    //product/attr/base/list/{catelogId}?&page=1&rows=10&key=
+    @GetMapping("/base/list/{catelogId}")
+    public BaseResult<PageResult<Attr>> baseList(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "rows", defaultValue = "10") Integer rows,
+            @RequestParam(value = "orderColumn", defaultValue = "") String orderColumn,
+            @RequestParam(value = "isAsc", defaultValue = "") String isAsc,
+            @RequestParam(value = "key", defaultValue = "") String key,
+            @PathVariable(value = "catelogId") Long catelogId
+    ) {
+        PageDomain pageDomain = new PageDomain(page, rows, orderColumn, isAsc);
+        PageResult<Attr> pageResult = attrService.queryPage(pageDomain, new Attr(), key, catelogId);
+        return BaseResult.ok(pageResult);
+    }
 
     /**
      * 查询商品属性列表
@@ -71,8 +98,8 @@ public class AttrController extends BaseController {
      * @return 成功返回true, 失败返回false
      */
     @PostMapping("/save")
-    public BaseResult<Boolean> save(@RequestBody Attr attr) {
-        boolean save = attrService.save(attr);
+    public BaseResult<Boolean> save(@RequestBody AttrVo attr) {
+        boolean save = attrService.saveAttr(attr);
         return toOperationResult(save);
     }
 
