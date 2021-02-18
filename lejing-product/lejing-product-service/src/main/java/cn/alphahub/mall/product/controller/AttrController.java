@@ -38,7 +38,6 @@ public class AttrController extends BaseController {
      * @param catelogId   三级分类id
      * @return 分页列表
      */
-    //product/attr/base/list/{catelogId}?&page=1&rows=10&key=
     @GetMapping("/base/list/{catelogId}")
     public BaseResult<PageResult<Attr>> baseList(
             @RequestParam(value = "page", defaultValue = "1") Integer page,

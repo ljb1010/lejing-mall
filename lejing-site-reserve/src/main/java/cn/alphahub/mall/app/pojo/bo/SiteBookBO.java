@@ -2,6 +2,7 @@ package cn.alphahub.mall.app.pojo.bo;
 
 import cn.alphahub.common.util.IdSerializer;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -40,5 +41,6 @@ public class SiteBookBO implements Serializable {
     /**
      * 可预定数量，>=1 可预订
      */
+    @JsonInclude(value = JsonInclude.Include.NON_EMPTY)
     private Integer bookCount;
 }

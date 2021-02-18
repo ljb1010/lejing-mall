@@ -21,6 +21,13 @@
         <result property="remark" column="remark"/>
     </resultMap>
 
+    <resultMap id="siteDetailBOResult" type="cn.alphahub.mall.app.pojo.vo.SiteBookVO">
+        <result property="siteSessionId" column="site_session_id"/>
+        <result property="effectDate" column="effect_date"/>
+        <result property="sessionStartTime" column="session_start_time"/>
+        <result property="sessionFinishTime" column="session_finish_time"/>
+    </resultMap>
+
     <!-- app -->
     <select id="getDataInDays" resultMap="siteReserveStatusResult">
         SELECT *
@@ -30,7 +37,7 @@
                 and site_id = #{siteId}
             </if>
             <if test="days != null">
-                and effect_date between now() and (date_add(now(), interval #{days} day));
+                and effect_date between now() and (date_add(now(), interval #{days} day))
             </if>
         </where>
         LIMIT 0,50
@@ -47,8 +54,24 @@
                 and site_id = #{siteId}
             </if>
             <if test="days != null">
-                and esrs.effect_date between now() and (date_add(now(), interval #{days} day));
+                and esrs.effect_date between now() and (date_add(now(), interval #{days} day))
             </if>
         </where>
+    </select>
+
+    <!-- app -->
+    <select id="getLatestSessionDataInDays" resultMap="siteDetailBOResult">
+        SELECT rs.site_session_id,
+               es.effect_date,
+               rs.session_start_time,
+               rs.session_finish_time
+        FROM `eb_site_reserve_status` es
+                     LEFT JOIN `eb_site_reserve_session` rs USING (site_session_id)
+        WHERE es.effect_date BETWEEN now()
+                AND (date_add(now(), INTERVAL #{days} day))
+          AND rs.site_id = #{siteId}
+          AND LEFT(rs.session_start_time, 2) > date_format(now(), '%k')
+          AND rs.session_status = 0
+        GROUP BY es.effect_date
     </select>
 </mapper>

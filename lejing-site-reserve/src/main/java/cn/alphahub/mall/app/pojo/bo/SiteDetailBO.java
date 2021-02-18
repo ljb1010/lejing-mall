@@ -1,5 +1,6 @@
 package cn.alphahub.mall.app.pojo.bo;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,6 +21,7 @@ public class SiteDetailBO implements Serializable {
     /**
      * 发布的信息(关联sys_dict_data表的dict_code)
      */
+    @JsonInclude(value = JsonInclude.Include.NON_EMPTY)
     private Integer sitePubDictCode;
 
     /**

@@ -67,6 +67,7 @@ public class AppSiteReserveServiceImpl implements AppSiteReserveService {
             // 7日内预约情况，用场地id（siteId）查当前时间至未来七天的可预约场次数量，weekReserveCount >= 1 可预约
             int weekReserveCount = siteUtil.getWeekReserveCount(ebSiteReserve.getSiteId(), 7);
             reserveVO.setWeekReserveCount(weekReserveCount);
+            reserveVO.setImageUrl(Arrays.asList(ebSiteReserve.getImageUrl().split(",")));
             return reserveVO;
         }).collect(Collectors.toList());
 
@@ -91,54 +92,18 @@ public class AppSiteReserveServiceImpl implements AppSiteReserveService {
 
         SiteReserveDetailVO detailVO = new SiteReserveDetailVO();
         // 查主表
-        SiteReserve siteReserve = siteReserveService.getById(siteId);
-
+        SiteReserve ebSiteReserve = siteReserveService.getById(siteId);
         // 预约量
-        int weekReserveCount = 0;
-        if (Objects.nonNull(siteReserve)) {
-            weekReserveCount = siteUtil.getWeekReserveCount(siteReserve.getSiteId(), 0);
-        }
-
-        detailVO.setSiteId(siteId);
-        detailVO.setProjectId("LJ12123232443");
-        detailVO.setSitePrice(2500);
-        detailVO.setSiteOpenTime("08:00");
-        detailVO.setSiteCloseTime("20:00");
-        detailVO.setSiteOpenStatus(new Random().nextInt() % 2 == 0 ? 1 : 0);
-        detailVO.setSiteAdministratorPhone("10086");
-        detailVO.setSiteTitle("乐璟生活社区足球场");
-        detailVO.setSiteLocationDesc("乐璟即墨生活社区内向东200米");
-        detailVO.setSiteCommunity("乐璟即墨生活社区");
-        detailVO.setImageUrl(Arrays.asList("http://abc.com/app.jpg", "http://abc.com/ppa.jpg"));
+        int weekReserveCount = siteUtil.getWeekReserveCount(ebSiteReserve.getSiteId(), 0);
+        BeanUtils.copyProperties(ebSiteReserve, detailVO);
+        detailVO.setImageUrl(Arrays.asList(ebSiteReserve.getImageUrl().split(",")));
         detailVO.setWeekReserveCount(weekReserveCount);
 
-        /**
-         *  TODO 场地预定-BO
-         */
-        List<SiteBookBO> bookList = new ArrayList<>();
-        /**
-         * TODO 场地详情-BO
-         */
-        List<SiteDetailBO> detailBos = new ArrayList<>();
-        for (long i = 1; i <= 7; i++) {
-            bookList.add(SiteBookBO.builder()
-                    .siteSessionId(i + 1254863358154L)
-                    .latestTime("1" + i + ":00")
-                    .bookDate(new Date())
-                    .bookCount((int) i)
-                    .build()
-            );
+        //场地预定详情
+        detailVO.setSiteBookList(siteUtil.getSiteBookDetails((siteId)));
 
-            detailBos.add(SiteDetailBO.builder()
-                    .sitePubDictCode(Integer.parseInt(String.valueOf(i)))
-                    .sitePubDictName("字典名称".concat(String.valueOf(i)))
-                    .sitePubTopic("场地信息".concat(String.valueOf(i)))
-                    .build()
-            );
-        }
-        detailVO.setSiteBookList(bookList);
-        detailVO.setSiteDetailList(detailBos);
-        // TODO 业务逻辑
+        //场地信息详情
+        detailVO.setSiteDetailList(siteUtil.getSiteDetails(siteId));
 
         return detailVO;
     }

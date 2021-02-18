@@ -1,11 +1,13 @@
 package cn.alphahub.mall.site.mapper;
 
+import cn.alphahub.mall.app.pojo.vo.SiteBookVO;
 import cn.alphahub.mall.site.domain.SiteReserveStatus;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 场地状态表
@@ -34,4 +36,11 @@ public interface SiteReserveStatusMapper extends BaseMapper<SiteReserveStatus> {
      * @return count
      */
     int getDataCountInDays(@Param("siteId") Long siteId, @Param("days") Integer days);
+
+    /**
+     * 查询七日内最早可预约场次数据
+     *
+     * @return 场地预定列表
+     */
+    List<SiteBookVO> getLatestSessionDataInDays(@Param("siteId") Long siteId, @Param("days") Integer days);
 }
