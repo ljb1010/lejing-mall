@@ -79,7 +79,7 @@ export default {
         url: this.$http.adornUrl("/product/spuinfo/" + id + "/up"),
         method: "post"
       }).then(({ data }) => {
-        if (data && data.code === 0) {
+        if (data && data.code === 200) {
           this.$message({
             message: "操作成功",
             type: "success",
@@ -106,16 +106,16 @@ export default {
       let param = {};
       Object.assign(param, this.dataForm, {
         page: this.pageIndex,
-        limit: this.pageSize
+        rows: this.pageSize
       });
       this.$http({
         url: this.$http.adornUrl("/product/spuinfo/list"),
         method: "get",
         params: this.$http.adornParams(param)
       }).then(({ data }) => {
-        if (data && data.code === 0) {
-          this.dataList = data.page.list;
-          this.totalPage = data.page.totalCount;
+        if (data && data.code === 200) {
+          this.dataList = data.data.items;
+          this.totalPage = data.data.totalCount;
         } else {
           this.dataList = [];
           this.totalPage = 0;

@@ -7,6 +7,7 @@ import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.mall.product.domain.Attr;
 import cn.alphahub.mall.product.service.AttrService;
+import cn.alphahub.mall.product.vo.AttrRespVo;
 import cn.alphahub.mall.product.vo.AttrVo;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public class AttrController extends BaseController {
      * @return 分页列表
      */
     @GetMapping("/base/list/{catelogId}")
-    public BaseResult<PageResult<Attr>> baseList(
+    public BaseResult<PageResult<AttrRespVo>> baseList(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             @RequestParam(value = "rows", defaultValue = "10") Integer rows,
             @RequestParam(value = "orderColumn", defaultValue = "") String orderColumn,
@@ -48,7 +49,7 @@ public class AttrController extends BaseController {
             @PathVariable(value = "catelogId") Long catelogId
     ) {
         PageDomain pageDomain = new PageDomain(page, rows, orderColumn, isAsc);
-        PageResult<Attr> pageResult = attrService.queryPage(pageDomain, new Attr(), key, catelogId);
+        PageResult<AttrRespVo> pageResult = attrService.queryPage(pageDomain, new Attr(), key, catelogId);
         return BaseResult.ok(pageResult);
     }
 
@@ -85,8 +86,8 @@ public class AttrController extends BaseController {
      * @return 商品属性详细信息
      */
     @GetMapping("/info/{attrId}")
-    public BaseResult<Attr> info(@PathVariable("attrId") Long attrId) {
-        Attr attr = attrService.getById(attrId);
+    public BaseResult<AttrRespVo> info(@PathVariable("attrId") Long attrId) {
+        AttrRespVo attr = attrService.getAttrInfoById(attrId);
         return ObjectUtils.anyNotNull(attr) ? BaseResult.ok(attr) : BaseResult.fail();
     }
 
@@ -109,8 +110,8 @@ public class AttrController extends BaseController {
      * @return 成功返回true, 失败返回false
      */
     @PutMapping("/update")
-    public BaseResult<Boolean> update(@RequestBody Attr attr) {
-        boolean update = attrService.updateById(attr);
+    public BaseResult<Boolean> update(@RequestBody AttrVo attr) {
+        boolean update = attrService.updateAttrById(attr);
         return toOperationResult(update);
     }
 

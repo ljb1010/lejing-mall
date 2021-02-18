@@ -4,6 +4,7 @@ import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.common.core.service.PageService;
 import cn.alphahub.mall.product.domain.Attr;
+import cn.alphahub.mall.product.vo.AttrRespVo;
 import cn.alphahub.mall.product.vo.AttrVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -24,5 +25,21 @@ public interface AttrService extends IService<Attr>, PageService<Attr> {
      */
     boolean saveAttr(AttrVo attr);
 
-    PageResult<Attr> queryPage(PageDomain pageDomain, Attr attr, String key, Long catelogId);
+    PageResult<AttrRespVo> queryPage(PageDomain pageDomain, Attr attr, String key, Long catelogId);
+
+    /**
+     * 修改
+     *
+     * @param attrVo
+     * @return
+     */
+    boolean updateAttrById(AttrVo attrVo);
+
+    /**
+     * 获取商品属性详情
+     *
+     * @param attrId 商品属性主键id
+     * @return 商品属性详细信息
+     */
+    AttrRespVo getAttrInfoById(Long attrId);
 }

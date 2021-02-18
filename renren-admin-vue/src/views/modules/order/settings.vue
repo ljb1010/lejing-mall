@@ -122,12 +122,12 @@
           method: 'get',
           params: this.$http.adornParams({
             'page': this.pageIndex,
-            'limit': this.pageSize,
+            'rows': this.pageSize,
             'key': this.dataForm.key
           })
         }).then(({data}) => {
-          if (data && data.code === 0) {
-            this.dataList = data.page.list
+          if (data && data.code === 200) {
+            this.totalPage = data.totalCount
             this.totalPage = data.page.totalCount
           } else {
             this.dataList = []
@@ -173,7 +173,7 @@
             method: 'post',
             data: this.$http.adornData(ids, false)
           }).then(({data}) => {
-            if (data && data.code === 0) {
+            if (data && data.code === 200) {
               this.$message({
                 message: '操作成功',
                 type: 'success',

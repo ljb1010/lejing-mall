@@ -178,19 +178,17 @@ export default {
       this.dataForm.catelogId = path[path.length - 1];
       if (path && path.length == 3) {
         this.$http({
-          url: this.$http.adornUrl(
-            `/product/attrgroup/list/${path[path.length - 1]}`
-          ),
+          url: this.$http.adornUrl(`/product/attrgroup/list/${path[path.length - 1]}`),
           method: "get",
-          params: this.$http.adornParams({page: 1, limit: 10000000})
+          params: this.$http.adornParams({page: 1, rows: 10000000})
         }).then(({data}) => {
           if (data && data.code === 200) {
-            this.attrGroups = data.page.list;
+            this.attrGroups = data.data.items;
           } else {
             this.$message.error(data.msg);
           }
         });
-      } else if (path.length == 200) {
+      } else if (path.length === 200) {
         this.dataForm.catelogId = "";
       } else {
         this.$message.error("请选择正确的分类");
@@ -208,8 +206,8 @@ export default {
         this.$refs["dataForm"].resetFields();
         if (this.dataForm.attrId) {
           this.$http({
-              url: this.$http.adornUrl(`/product/attr/info/${this.dataForm.attrId}`),
-              method: 'get',
+            url: this.$http.adornUrl(`/product/attr/info/${this.dataForm.attrId}`),
+            method: 'get',
             params: this.$http.adornParams()
           }).then(({data}) => {
             if (data && data.code === 200) {
@@ -239,9 +237,9 @@ export default {
       this.$refs["dataForm"].validate(valid => {
         if (valid) {
           this.$http({
-              url: this.$http.adornUrl(`/product/attr/${!this.dataForm.attrId ? 'save' : 'update'}`),
-              method: !this.dataForm.brandId ? 'post' : 'put',
-              data: this.$http.adornData({
+            url: this.$http.adornUrl(`/product/attr/${!this.dataForm.attrId ? 'save' : 'update'}`),
+            method: !this.dataForm.attrId ? 'post' : 'put',
+            data: this.$http.adornData({
               attrId: this.dataForm.attrId || undefined,
               attrName: this.dataForm.attrName,
               searchType: this.dataForm.searchType,

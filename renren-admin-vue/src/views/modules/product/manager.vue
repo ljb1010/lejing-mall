@@ -147,7 +147,7 @@ export default {
         method: "get",
         params: this.$http.adornParams({
           page: this.pageIndex,
-          limit: this.pageSize,
+          rows: this.pageSize,
           key: this.dataForm.key,
           catelogId: this.dataForm.catelogId,
           brandId: this.dataForm.brandId,
@@ -155,7 +155,7 @@ export default {
           max: this.dataForm.price.max
         })
       }).then(({ data }) => {
-        if (data && data.code === 0) {
+        if (data && data.code === 200) {
           this.dataList = data.page.list;
           this.totalPage = data.page.totalCount;
         } else {

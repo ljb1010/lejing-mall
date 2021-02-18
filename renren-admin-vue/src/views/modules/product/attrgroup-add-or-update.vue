@@ -122,7 +122,6 @@ export default {
         if (valid) {
           this.$http({
             url: this.$http.adornUrl(`/product/attrgroup/${!this.dataForm.attrGroupId ? 'save' : 'update'}`),
-            //method: !this.dataForm.brandId ? 'post' : 'put',
             method: !this.dataForm.attrGroupId ? 'post' : 'put',
             data: this.$http.adornData({
               attrGroupId: this.dataForm.attrGroupId || undefined,
