@@ -10,9 +10,9 @@ import ${package}.${moduleName}.domain.${className};
 import ${package}.${moduleName}.service.${className}Service;
 
 import org.apache.commons.lang3.ObjectUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.Arrays;
 
 /**
@@ -25,7 +25,7 @@ import java.util.Arrays;
 @RestController
 @RequestMapping("${moduleName}/${pathName}")
 public class ${className}Controller extends BaseController {
-    @Autowired
+    @Resource
     private ${className}Service ${classname}Service;
 
     /**

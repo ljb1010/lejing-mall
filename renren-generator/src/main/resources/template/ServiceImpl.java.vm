@@ -20,7 +20,7 @@ import java.util.List;
  * @email ${email}
  * @date ${datetime}
  */
-@Service("${classname}Service")
+@Service
 public class ${className}ServiceImpl extends ServiceImpl<${className}Mapper, ${className}> implements ${className}Service {
 
     /**
@@ -50,12 +50,11 @@ public class ${className}ServiceImpl extends ServiceImpl<${className}Mapper, ${c
     private PageResult<${className}> getPageResult(QueryWrapper<${className}> wrapper) {
         List<${className}> list = this.list(wrapper);
         PageInfo<${className}> pageInfo = new PageInfo<>(list);
-        PageResult<${className}> pageResult = PageResult.<${className}>builder()
+        return PageResult.<${className}>builder()
                 .totalCount(pageInfo.getTotal())
                 .totalPage((long) pageInfo.getPages())
                 .items(pageInfo.getList())
                 .build();
-        return pageResult;
     }
 
 }
