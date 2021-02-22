@@ -1,7 +1,6 @@
 package cn.alphahub.mall.product.vo;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -13,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class AttrRespVo extends AttrVo {
+public class AttrRespVO extends AttrVO {
     /**
      * "catelogName": "手机/数码/手机", //所属分类名字
      */

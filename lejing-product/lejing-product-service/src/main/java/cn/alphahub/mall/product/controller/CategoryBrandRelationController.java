@@ -62,7 +62,8 @@ public class CategoryBrandRelationController extends BaseController {
      */
     @GetMapping("/catelog/list")
     public BaseResult<List<CategoryBrandRelation>> catelogList(@RequestParam(value = "brandId") Long brandId) {
-        QueryWrapper<CategoryBrandRelation> wrapper = new QueryWrapper<CategoryBrandRelation>().eq("brand_id", brandId);
+        QueryWrapper<CategoryBrandRelation> wrapper = new QueryWrapper<CategoryBrandRelation>();
+        wrapper.lambda().eq(CategoryBrandRelation::getBrandId, brandId);
         List<CategoryBrandRelation> categoryBrandRelations = categoryBrandRelationService.list(wrapper);
         return BaseResult.ok(categoryBrandRelations);
     }

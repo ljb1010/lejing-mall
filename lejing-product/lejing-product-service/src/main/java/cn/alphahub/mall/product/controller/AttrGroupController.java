@@ -5,14 +5,21 @@ import cn.alphahub.common.core.controller.BaseController;
 import cn.alphahub.common.core.domain.BaseResult;
 import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
+import cn.alphahub.mall.product.domain.Attr;
 import cn.alphahub.mall.product.domain.AttrGroup;
+import cn.alphahub.mall.product.service.AttrAttrgroupRelationService;
 import cn.alphahub.mall.product.service.AttrGroupService;
+import cn.alphahub.mall.product.service.AttrService;
 import cn.alphahub.mall.product.service.CategoryService;
+import cn.alphahub.mall.product.vo.AttrGroupRelationVO;
+import cn.alphahub.mall.product.vo.AttrGroupVO;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -25,10 +32,44 @@ import java.util.Objects;
 @RestController
 @RequestMapping("product/attrgroup")
 public class AttrGroupController extends BaseController {
-    @Autowired
+    @Resource
     private AttrGroupService attrGroupService;
-    @Autowired
+    @Resource
     private CategoryService categoryService;
+    @Resource
+    private AttrService attrService;
+    @Resource
+    AttrAttrgroupRelationService relationService;
+    /**
+     * 获取当属性分组id的关联关系
+     *
+     * @param attrGroupId 属性分组id
+     * @return 商品属性列表
+     */
+    @GetMapping("/{attrGroupId}/attr/relation")
+    public BaseResult<List<Attr>> getAttrRelations(@PathVariable("attrGroupId") Long attrGroupId) {
+        return BaseResult.ok(attrService.getAttrRelations(attrGroupId));
+    }
+
+    /**
+     * 获取当分组id的没有关联关系的属性
+     *
+     * @param attrGroupId 属性分组id
+     * @param page        当前页码,默认第1页
+     * @param rows        显示行数,默认10条
+     * @param key         搜索关键字
+     * @return 属性分组分页数据
+     */
+    @GetMapping("/{attrGroupId}/noattr/relation")
+    public BaseResult<PageResult<Attr>> getAttrNoRelations(
+            @PathVariable("attrGroupId") Long attrGroupId,
+            @RequestParam(value = "key", defaultValue = "") String key,
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "rows", defaultValue = "10") Integer rows
+    ) {
+        PageDomain pageDomain = new PageDomain(page, rows);
+        return BaseResult.ok(attrService.getAttrNoRelations(pageDomain, attrGroupId, key));
+    }
 
     /**
      * 查询属性分组列表
@@ -107,7 +148,7 @@ public class AttrGroupController extends BaseController {
      * @param attrGroup 属性分组元数据
      * @return 成功返回true, 失败返回false
      */
-    @PostMapping("/save")
+    @PostMapping("save")
     public BaseResult<Boolean> save(@RequestBody AttrGroup attrGroup) {
         boolean save = attrGroupService.save(attrGroup);
         return toOperationResult(save);
@@ -119,7 +160,7 @@ public class AttrGroupController extends BaseController {
      * @param attrGroup 属性分组,根据id选择性更新
      * @return 成功返回true, 失败返回false
      */
-    @PutMapping("/update")
+    @PutMapping("update")
     public BaseResult<Boolean> update(@RequestBody AttrGroup attrGroup) {
         boolean update = attrGroupService.updateById(attrGroup);
         return toOperationResult(update);
@@ -131,9 +172,30 @@ public class AttrGroupController extends BaseController {
      * @param attrGroupIds 属性分组id集合
      * @return 成功返回true, 失败返回false
      */
-    @DeleteMapping("/delete/{attrGroupIds}")
+    @DeleteMapping("delete/{attrGroupIds}")
     public BaseResult<Boolean> delete(@PathVariable Long[] attrGroupIds) {
         boolean delete = attrGroupService.removeByIds(Arrays.asList(attrGroupIds));
         return toOperationResult(delete);
+    }
+
+    /**
+     * 删除属性分组关联关系
+     *
+     * @param attrGroupVOList 属性分组集合
+     */
+    @PostMapping("attr/relation/delete")
+    public BaseResult<Integer> deleteRelations(@RequestBody List<AttrGroupVO> attrGroupVOList) {
+        Integer rows = attrService.removeRelations(attrGroupVOList);
+        return BaseResult.ok(rows);
+    }
+
+    /**
+     * 新增属性分组关联关系
+     *
+     * @param relationVos 属性分组集合
+     */
+    @PostMapping("/attr/relation")
+    public BaseResult<Boolean> addBatchRelations(@RequestBody List<AttrGroupRelationVO> relationVos) {
+        return BaseResult.ok(relationService.addBatchRelations(relationVos));
     }
 }

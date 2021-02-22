@@ -5,12 +5,17 @@ import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.mall.product.domain.AttrAttrgroupRelation;
 import cn.alphahub.mall.product.mapper.AttrAttrgroupRelationMapper;
 import cn.alphahub.mall.product.service.AttrAttrgroupRelationService;
+import cn.alphahub.mall.product.vo.AttrGroupRelationVO;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageInfo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 属性&属性分组关联Service业务层处理
@@ -35,12 +40,36 @@ public class AttrAttrgroupRelationServiceImpl extends ServiceImpl<AttrAttrgroupR
         QueryWrapper<AttrAttrgroupRelation> wrapper = new QueryWrapper<>(attrAttrgroupRelation);
         List<AttrAttrgroupRelation> list = this.list(wrapper);
         PageInfo<AttrAttrgroupRelation> pageInfo = new PageInfo<>(list);
-        PageResult<AttrAttrgroupRelation> pageResult = PageResult.<AttrAttrgroupRelation>builder()
+        return PageResult.<AttrAttrgroupRelation>builder()
                 .totalCount(pageInfo.getTotal())
                 .totalPage((long) pageInfo.getPages())
                 .items(pageInfo.getList())
                 .build();
-        return pageResult;
     }
 
+
+    @Override
+    public Boolean addBatchRelations(List<AttrGroupRelationVO> relationVos) {
+        relationVos = relationVos.stream().map(attrGroupRelationVO -> {
+            AttrGroupRelationVO relationVO = new AttrGroupRelationVO();
+            QueryWrapper<AttrAttrgroupRelation> wrapper = new QueryWrapper<>();
+            AttrAttrgroupRelation relation = this.getOne(
+                    wrapper.lambda().eq(AttrAttrgroupRelation::getAttrId, attrGroupRelationVO.getAttrId()).eq(AttrAttrgroupRelation::getAttrGroupId, attrGroupRelationVO.getAttrGroupId())
+            );
+            if (ObjectUtils.isNull(relation)) {
+                BeanUtils.copyProperties(attrGroupRelationVO, relationVO);
+            }
+            return relationVO;
+        }).collect(Collectors.toList());
+
+        List<AttrAttrgroupRelation> attrgroupRelations = new ArrayList<>();
+        for (AttrGroupRelationVO attrGroupRelationVO : relationVos) {
+            AttrAttrgroupRelation attrgroupRelation = new AttrAttrgroupRelation();
+            if (ObjectUtils.isNotNull(attrGroupRelationVO)) {
+                BeanUtils.copyProperties(attrGroupRelationVO, attrgroupRelation);
+                attrgroupRelations.add(attrgroupRelation);
+            }
+        }
+        return this.saveBatch(attrgroupRelations);
+    }
 }

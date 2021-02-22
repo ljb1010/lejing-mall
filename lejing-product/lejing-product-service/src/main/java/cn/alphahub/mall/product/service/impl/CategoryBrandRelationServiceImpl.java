@@ -75,7 +75,8 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
                 .brandId(brandId)
                 .brandName(name)
                 .build();
-        return this.update(brandRelation, new UpdateWrapper<CategoryBrandRelation>().eq("brand_id", brandId));
+        UpdateWrapper<CategoryBrandRelation> updateWrapper = new UpdateWrapper<>();
+        return this.update(brandRelation, updateWrapper.lambda().eq(CategoryBrandRelation::getBrandId, brandId));
     }
 
     /**

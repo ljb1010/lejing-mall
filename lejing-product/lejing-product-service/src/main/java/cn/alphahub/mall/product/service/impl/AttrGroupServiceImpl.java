@@ -12,7 +12,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * 属性分组Service业务层处理
@@ -52,7 +51,7 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupMapper, AttrGroup
         QueryWrapper<AttrGroup> wrapper = new QueryWrapper<>(attrGroup);
         //select * from pms_attr_group where catelog_id=? and (attr_group_id=key or attr_group_name like %key%)
         if (StringUtils.isNotBlank(key)) {
-            wrapper.and(qw -> qw.eq("attr_group_id", key).or().like("attr_group_name", key));
+            wrapper.and(qw -> qw.lambda().eq(AttrGroup::getAttrGroupId, key).or().like(AttrGroup::getAttrGroupName, key));
         }
         return getAttrGroupPageResult(wrapper);
     }

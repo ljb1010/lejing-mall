@@ -7,13 +7,15 @@ import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.mall.product.domain.Attr;
 import cn.alphahub.mall.product.service.AttrService;
-import cn.alphahub.mall.product.vo.AttrRespVo;
-import cn.alphahub.mall.product.vo.AttrVo;
+import cn.alphahub.mall.product.vo.AttrGroupVO;
+import cn.alphahub.mall.product.vo.AttrRespVO;
+import cn.alphahub.mall.product.vo.AttrVO;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * 商品属性Controller
@@ -29,7 +31,7 @@ public class AttrController extends BaseController {
     private AttrService attrService;
 
     /**
-     * 查询属性base list
+     * 查询属性base/sale list
      *
      * @param page        当前页码,默认第1页
      * @param rows        显示行数,默认10条
@@ -37,19 +39,22 @@ public class AttrController extends BaseController {
      * @param isAsc       排序方式,desc或者asc
      * @param key         搜索关键字
      * @param catelogId   三级分类id
+     * @param attrType    属性类型
      * @return 分页列表
      */
-    @GetMapping("/base/list/{catelogId}")
-    public BaseResult<PageResult<AttrRespVo>> baseList(
+    @GetMapping("/{attrType}/list/{catelogId}")
+    public BaseResult<PageResult<AttrRespVO>> baseList(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             @RequestParam(value = "rows", defaultValue = "10") Integer rows,
             @RequestParam(value = "orderColumn", defaultValue = "") String orderColumn,
             @RequestParam(value = "isAsc", defaultValue = "") String isAsc,
             @RequestParam(value = "key", defaultValue = "") String key,
-            @PathVariable(value = "catelogId") Long catelogId
+            @PathVariable(value = "catelogId") Long catelogId,
+            @PathVariable(value = "attrType") String attrType
     ) {
+        // attrType=1 -> /base/list/{catelogId} | attrType=2 -> /sale/list/{catelogId}
         PageDomain pageDomain = new PageDomain(page, rows, orderColumn, isAsc);
-        PageResult<AttrRespVo> pageResult = attrService.queryPage(pageDomain, new Attr(), key, catelogId);
+        PageResult<AttrRespVO> pageResult = attrService.queryPage(pageDomain, new Attr(), key, catelogId, attrType);
         return BaseResult.ok(pageResult);
     }
 
@@ -86,8 +91,8 @@ public class AttrController extends BaseController {
      * @return 商品属性详细信息
      */
     @GetMapping("/info/{attrId}")
-    public BaseResult<AttrRespVo> info(@PathVariable("attrId") Long attrId) {
-        AttrRespVo attr = attrService.getAttrInfoById(attrId);
+    public BaseResult<AttrRespVO> info(@PathVariable("attrId") Long attrId) {
+        AttrRespVO attr = attrService.getAttrInfoById(attrId);
         return ObjectUtils.anyNotNull(attr) ? BaseResult.ok(attr) : BaseResult.fail();
     }
 
@@ -98,7 +103,7 @@ public class AttrController extends BaseController {
      * @return 成功返回true, 失败返回false
      */
     @PostMapping("/save")
-    public BaseResult<Boolean> save(@RequestBody AttrVo attr) {
+    public BaseResult<Boolean> save(@RequestBody AttrVO attr) {
         boolean save = attrService.saveAttr(attr);
         return toOperationResult(save);
     }
@@ -110,7 +115,7 @@ public class AttrController extends BaseController {
      * @return 成功返回true, 失败返回false
      */
     @PutMapping("/update")
-    public BaseResult<Boolean> update(@RequestBody AttrVo attr) {
+    public BaseResult<Boolean> update(@RequestBody AttrVO attr) {
         boolean update = attrService.updateAttrById(attr);
         return toOperationResult(update);
     }

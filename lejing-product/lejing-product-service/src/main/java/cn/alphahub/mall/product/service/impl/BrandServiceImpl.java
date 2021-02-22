@@ -55,7 +55,10 @@ public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements
         pageDomain.startPage();
         QueryWrapper<Brand> wrapper = new QueryWrapper<>(brand);
         if (StringUtils.isNotBlank(searchKey)) {
-            wrapper.eq("brand_id", searchKey).or().like("name", searchKey);
+            wrapper.lambda()
+                    .eq(Brand::getBrandId, searchKey)
+                    .or()
+                    .like(Brand::getName, searchKey);
         }
         return getBrandPageResult(wrapper);
     }

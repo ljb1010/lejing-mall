@@ -13,7 +13,7 @@ import java.io.Serializable;
 
 
 /**
- * Pagehelper分页数据实体
+ * Pagehelper分页对象
  *
  * @author liuwenjing
  */
@@ -29,7 +29,7 @@ public class PageDomain implements Serializable {
     private Integer page;
 
     /**
-     * 每页显示数量,默认每页显示10条
+     * 每页显示条数,默认每页显示10行
      */
     private Integer rows;
 
@@ -44,6 +44,17 @@ public class PageDomain implements Serializable {
      * asc-正序排序(从小到大排序)
      */
     private String isAsc = "asc";
+
+    /**
+     * 初始化一个页码和当前页显示条数的构造器
+     *
+     * @param page 页码
+     * @param rows 当前页显示行数
+     */
+    public PageDomain(Integer page, Integer rows) {
+        this.page = page;
+        this.rows = rows;
+    }
 
     public String getOrderBy() {
         if (StringUtils.isBlank(orderColumn)) {

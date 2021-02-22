@@ -17,7 +17,7 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AttrVo implements Serializable {
+public class AttrVO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
