@@ -1,10 +1,14 @@
 ![shanghao-idea](https://alphahub-test-bucket.oss-cn-shanghai.aliyuncs.com/image/shanghao-idea.jpg)
 
-# 乐璟商城
+#                                                   乐璟商城
+
+> **微服务架构图**
+
+![](https://alphahub-test-bucket.oss-cn-shanghai.aliyuncs.com/image/image-20210222191025177.png)
 
 # 1 技术架构选型
 
-第二代微服务架构，kubernetes高可用集群，全自动DevOps，
+第二代微服务架构，`kubernetes`高可用集群，全自动`DevOps`，
 
 [springcloud与springboot对应版本](https://start.spring.io/actuator/info)
 
@@ -21,6 +25,8 @@
 - apache-maven-3.6.3
 - springboot 2.3.8.RELEASE
 - spring-cloud-alibaba 2.2.5.RELEASE
+
+**架构图**
 
 
 
@@ -78,6 +84,15 @@ JVM参数: `-Xms512m -Xmx512m -Xmn200m -Xlog:gc*`
 
   目的：让今后因业务变动影响数据库的变动只需要码农修改数据库对应的领域模型即可，节省更多的时间
 
-- [ ] 微服务计划-ing
+- [ ] 微服务计划
 
 - [x] 移除`spring-cloud-alibaba 2.2.5.RELEASE` 版本中微服务中通过`feign`远程调用时使用`ribbon`负载均衡的支持, 采用`spring-cloud 2020.0.1`的`spring cloud loadbalancer`代替
+
+
+
+# 5 TIPS
+
+> 本项目的`api`文档输出基于smart-doc和common工程里面我写的一些类完成的，不建议把common工程上传到maven私服上面，这会导致项目执行：
+>
+> `mvn package`的时候不能读取common里面的一些相关类的注释，因为`java`最终编译成字节码文件后会把所有注释都清理掉，也就是项目最终的class文件不包含任何注释
+
