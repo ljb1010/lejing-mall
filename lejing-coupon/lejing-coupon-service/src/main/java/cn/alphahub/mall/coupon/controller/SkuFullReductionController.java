@@ -5,6 +5,7 @@ import cn.alphahub.common.core.controller.BaseController;
 import cn.alphahub.common.core.domain.BaseResult;
 import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
+import cn.alphahub.common.to.SkuReductionTO;
 import cn.alphahub.mall.coupon.domain.SkuFullReduction;
 import cn.alphahub.mall.coupon.service.SkuFullReductionService;
 import org.apache.commons.lang3.ObjectUtils;
@@ -98,5 +99,17 @@ public class SkuFullReductionController extends BaseController {
     public BaseResult<Boolean> delete(@PathVariable Long[] ids) {
         boolean delete = skuFullReductionService.removeByIds(Arrays.asList(ids));
         return toOperationResult(delete);
+    }
+
+    /**
+     * 保存满减、优惠信息
+     *
+     * @param skuReductionTo
+     * @return
+     */
+    @PostMapping("/saveinfo")
+    BaseResult<Boolean> saveSkuReduction(@RequestBody SkuReductionTO skuReductionTo) {
+        Boolean reduction = skuFullReductionService.saveSkuReduction(skuReductionTo);
+        return reduction ? BaseResult.ok("保存成功", reduction) : BaseResult.fail("保存失败", reduction);
     }
 }

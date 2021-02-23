@@ -6,11 +6,14 @@ import cn.alphahub.mall.product.domain.SpuImages;
 import cn.alphahub.mall.product.mapper.SpuImagesMapper;
 import cn.alphahub.mall.product.service.SpuImagesService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * spu图片Service业务层处理
@@ -19,6 +22,7 @@ import java.util.List;
  * @email 1432689025@qq.com
  * @date 2021-02-07 22:46:24
  */
+@Slf4j
 @Service("spuImagesService")
 public class SpuImagesServiceImpl extends ServiceImpl<SpuImagesMapper, SpuImages> implements SpuImagesService {
 
@@ -35,12 +39,30 @@ public class SpuImagesServiceImpl extends ServiceImpl<SpuImagesMapper, SpuImages
         QueryWrapper<SpuImages> wrapper = new QueryWrapper<>(spuImages);
         List<SpuImages> list = this.list(wrapper);
         PageInfo<SpuImages> pageInfo = new PageInfo<>(list);
-        PageResult<SpuImages> pageResult = PageResult.<SpuImages>builder()
+        return PageResult.<SpuImages>builder()
                 .totalCount(pageInfo.getTotal())
                 .totalPage((long) pageInfo.getPages())
                 .items(pageInfo.getList())
                 .build();
-        return pageResult;
     }
 
+    /**
+     * 保存图片
+     *
+     * @param spuInfoId
+     * @param images
+     */
+    @Override
+    public void saveBatch(Long spuInfoId, List<String> images) {
+        if (CollectionUtils.isEmpty(images)) {
+            log.warn("图片集合为空images：{}", images);
+        } else {
+            List<SpuImages> spuImages = images.stream().map(imageUrl ->
+                    SpuImages.builder()
+                    .id(spuInfoId)
+                    .imgUrl(imageUrl)
+                    .build()).collect(Collectors.toList());
+            this.saveBatch(spuImages);
+        }
+    }
 }

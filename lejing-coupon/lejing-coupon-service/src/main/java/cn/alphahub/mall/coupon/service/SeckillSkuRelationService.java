@@ -1,6 +1,7 @@
 package cn.alphahub.mall.coupon.service;
 
 import cn.alphahub.common.core.service.PageService;
+import cn.alphahub.common.to.SkuReductionTO;
 import cn.alphahub.mall.coupon.domain.SeckillSkuRelation;
 import com.baomidou.mybatisplus.extension.service.IService;
 

@@ -35,12 +35,15 @@ public class SpuInfoDescServiceImpl extends ServiceImpl<SpuInfoDescMapper, SpuIn
         QueryWrapper<SpuInfoDesc> wrapper = new QueryWrapper<>(spuInfoDesc);
         List<SpuInfoDesc> list = this.list(wrapper);
         PageInfo<SpuInfoDesc> pageInfo = new PageInfo<>(list);
-        PageResult<SpuInfoDesc> pageResult = PageResult.<SpuInfoDesc>builder()
+        return PageResult.<SpuInfoDesc>builder()
                 .totalCount(pageInfo.getTotal())
                 .totalPage((long) pageInfo.getPages())
                 .items(pageInfo.getList())
                 .build();
-        return pageResult;
     }
 
+    @Override
+    public void saveSpuInfoDesc(SpuInfoDesc spuInfoDesc) {
+        baseMapper.insert(spuInfoDesc);
+    }
 }

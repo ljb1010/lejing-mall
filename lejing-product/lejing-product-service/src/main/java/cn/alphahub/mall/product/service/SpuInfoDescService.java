@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface SpuInfoDescService extends IService<SpuInfoDesc>, PageService<SpuInfoDesc> {
 
+    void saveSpuInfoDesc(SpuInfoDesc spuInfoDesc);
 }

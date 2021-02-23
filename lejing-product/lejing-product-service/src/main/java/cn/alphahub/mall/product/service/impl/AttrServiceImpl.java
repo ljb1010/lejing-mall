@@ -99,13 +99,16 @@ public class AttrServiceImpl extends ServiceImpl<AttrMapper, Attr> implements At
 
             // 设置分类和分组名
             QueryWrapper<AttrAttrgroupRelation> queryWrapper = new QueryWrapper<>();
+            // 基础属性才设置
             if (StringUtils.isBlank(attrType) || StringUtils.equalsIgnoreCase(attrType, "base")) {
                 queryWrapper.lambda().eq(AttrAttrgroupRelation::getAttrId, respVo.getAttrId());
-                List<AttrAttrgroupRelation> attrgroupRelations = this.attrAttrgroupRelationMapper.selectList(queryWrapper);
-                if (CollectionUtils.isNotEmpty(attrgroupRelations)) {
-                    Long attrGroupId = attrgroupRelations.get(0).getAttrGroupId();
+                AttrAttrgroupRelation attrgroupRelation = this.attrAttrgroupRelationMapper.selectOne(queryWrapper);
+                if (ObjectUtils.isNotEmpty(attrgroupRelation)) {
+                    Long attrGroupId = attrgroupRelation.getAttrGroupId();
                     AttrGroup attrGroup = attrGroupMapper.selectById(attrGroupId);
-                    respVo.setGroupName(attrGroup.getAttrGroupName());
+                    if (ObjectUtils.isNotEmpty(attrGroup)) {
+                        respVo.setGroupName(attrGroup.getAttrGroupName());
+                    }
                 }
             }
             Category category = categoryMapper.selectById(attr2.getCatelogId());
@@ -141,7 +144,9 @@ public class AttrServiceImpl extends ServiceImpl<AttrMapper, Attr> implements At
         // 保存基本数据
         boolean save = this.save(attr);
         //保存关联关系
-        if (Objects.equals(attrVo.getAttrType(), ProductConstant.AttrEnum.BASE.getCode())) {
+        if (Objects.equals(attrVo.getAttrType(), ProductConstant.AttrEnum.BASE.getCode())
+                && ObjectUtils.isNotEmpty(attrVo.getAttrGroupId())
+        ) {
             AttrAttrgroupRelation relation = new AttrAttrgroupRelation();
             relation.setAttrGroupId(attrVo.getAttrGroupId());
             relation.setAttrId(attr.getAttrId());

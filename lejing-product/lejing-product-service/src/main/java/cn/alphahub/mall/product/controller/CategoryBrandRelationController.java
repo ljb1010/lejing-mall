@@ -7,6 +7,7 @@ import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.mall.product.domain.CategoryBrandRelation;
 import cn.alphahub.mall.product.service.CategoryBrandRelationService;
+import cn.alphahub.mall.product.vo.BrandVO;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,19 @@ import java.util.List;
 public class CategoryBrandRelationController extends BaseController {
     @Autowired
     private CategoryBrandRelationService categoryBrandRelationService;
+
+
+    /**
+     * 根据分类id获取品牌列表
+     *
+     * @param catId 分类id
+     * @return 商品id名称列表
+     */
+    @GetMapping("/brands/list")
+    public BaseResult<List<BrandVO>> relationBrandsList(@RequestParam(value = "catId") Long catId) {
+        List<BrandVO> brandVOList = categoryBrandRelationService.getBrandsByCatId(catId);
+        return BaseResult.ok(brandVOList);
+    }
 
     /**
      * 查询品牌分类关联列表

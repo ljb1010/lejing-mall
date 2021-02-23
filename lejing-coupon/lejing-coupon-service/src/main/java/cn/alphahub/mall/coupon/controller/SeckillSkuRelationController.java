@@ -5,6 +5,7 @@ import cn.alphahub.common.core.controller.BaseController;
 import cn.alphahub.common.core.domain.BaseResult;
 import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
+import cn.alphahub.common.to.SkuReductionTO;
 import cn.alphahub.mall.coupon.domain.SeckillSkuRelation;
 import cn.alphahub.mall.coupon.service.SeckillSkuRelationService;
 import org.apache.commons.lang3.ObjectUtils;

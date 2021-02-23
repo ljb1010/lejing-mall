@@ -1,4 +1,4 @@
-package cn.alphahub.mall.member.client;
+package cn.alphahub.mall.member.feign;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;

@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * 自定义分页查询结果集对象
  *
- * @param <T> 分页实体对象
+ * @param <T> 分页对象
  * @author lwj
  */
 @Data
@@ -20,7 +20,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PageResult<T> implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 314159265354L;
+
     /**
      * 总条数
      */
@@ -46,7 +47,7 @@ public class PageResult<T> implements Serializable {
     /**
      * 返回泛型T的分页列表数据
      *
-     * @param list DAO|Mapper执行select语句后的list<T>集合
+     * @param list Dao|Mapper执行select语句后的list<T>集合
      * @return 返回泛型T的分页数据
      */
     public PageResult<T> getPage(List<T> list) {

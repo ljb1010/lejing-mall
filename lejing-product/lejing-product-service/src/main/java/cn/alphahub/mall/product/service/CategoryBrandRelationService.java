@@ -2,7 +2,10 @@ package cn.alphahub.mall.product.service;
 
 import cn.alphahub.common.core.service.PageService;
 import cn.alphahub.mall.product.domain.CategoryBrandRelation;
+import cn.alphahub.mall.product.vo.BrandVO;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * 品牌分类关联Service接口
@@ -38,4 +41,11 @@ public interface CategoryBrandRelationService extends IService<CategoryBrandRela
      * @return 成功返回true, 失败返回false
      */
     boolean updateCategory(Long catId, String name);
+    /**
+     * 根据分类id获取品牌列表
+     *
+     * @param catId 分类id
+     * @return 商品id名称列表
+     */
+    List<BrandVO> getBrandsByCatId(Long catId);
 }

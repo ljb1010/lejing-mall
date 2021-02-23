@@ -6,7 +6,9 @@ import cn.alphahub.common.core.domain.BaseResult;
 import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.mall.product.domain.SpuInfo;
+import cn.alphahub.mall.product.feign.SpuBoundsClient;
 import cn.alphahub.mall.product.service.SpuInfoService;
+import cn.alphahub.mall.product.vo.SpuSaveVO;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +27,8 @@ import java.util.Arrays;
 public class SpuInfoController extends BaseController {
     @Autowired
     private SpuInfoService spuInfoService;
+    @Autowired
+    private SpuBoundsClient spuBoundsClient;
 
     /**
      * 查询spu信息列表
@@ -67,13 +71,13 @@ public class SpuInfoController extends BaseController {
     /**
      * 新增spu信息
      *
-     * @param spuInfo spu信息元数据
+     * @param spuSaveVO spu信息元数据
      * @return 成功返回true, 失败返回false
      */
     @PostMapping("/save")
-    public BaseResult<Boolean> save(@RequestBody SpuInfo spuInfo) {
-        boolean save = spuInfoService.save(spuInfo);
-        return toOperationResult(save);
+    public BaseResult<Boolean> save(@RequestBody SpuSaveVO spuSaveVO) {
+        spuInfoService.saveSpuInfo(spuSaveVO);
+        return BaseResult.ok();
     }
 
     /**

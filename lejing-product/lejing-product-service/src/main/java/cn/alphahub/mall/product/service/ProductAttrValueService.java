@@ -4,6 +4,8 @@ import cn.alphahub.common.core.service.PageService;
 import cn.alphahub.mall.product.domain.ProductAttrValue;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * spu属性值Service接口
  *
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ProductAttrValueService extends IService<ProductAttrValue>, PageService<ProductAttrValue> {
 
+    void saveProductAttrValues(List<ProductAttrValue> productAttrValues);
 }

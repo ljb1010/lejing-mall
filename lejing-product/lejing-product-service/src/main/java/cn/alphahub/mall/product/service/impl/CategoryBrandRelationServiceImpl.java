@@ -8,7 +8,9 @@ import cn.alphahub.mall.product.domain.CategoryBrandRelation;
 import cn.alphahub.mall.product.mapper.BrandMapper;
 import cn.alphahub.mall.product.mapper.CategoryBrandRelationMapper;
 import cn.alphahub.mall.product.mapper.CategoryMapper;
+import cn.alphahub.mall.product.service.BrandService;
 import cn.alphahub.mall.product.service.CategoryBrandRelationService;
+import cn.alphahub.mall.product.vo.BrandVO;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 品牌分类关联Service业务层处理
@@ -33,6 +36,10 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
 
     @Resource
     private CategoryMapper categoryMapper;
+    @Resource
+    private CategoryBrandRelationMapper categoryBrandRelationMapper;
+    @Resource
+    private BrandService brandService;
 
     /**
      * 查询品牌分类关联分页列表
@@ -47,12 +54,11 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
         QueryWrapper<CategoryBrandRelation> wrapper = new QueryWrapper<>(categoryBrandRelation);
         List<CategoryBrandRelation> list = this.list(wrapper);
         PageInfo<CategoryBrandRelation> pageInfo = new PageInfo<>(list);
-        PageResult<CategoryBrandRelation> pageResult = PageResult.<CategoryBrandRelation>builder()
+        return PageResult.<CategoryBrandRelation>builder()
                 .totalCount(pageInfo.getTotal())
                 .totalPage((long) pageInfo.getPages())
                 .items(pageInfo.getList())
                 .build();
-        return pageResult;
     }
 
     @Override
@@ -89,5 +95,26 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
     @Override
     public boolean updateCategory(Long catId, String name) {
         return this.baseMapper.updateCategory(catId, name) >= 1;
+    }
+
+    /**
+     * 根据分类id获取品牌列表
+     *
+     * @param catId 分类id
+     * @return 商品id名称列表
+     */
+    @Override
+    public List<BrandVO> getBrandsByCatId(Long catId) {
+        QueryWrapper<CategoryBrandRelation> wrapper = new QueryWrapper<>();
+        List<CategoryBrandRelation> brandRelations = categoryBrandRelationMapper.selectList(
+                wrapper.lambda().eq(CategoryBrandRelation::getCatelogId, catId)
+        );
+        return brandRelations.stream().map(categoryBrandRelation -> {
+            Brand brand = brandService.getById(categoryBrandRelation.getBrandId());
+            return BrandVO.builder()
+                    .branId(brand.getBrandId())
+                    .brandName(brand.getName())
+                    .build();
+        }).collect(Collectors.toList());
     }
 }

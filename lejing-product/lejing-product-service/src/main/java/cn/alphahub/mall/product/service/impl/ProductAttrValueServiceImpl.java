@@ -43,4 +43,8 @@ public class ProductAttrValueServiceImpl extends ServiceImpl<ProductAttrValueMap
         return pageResult;
     }
 
+    @Override
+    public void saveProductAttrValues(List<ProductAttrValue> productAttrValues) {
+        this.saveBatch(productAttrValues);
+    }
 }

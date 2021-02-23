@@ -6,6 +6,7 @@ import cn.alphahub.common.core.top.abstraction.AbstractResult;
 import cn.alphahub.common.util.DateUtils;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.apache.commons.lang3.ObjectUtils;
 
 import java.io.Serializable;

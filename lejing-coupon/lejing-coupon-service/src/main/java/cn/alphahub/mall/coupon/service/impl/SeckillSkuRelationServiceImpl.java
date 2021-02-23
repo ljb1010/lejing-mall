@@ -2,14 +2,20 @@ package cn.alphahub.mall.coupon.service.impl;
 
 import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
+import cn.alphahub.common.to.SkuReductionTO;
 import cn.alphahub.mall.coupon.domain.SeckillSkuRelation;
+import cn.alphahub.mall.coupon.domain.SkuFullReduction;
+import cn.alphahub.mall.coupon.domain.SkuLadder;
 import cn.alphahub.mall.coupon.mapper.SeckillSkuRelationMapper;
 import cn.alphahub.mall.coupon.service.SeckillSkuRelationService;
+import cn.alphahub.mall.coupon.service.SkuLadderService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageInfo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -35,12 +41,10 @@ public class SeckillSkuRelationServiceImpl extends ServiceImpl<SeckillSkuRelatio
         QueryWrapper<SeckillSkuRelation> wrapper = new QueryWrapper<>(seckillSkuRelation);
         List<SeckillSkuRelation> list = this.list(wrapper);
         PageInfo<SeckillSkuRelation> pageInfo = new PageInfo<>(list);
-        PageResult<SeckillSkuRelation> pageResult = PageResult.<SeckillSkuRelation>builder()
+        return PageResult.<SeckillSkuRelation>builder()
                 .totalCount(pageInfo.getTotal())
                 .totalPage((long) pageInfo.getPages())
                 .items(pageInfo.getList())
                 .build();
-        return pageResult;
     }
-
 }

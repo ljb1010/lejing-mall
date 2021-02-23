@@ -1,4 +1,4 @@
-package cn.alphahub.mall.member.client;
+package cn.alphahub.mall.member.feign;
 
 import cn.alphahub.mall.coupon.api.CouponApi;
 import org.springframework.cloud.openfeign.FeignClient;

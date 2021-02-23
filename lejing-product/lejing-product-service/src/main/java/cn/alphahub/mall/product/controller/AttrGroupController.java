@@ -13,8 +13,8 @@ import cn.alphahub.mall.product.service.AttrService;
 import cn.alphahub.mall.product.service.CategoryService;
 import cn.alphahub.mall.product.vo.AttrGroupRelationVO;
 import cn.alphahub.mall.product.vo.AttrGroupVO;
+import cn.alphahub.mall.product.vo.AttrGroupWithAttrsVO;
 import org.apache.commons.lang3.ObjectUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -33,13 +33,14 @@ import java.util.Objects;
 @RequestMapping("product/attrgroup")
 public class AttrGroupController extends BaseController {
     @Resource
+    AttrAttrgroupRelationService relationService;
+    @Resource
     private AttrGroupService attrGroupService;
     @Resource
     private CategoryService categoryService;
     @Resource
     private AttrService attrService;
-    @Resource
-    AttrAttrgroupRelationService relationService;
+
     /**
      * 获取当属性分组id的关联关系
      *
@@ -49,6 +50,20 @@ public class AttrGroupController extends BaseController {
     @GetMapping("/{attrGroupId}/attr/relation")
     public BaseResult<List<Attr>> getAttrRelations(@PathVariable("attrGroupId") Long attrGroupId) {
         return BaseResult.ok(attrService.getAttrRelations(attrGroupId));
+    }
+
+    /**
+     * 获取分类下所有分组&关联属性
+     *
+     * @param catelogId 分类id
+     * @return 分类下所有分组&关联属性列表
+     */
+    @GetMapping("/{catelogId}/withattr")
+    public BaseResult<List<AttrGroupWithAttrsVO>> getAttrGroupWithAttr(@PathVariable("catelogId") Long catelogId) {
+        //1、查出当前分类下的所有属性分组
+        //2、查出每个属性分组的所有属性
+        List<AttrGroupWithAttrsVO> vos = attrGroupService.getAttrGroupWithAttrsByCatelogId(catelogId);
+        return BaseResult.ok(vos);
     }
 
     /**

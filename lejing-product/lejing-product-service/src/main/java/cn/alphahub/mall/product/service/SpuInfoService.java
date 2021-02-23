@@ -2,6 +2,8 @@ package cn.alphahub.mall.product.service;
 
 import cn.alphahub.common.core.service.PageService;
 import cn.alphahub.mall.product.domain.SpuInfo;
+import cn.alphahub.mall.product.domain.SpuInfoDesc;
+import cn.alphahub.mall.product.vo.SpuSaveVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface SpuInfoService extends IService<SpuInfo>, PageService<SpuInfo> {
 
+    void saveSpuInfo(SpuSaveVO spuSaveVO);
 }
