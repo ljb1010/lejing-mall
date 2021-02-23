@@ -95,7 +95,6 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoMapper, SpuInfo> impl
         BeanUtils.copyProperties(vo, spuInfo);
         Date currTime = new Date();
         spuInfo.setCreateTime(currTime);
-        // 保存spuInfo属性
         baseMapper.insert(spuInfo);
 
         // 2、保存Spu的描述图片 pms_spu_info_desc
