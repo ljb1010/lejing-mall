@@ -177,13 +177,17 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoMapper, SpuInfo> impl
                 SpuBounds spuBounds = new SpuBounds();
                 BeanUtils.copyProperties(bounds, spuBounds);
                 spuBounds.setSpuId(spuInfoId);
-                spuBoundsClient.save(spuBounds);
+                BaseResult<Boolean> save = spuBoundsClient.save(spuBounds);
+                if (save.getData()) {
+                    log.info("{}", "远程保存商品spu积分成功");
+                } else {
+                    log.warn("{}", "远程保存商品spu积分失败");
+                }
                 SkuReductionTO skuReductionTo = new SkuReductionTO();
                 skuReductionTo.setSkuId(skuId);
                 BeanUtils.copyProperties(vo, skuReductionTo);
                 BaseResult<Boolean> baseResult = skuFullReductionClient.saveSkuReduction(skuReductionTo);
-                Boolean flag = baseResult.getData();
-                if (flag) {
+                if (baseResult.getData()) {
                     log.info("{}", "远程保存sku成功");
                 } else {
                     log.warn("{}", "远程保存sku失败");
