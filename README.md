@@ -18,13 +18,14 @@
 
 ![image-20210126234531221](https://alphahub-test-bucket.oss-cn-shanghai.aliyuncs.com/image/image-20210126234531221.png)
 
-综合上述调研，最终为乐璟商城最终技术架构
+技术架构：
 
-- JDK11
-- MySQL-8.0.23
-- apache-maven-3.6.3
-- springboot 2.3.8.RELEASE
-- spring-cloud-alibaba 2.2.5.RELEASE
+- `JDK11`
+- `MySQL-8.0.23`
+- `apache-maven-3.6.3`
+- `spring-boot 2.3.9.RELEASE`
+- `spring-cloud-Hoxton.SR10`
+- `spring-cloud-alibaba 2.2.5.RELEASE`
 
 **架构图**
 
