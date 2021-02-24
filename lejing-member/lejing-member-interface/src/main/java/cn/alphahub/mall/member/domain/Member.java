@@ -1,5 +1,7 @@
 package cn.alphahub.mall.member.domain;
 
+import com.baomidou.mybatisplus.annotation.SqlCondition;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -14,7 +16,6 @@ import java.util.Date;
  * 会员
  *
  * @author Weasley J
- * @email 1432689025@qq.com
  * @date 2021-02-24 16:15:38
  */
 @Data
@@ -49,6 +50,7 @@ public class Member implements Serializable {
     /**
      * 昵称
      */
+    @TableField(condition = SqlCondition.LIKE)
     private String nickname;
 
     /**
