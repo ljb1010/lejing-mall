@@ -7,27 +7,25 @@ import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.mall.product.domain.Attr;
 import cn.alphahub.mall.product.service.AttrService;
-import cn.alphahub.mall.product.vo.AttrGroupVO;
 import cn.alphahub.mall.product.vo.AttrRespVO;
 import cn.alphahub.mall.product.vo.AttrVO;
 import org.apache.commons.lang3.ObjectUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * 商品属性Controller
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-14 19:02:16
+ * @date 2021-02-24 15:36:31
  */
 @RestController
 @RequestMapping("product/attr")
 public class AttrController extends BaseController {
-    @Autowired
+    @Resource
     private AttrService attrService;
 
     /**

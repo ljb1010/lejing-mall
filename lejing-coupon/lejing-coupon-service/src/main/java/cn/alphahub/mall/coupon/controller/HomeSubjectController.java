@@ -8,9 +8,9 @@ import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.mall.coupon.domain.HomeSubject;
 import cn.alphahub.mall.coupon.service.HomeSubjectService;
 import org.apache.commons.lang3.ObjectUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.Arrays;
 
 /**
@@ -18,12 +18,12 @@ import java.util.Arrays;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-14 18:57:50
+ * @date 2021-02-24 16:31:15
  */
 @RestController
 @RequestMapping("coupon/homesubject")
 public class HomeSubjectController extends BaseController {
-    @Autowired
+    @Resource
     private HomeSubjectService homeSubjectService;
 
     /**
@@ -33,7 +33,7 @@ public class HomeSubjectController extends BaseController {
      * @param rows        显示行数,默认10条
      * @param orderColumn 排序排序字段,默认不排序
      * @param isAsc       排序方式,desc或者asc
-     * @param homeSubject 首页专题表【jd首页下面很多专题，每个专题链接新的页面，展示专题商品信息】,查询字段选择性传入,默认为等值查询
+     * @param homeSubject 首页专题表【jd首页下面很多专题，每个专题链接新的页面，展示专题商品信息】, 查询字段选择性传入, 默认为等值查询
      * @return 首页专题表【jd首页下面很多专题，每个专题链接新的页面，展示专题商品信息】分页数据
      */
     @GetMapping("/list")
@@ -79,7 +79,7 @@ public class HomeSubjectController extends BaseController {
     /**
      * 修改首页专题表【jd首页下面很多专题，每个专题链接新的页面，展示专题商品信息】
      *
-     * @param homeSubject 首页专题表【jd首页下面很多专题，每个专题链接新的页面，展示专题商品信息】,根据id选择性更新
+     * @param homeSubject 首页专题表【jd首页下面很多专题，每个专题链接新的页面，展示专题商品信息】, 根据id选择性更新
      * @return 成功返回true, 失败返回false
      */
     @PutMapping("/update")

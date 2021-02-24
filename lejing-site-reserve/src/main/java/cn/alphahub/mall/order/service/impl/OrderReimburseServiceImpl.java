@@ -49,12 +49,11 @@ public class OrderReimburseServiceImpl extends ServiceImpl<OrderReimburseMapper,
     private PageResult<OrderReimburse> getPageResult(QueryWrapper<OrderReimburse> wrapper) {
         List<OrderReimburse> list = this.list(wrapper);
         PageInfo<OrderReimburse> pageInfo = new PageInfo<>(list);
-        PageResult<OrderReimburse> pageResult = PageResult.<OrderReimburse>builder()
+        return PageResult.<OrderReimburse>builder()
                 .totalCount(pageInfo.getTotal())
-                .totalPage((long) pageInfo.getPages())
+                .totalPage(pageInfo.getPages())
                 .items(pageInfo.getList())
                 .build();
-        return pageResult;
     }
 
 }

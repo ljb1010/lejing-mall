@@ -8,9 +8,9 @@ import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.mall.product.domain.ProductAttrValue;
 import cn.alphahub.mall.product.service.ProductAttrValueService;
 import org.apache.commons.lang3.ObjectUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.Arrays;
 
 /**
@@ -18,12 +18,12 @@ import java.util.Arrays;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-14 19:02:16
+ * @date 2021-02-24 15:36:31
  */
 @RestController
 @RequestMapping("product/productattrvalue")
 public class ProductAttrValueController extends BaseController {
-    @Autowired
+    @Resource
     private ProductAttrValueService productAttrValueService;
 
     /**

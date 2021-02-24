@@ -1,5 +1,6 @@
 {
-  "serverUrl": "http://127.0.0.1:7000",
+  //"serverUrl": "http://127.0.0.1:7000",
+  "serverUrl": "http://localhost:7000",
   "isStrict": false,
   "allInOne": true,
   "outPath": "src/main/resources/static",

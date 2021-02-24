@@ -7,7 +7,6 @@ import cn.alphahub.mall.product.mapper.CommentReplayMapper;
 import cn.alphahub.mall.product.service.CommentReplayService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,9 +16,9 @@ import java.util.List;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-07 22:46:24
+ * @date 2021-02-24 15:36:31
  */
-@Service("commentReplayService")
+@Service
 public class CommentReplayServiceImpl extends ServiceImpl<CommentReplayMapper, CommentReplay> implements CommentReplayService {
 
     /**
@@ -31,16 +30,16 @@ public class CommentReplayServiceImpl extends ServiceImpl<CommentReplayMapper, C
      */
     @Override
     public PageResult<CommentReplay> queryPage(PageDomain pageDomain, CommentReplay commentReplay) {
-        pageDomain.startPage();
+        // 1. 构造mybatis-plus查询wrapper
         QueryWrapper<CommentReplay> wrapper = new QueryWrapper<>(commentReplay);
-        List<CommentReplay> list = this.list(wrapper);
-        PageInfo<CommentReplay> pageInfo = new PageInfo<>(list);
-        PageResult<CommentReplay> pageResult = PageResult.<CommentReplay>builder()
-                .totalCount(pageInfo.getTotal())
-                .totalPage((long) pageInfo.getPages())
-                .items(pageInfo.getList())
-                .build();
-        return pageResult;
+        // 2. 创建一个分页对象
+        PageResult<CommentReplay> pageResult = new PageResult<>();
+        // 3. 开始分页
+        pageResult.startPage(pageDomain);
+        // 4. 执行Dao|Mapper SQL查询
+        List<CommentReplay> commentReplayList = this.list(wrapper);
+        // 5. 分装并返回数据
+        return pageResult.getPage(commentReplayList);
     }
 
 }

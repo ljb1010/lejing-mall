@@ -15,7 +15,7 @@ import java.util.Date;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-07 22:45:12
+ * @date 2021-02-24 16:02:31
  */
 @Data
 @Builder
@@ -23,32 +23,32 @@ import java.util.Date;
 @AllArgsConstructor
 @TableName("oms_order_return_reason")
 public class OrderReturnReason implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * id
-	 */
+    /**
+     * id
+     */
     @TableId
     private Long id;
 
-	/**
-	 * 退货原因名
-	 */
+    /**
+     * 退货原因名
+     */
     private String name;
 
-	/**
-	 * 排序
-	 */
+    /**
+     * 排序
+     */
     private Integer sort;
 
-	/**
-	 * 启用状态
-	 */
+    /**
+     * 启用状态
+     */
     private Integer status;
 
-	/**
-	 * create_time
-	 */
+    /**
+     * create_time
+     */
     private Date createTime;
 
 }

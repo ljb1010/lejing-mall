@@ -8,9 +8,9 @@ import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.mall.ware.domain.WareOrderTask;
 import cn.alphahub.mall.ware.service.WareOrderTaskService;
 import org.apache.commons.lang3.ObjectUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.Arrays;
 
 /**
@@ -18,12 +18,12 @@ import java.util.Arrays;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-14 19:03:09
+ * @date 2021-02-24 15:19:57
  */
 @RestController
 @RequestMapping("ware/wareordertask")
 public class WareOrderTaskController extends BaseController {
-    @Autowired
+    @Resource
     private WareOrderTaskService wareOrderTaskService;
 
     /**
@@ -33,7 +33,7 @@ public class WareOrderTaskController extends BaseController {
      * @param rows          显示行数,默认10条
      * @param orderColumn   排序排序字段,默认不排序
      * @param isAsc         排序方式,desc或者asc
-     * @param wareOrderTask 库存工作单,查询字段选择性传入,默认为等值查询
+     * @param wareOrderTask 库存工作单, 查询字段选择性传入, 默认为等值查询
      * @return 库存工作单分页数据
      */
     @GetMapping("/list")
@@ -79,7 +79,7 @@ public class WareOrderTaskController extends BaseController {
     /**
      * 修改库存工作单
      *
-     * @param wareOrderTask 库存工作单,根据id选择性更新
+     * @param wareOrderTask 库存工作单, 根据id选择性更新
      * @return 成功返回true, 失败返回false
      */
     @PutMapping("/update")

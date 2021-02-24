@@ -2,9 +2,7 @@ package cn.alphahub.mall.product.service;
 
 import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
-import cn.alphahub.common.core.service.PageService;
 import cn.alphahub.mall.product.domain.Attr;
-import cn.alphahub.mall.product.domain.AttrGroup;
 import cn.alphahub.mall.product.vo.AttrGroupVO;
 import cn.alphahub.mall.product.vo.AttrRespVO;
 import cn.alphahub.mall.product.vo.AttrVO;
@@ -19,7 +17,7 @@ import java.util.List;
  * @email 1432689025@qq.com
  * @date 2021-02-07 22:46:24
  */
-public interface AttrService extends IService<Attr>, PageService<Attr> {
+public interface AttrService extends IService<Attr> {
 
     /**
      * 新增商品属性
@@ -30,6 +28,17 @@ public interface AttrService extends IService<Attr>, PageService<Attr> {
     boolean saveAttr(AttrVO attr);
 
     /**
+     * 查询商品属性分页列表
+     *
+     * @param pageDomain 分页数据
+     * @param attr       分页对象
+     * @return 商品属性分页数据
+     */
+    PageResult<Attr> queryPage(PageDomain pageDomain, Attr attr);
+
+    /**
+     * 查询分页
+     *
      * @param pageDomain 分页数据实体
      * @param attr       商品属性
      * @param key        查询关键字

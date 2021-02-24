@@ -7,7 +7,6 @@ import cn.alphahub.mall.ware.mapper.PurchaseMapper;
 import cn.alphahub.mall.ware.service.PurchaseService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,9 +16,9 @@ import java.util.List;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-07 22:47:37
+ * @date 2021-02-24 15:19:57
  */
-@Service("purchaseService")
+@Service
 public class PurchaseServiceImpl extends ServiceImpl<PurchaseMapper, Purchase> implements PurchaseService {
 
     /**
@@ -31,16 +30,16 @@ public class PurchaseServiceImpl extends ServiceImpl<PurchaseMapper, Purchase> i
      */
     @Override
     public PageResult<Purchase> queryPage(PageDomain pageDomain, Purchase purchase) {
-        pageDomain.startPage();
+        // 1. 构造mybatis-plus查询wrapper
         QueryWrapper<Purchase> wrapper = new QueryWrapper<>(purchase);
-        List<Purchase> list = this.list(wrapper);
-        PageInfo<Purchase> pageInfo = new PageInfo<>(list);
-        PageResult<Purchase> pageResult = PageResult.<Purchase>builder()
-                .totalCount(pageInfo.getTotal())
-                .totalPage((long) pageInfo.getPages())
-                .items(pageInfo.getList())
-                .build();
-        return pageResult;
+        // 2. 创建一个分页对象
+        PageResult<Purchase> pageResult = new PageResult<>();
+        // 3. 开始分页
+        pageResult.startPage(pageDomain);
+        // 4. 执行Dao|Mapper SQL查询
+        List<Purchase> purchaseList = this.list(wrapper);
+        // 5. 分装并返回数据
+        return pageResult.getPage(purchaseList);
     }
 
 }

@@ -8,9 +8,9 @@ import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.mall.coupon.domain.SpuBounds;
 import cn.alphahub.mall.coupon.service.SpuBoundsService;
 import org.apache.commons.lang3.ObjectUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.Arrays;
 
 /**
@@ -18,12 +18,12 @@ import java.util.Arrays;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-14 18:57:50
+ * @date 2021-02-24 16:31:15
  */
 @RestController
 @RequestMapping("coupon/spubounds")
 public class SpuBoundsController extends BaseController {
-    @Autowired
+    @Resource
     private SpuBoundsService spuBoundsService;
 
     /**
@@ -33,7 +33,7 @@ public class SpuBoundsController extends BaseController {
      * @param rows        显示行数,默认10条
      * @param orderColumn 排序排序字段,默认不排序
      * @param isAsc       排序方式,desc或者asc
-     * @param spuBounds   商品spu积分设置,查询字段选择性传入,默认为等值查询
+     * @param spuBounds   商品spu积分设置, 查询字段选择性传入, 默认为等值查询
      * @return 商品spu积分设置分页数据
      */
     @GetMapping("/list")
@@ -79,7 +79,7 @@ public class SpuBoundsController extends BaseController {
     /**
      * 修改商品spu积分设置
      *
-     * @param spuBounds 商品spu积分设置,根据id选择性更新
+     * @param spuBounds 商品spu积分设置, 根据id选择性更新
      * @return 成功返回true, 失败返回false
      */
     @PutMapping("/update")

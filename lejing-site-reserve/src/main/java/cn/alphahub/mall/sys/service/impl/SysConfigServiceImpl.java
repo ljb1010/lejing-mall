@@ -51,7 +51,7 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
         PageInfo<SysConfig> pageInfo = new PageInfo<>(list);
         PageResult<SysConfig> pageResult = PageResult.<SysConfig>builder()
                 .totalCount(pageInfo.getTotal())
-                .totalPage((long) pageInfo.getPages())
+                .totalPage(pageInfo.getPages())
                 .items(pageInfo.getList())
                 .build();
         return pageResult;

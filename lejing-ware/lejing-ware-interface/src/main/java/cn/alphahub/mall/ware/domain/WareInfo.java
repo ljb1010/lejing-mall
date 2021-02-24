@@ -14,7 +14,7 @@ import java.io.Serializable;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-07 22:47:37
+ * @date 2021-02-24 15:19:57
  */
 @Data
 @Builder
@@ -22,27 +22,27 @@ import java.io.Serializable;
 @AllArgsConstructor
 @TableName("wms_ware_info")
 public class WareInfo implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * id
-	 */
+    /**
+     * id
+     */
     @TableId
     private Long id;
 
-	/**
-	 * 仓库名
-	 */
+    /**
+     * 仓库名
+     */
     private String name;
 
-	/**
-	 * 仓库地址
-	 */
+    /**
+     * 仓库地址
+     */
     private String address;
 
-	/**
-	 * 区域编码
-	 */
+    /**
+     * 区域编码
+     */
     private String areacode;
 
 }

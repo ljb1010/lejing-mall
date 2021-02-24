@@ -10,9 +10,9 @@ import cn.alphahub.mall.product.service.CategoryBrandRelationService;
 import cn.alphahub.mall.product.vo.BrandVO;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.apache.commons.lang3.ObjectUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,12 +21,12 @@ import java.util.List;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-14 19:02:16
+ * @date 2021-02-24 15:36:31
  */
 @RestController
 @RequestMapping("product/categorybrandrelation")
 public class CategoryBrandRelationController extends BaseController {
-    @Autowired
+    @Resource
     private CategoryBrandRelationService categoryBrandRelationService;
 
 

@@ -15,7 +15,7 @@ import java.util.Date;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-07 22:43:41
+ * @date 2021-02-24 16:15:38
  */
 @Data
 @Builder
@@ -23,37 +23,37 @@ import java.util.Date;
 @AllArgsConstructor
 @TableName("ums_member_login_log")
 public class MemberLoginLog implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * id
-	 */
+    /**
+     * id
+     */
     @TableId
     private Long id;
 
-	/**
-	 * member_id
-	 */
+    /**
+     * member_id
+     */
     private Long memberId;
 
-	/**
-	 * 创建时间
-	 */
+    /**
+     * 创建时间
+     */
     private Date createTime;
 
-	/**
-	 * ip
-	 */
+    /**
+     * ip
+     */
     private String ip;
 
-	/**
-	 * city
-	 */
+    /**
+     * city
+     */
     private String city;
 
-	/**
-	 * 登录类型[1-web，2-app]
-	 */
+    /**
+     * 登录类型[1-web，2-app]
+     */
     private Integer loginType;
 
 }

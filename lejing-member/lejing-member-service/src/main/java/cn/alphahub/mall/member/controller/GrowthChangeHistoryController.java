@@ -8,9 +8,9 @@ import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.mall.member.domain.GrowthChangeHistory;
 import cn.alphahub.mall.member.service.GrowthChangeHistoryService;
 import org.apache.commons.lang3.ObjectUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.Arrays;
 
 /**
@@ -18,12 +18,12 @@ import java.util.Arrays;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-14 18:59:58
+ * @date 2021-02-24 16:15:38
  */
 @RestController
 @RequestMapping("member/growthchangehistory")
 public class GrowthChangeHistoryController extends BaseController {
-    @Autowired
+    @Resource
     private GrowthChangeHistoryService growthChangeHistoryService;
 
     /**
@@ -33,7 +33,7 @@ public class GrowthChangeHistoryController extends BaseController {
      * @param rows                显示行数,默认10条
      * @param orderColumn         排序排序字段,默认不排序
      * @param isAsc               排序方式,desc或者asc
-     * @param growthChangeHistory 成长值变化历史记录,查询字段选择性传入,默认为等值查询
+     * @param growthChangeHistory 成长值变化历史记录, 查询字段选择性传入, 默认为等值查询
      * @return 成长值变化历史记录分页数据
      */
     @GetMapping("/list")
@@ -79,7 +79,7 @@ public class GrowthChangeHistoryController extends BaseController {
     /**
      * 修改成长值变化历史记录
      *
-     * @param growthChangeHistory 成长值变化历史记录,根据id选择性更新
+     * @param growthChangeHistory 成长值变化历史记录, 根据id选择性更新
      * @return 成功返回true, 失败返回false
      */
     @PutMapping("/update")

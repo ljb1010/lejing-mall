@@ -49,12 +49,11 @@ public class SiteReserveStatusServiceImpl extends ServiceImpl<SiteReserveStatusM
     private PageResult<SiteReserveStatus> getPageResult(QueryWrapper<SiteReserveStatus> wrapper) {
         List<SiteReserveStatus> list = this.list(wrapper);
         PageInfo<SiteReserveStatus> pageInfo = new PageInfo<>(list);
-        PageResult<SiteReserveStatus> pageResult = PageResult.<SiteReserveStatus>builder()
+        return PageResult.<SiteReserveStatus>builder()
                 .totalCount(pageInfo.getTotal())
-                .totalPage((long) pageInfo.getPages())
+                .totalPage(pageInfo.getPages())
                 .items(pageInfo.getList())
                 .build();
-        return pageResult;
     }
 
 }

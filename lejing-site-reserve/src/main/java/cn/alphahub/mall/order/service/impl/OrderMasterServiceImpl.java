@@ -49,12 +49,11 @@ public class OrderMasterServiceImpl extends ServiceImpl<OrderMasterMapper, Order
     private PageResult<OrderMaster> getPageResult(QueryWrapper<OrderMaster> wrapper) {
         List<OrderMaster> list = this.list(wrapper);
         PageInfo<OrderMaster> pageInfo = new PageInfo<>(list);
-        PageResult<OrderMaster> pageResult = PageResult.<OrderMaster>builder()
+        return PageResult.<OrderMaster>builder()
                 .totalCount(pageInfo.getTotal())
-                .totalPage((long) pageInfo.getPages())
+                .totalPage(pageInfo.getPages())
                 .items(pageInfo.getList())
                 .build();
-        return pageResult;
     }
 
 }

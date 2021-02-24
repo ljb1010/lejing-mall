@@ -25,7 +25,6 @@ import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,19 +38,19 @@ import java.util.stream.Collectors;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-07 22:46:24
+ * @date 2021-02-24 15:36:31
  */
-@Service("attrService")
+@Service
 public class AttrServiceImpl extends ServiceImpl<AttrMapper, Attr> implements AttrService {
 
-    @Autowired
-    private AttrAttrgroupRelationMapper attrAttrgroupRelationMapper;
     @Resource
     private AttrGroupMapper attrGroupMapper;
     @Resource
     private CategoryMapper categoryMapper;
     @Resource
     private CategoryService categoryService;
+    @Resource
+    private AttrAttrgroupRelationMapper attrAttrgroupRelationMapper;
 
     /**
      * 查询商品属性分页列表
@@ -62,9 +61,16 @@ public class AttrServiceImpl extends ServiceImpl<AttrMapper, Attr> implements At
      */
     @Override
     public PageResult<Attr> queryPage(PageDomain pageDomain, Attr attr) {
-        pageDomain.startPage();
+        // 1. 构造mybatis-plus查询wrapper
         QueryWrapper<Attr> wrapper = new QueryWrapper<>(attr);
-        return getPageResult(wrapper);
+        // 2. 创建一个分页对象
+        PageResult<Attr> pageResult = new PageResult<>();
+        // 3. 开始分页
+        pageResult.startPage(pageDomain);
+        // 4. 执行Dao|Mapper SQL查询
+        List<Attr> attrList = this.list(wrapper);
+        // 5. 分装并返回数据
+        return pageResult.getPage(attrList);
     }
 
     @Override
@@ -131,7 +137,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrMapper, Attr> implements At
         PageInfo<Attr> pageInfo = new PageInfo<>(list);
         return PageResult.<Attr>builder()
                 .totalCount(pageInfo.getTotal())
-                .totalPage((long) pageInfo.getPages())
+                .totalPage(pageInfo.getPages())
                 .items(pageInfo.getList())
                 .build();
     }

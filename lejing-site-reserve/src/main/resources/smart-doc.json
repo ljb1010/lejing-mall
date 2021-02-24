@@ -1,5 +1,5 @@
 {
-  "serverUrl": "http://127.0.0.1:88/api",
+  "serverUrl": "http://localhost:88/api",
   "isStrict": false,
   "allInOne": true,
   "outPath": "src/main/resources/static",

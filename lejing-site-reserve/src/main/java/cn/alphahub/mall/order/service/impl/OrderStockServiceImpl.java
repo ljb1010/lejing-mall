@@ -49,12 +49,11 @@ public class OrderStockServiceImpl extends ServiceImpl<OrderStockMapper, OrderSt
     private PageResult<OrderStock> getPageResult(QueryWrapper<OrderStock> wrapper) {
         List<OrderStock> list = this.list(wrapper);
         PageInfo<OrderStock> pageInfo = new PageInfo<>(list);
-        PageResult<OrderStock> pageResult = PageResult.<OrderStock>builder()
+        return PageResult.<OrderStock>builder()
                 .totalCount(pageInfo.getTotal())
-                .totalPage((long) pageInfo.getPages())
+                .totalPage(pageInfo.getPages())
                 .items(pageInfo.getList())
                 .build();
-        return pageResult;
     }
 
 }

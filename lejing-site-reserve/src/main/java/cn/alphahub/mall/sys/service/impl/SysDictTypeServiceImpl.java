@@ -51,7 +51,7 @@ public class SysDictTypeServiceImpl extends ServiceImpl<SysDictTypeMapper, SysDi
         PageInfo<SysDictType> pageInfo = new PageInfo<>(list);
         PageResult<SysDictType> pageResult = PageResult.<SysDictType>builder()
                 .totalCount(pageInfo.getTotal())
-                .totalPage((long) pageInfo.getPages())
+                .totalPage(pageInfo.getPages())
                 .items(pageInfo.getList())
                 .build();
         return pageResult;

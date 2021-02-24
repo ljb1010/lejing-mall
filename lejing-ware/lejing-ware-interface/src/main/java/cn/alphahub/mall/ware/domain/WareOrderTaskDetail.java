@@ -14,7 +14,7 @@ import java.io.Serializable;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-07 22:47:37
+ * @date 2021-02-24 15:19:57
  */
 @Data
 @Builder
@@ -22,42 +22,42 @@ import java.io.Serializable;
 @AllArgsConstructor
 @TableName("wms_ware_order_task_detail")
 public class WareOrderTaskDetail implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * id
-	 */
+    /**
+     * id
+     */
     @TableId
     private Long id;
 
-	/**
-	 * sku_id
-	 */
+    /**
+     * sku_id
+     */
     private Long skuId;
 
-	/**
-	 * sku_name
-	 */
+    /**
+     * sku_name
+     */
     private String skuName;
 
-	/**
-	 * 购买个数
-	 */
+    /**
+     * 购买个数
+     */
     private Integer skuNum;
 
-	/**
-	 * 工作单id
-	 */
+    /**
+     * 工作单id
+     */
     private Long taskId;
 
-	/**
-	 * 仓库id
-	 */
+    /**
+     * 仓库id
+     */
     private Long wareId;
 
-	/**
-	 * 1-已锁定 2-已解锁 3-已扣减
-	 */
+    /**
+     * 1-已锁定 2-已解锁 3-已扣减
+     */
     private Integer lockStatus;
 
 }

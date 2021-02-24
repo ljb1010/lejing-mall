@@ -8,7 +8,6 @@ import cn.alphahub.mall.product.service.SpuImagesService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +19,10 @@ import java.util.stream.Collectors;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-07 22:46:24
+ * @date 2021-02-24 15:36:31
  */
 @Slf4j
-@Service("spuImagesService")
+@Service
 public class SpuImagesServiceImpl extends ServiceImpl<SpuImagesMapper, SpuImages> implements SpuImagesService {
 
     /**
@@ -35,16 +34,18 @@ public class SpuImagesServiceImpl extends ServiceImpl<SpuImagesMapper, SpuImages
      */
     @Override
     public PageResult<SpuImages> queryPage(PageDomain pageDomain, SpuImages spuImages) {
-        pageDomain.startPage();
+        // 1. 构造mybatis-plus查询wrapper
         QueryWrapper<SpuImages> wrapper = new QueryWrapper<>(spuImages);
-        List<SpuImages> list = this.list(wrapper);
-        PageInfo<SpuImages> pageInfo = new PageInfo<>(list);
-        return PageResult.<SpuImages>builder()
-                .totalCount(pageInfo.getTotal())
-                .totalPage((long) pageInfo.getPages())
-                .items(pageInfo.getList())
-                .build();
+        // 2. 创建一个分页对象
+        PageResult<SpuImages> pageResult = new PageResult<>();
+        // 3. 开始分页
+        pageResult.startPage(pageDomain);
+        // 4. 执行Dao|Mapper SQL查询
+        List<SpuImages> spuImagesList = this.list(wrapper);
+        // 5. 分装并返回数据
+        return pageResult.getPage(spuImagesList);
     }
+
 
     /**
      * 保存图片
@@ -59,9 +60,9 @@ public class SpuImagesServiceImpl extends ServiceImpl<SpuImagesMapper, SpuImages
         } else {
             List<SpuImages> spuImages = images.stream().map(imageUrl ->
                     SpuImages.builder()
-                    .id(spuInfoId)
-                    .imgUrl(imageUrl)
-                    .build()).collect(Collectors.toList());
+                            .id(spuInfoId)
+                            .imgUrl(imageUrl)
+                            .build()).collect(Collectors.toList());
             this.saveBatch(spuImages);
         }
     }

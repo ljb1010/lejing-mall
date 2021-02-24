@@ -2,7 +2,6 @@ package cn.alphahub.mall.product.service;
 
 import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
-import cn.alphahub.common.core.service.PageService;
 import cn.alphahub.mall.product.domain.Brand;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -11,9 +10,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-07 22:46:24
+ * @date 2021-02-24 15:36:31
  */
-public interface BrandService extends IService<Brand>, PageService<Brand> {
+public interface BrandService extends IService<Brand> {
 
     /**
      * 根据关键字查询品牌分页列表
@@ -24,6 +23,15 @@ public interface BrandService extends IService<Brand>, PageService<Brand> {
      * @return 品牌分页数据
      */
     PageResult<Brand> queryPage(PageDomain pageDomain, Brand brand, String searchKey);
+
+    /**
+     * 查询品牌分页列表
+     *
+     * @param pageDomain 分页数据
+     * @param brand      分页对象
+     * @return 品牌分页数据
+     */
+    PageResult<Brand> queryPage(PageDomain pageDomain, Brand brand);
 
     /**
      * 修改品牌状态

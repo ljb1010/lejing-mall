@@ -1,6 +1,7 @@
 package cn.alphahub.mall.product.service;
 
-import cn.alphahub.common.core.service.PageService;
+import cn.alphahub.common.core.page.PageDomain;
+import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.mall.product.domain.CategoryBrandRelation;
 import cn.alphahub.mall.product.vo.BrandVO;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -12,9 +13,17 @@ import java.util.List;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-07 22:46:24
+ * @date 2021-02-24 15:36:31
  */
-public interface CategoryBrandRelationService extends IService<CategoryBrandRelation>, PageService<CategoryBrandRelation> {
+public interface CategoryBrandRelationService extends IService<CategoryBrandRelation> {
+    /**
+     * 查询品牌分类关联分页列表
+     *
+     * @param pageDomain            分页数据
+     * @param categoryBrandRelation 分页对象
+     * @return 品牌分类关联分页数据
+     */
+    PageResult<CategoryBrandRelation> queryPage(PageDomain pageDomain, CategoryBrandRelation categoryBrandRelation);
 
     /**
      * 新增品牌分类关联
@@ -41,6 +50,7 @@ public interface CategoryBrandRelationService extends IService<CategoryBrandRela
      * @return 成功返回true, 失败返回false
      */
     boolean updateCategory(Long catId, String name);
+
     /**
      * 根据分类id获取品牌列表
      *

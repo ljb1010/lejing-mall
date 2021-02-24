@@ -9,7 +9,6 @@ import cn.alphahub.mall.product.service.CategoryService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +24,8 @@ import java.util.stream.Collectors;
  * 商品三级分类Service业务层处理
  *
  * @author Weasley J
- * @date 2021-02-07 22:46:24
+ * @email 1432689025@qq.com
+ * @date 2021-02-24 15:36:31
  */
 @Service("categoryService")
 public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> implements CategoryService {
@@ -45,17 +45,18 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
      */
     @Override
     public PageResult<Category> queryPage(PageDomain pageDomain, Category category) {
-        pageDomain.startPage();
+        // 1. 构造mybatis-plus查询wrapper
         QueryWrapper<Category> wrapper = new QueryWrapper<>(category);
-        List<Category> list = this.list(wrapper);
-        PageInfo<Category> pageInfo = new PageInfo<>(list);
-        PageResult<Category> pageResult = PageResult.<Category>builder()
-                .totalCount(pageInfo.getTotal())
-                .totalPage((long) pageInfo.getPages())
-                .items(pageInfo.getList())
-                .build();
-        return pageResult;
+        // 2. 创建一个分页对象
+        PageResult<Category> pageResult = new PageResult<>();
+        // 3. 开始分页
+        pageResult.startPage(pageDomain);
+        // 4. 执行Dao|Mapper SQL查询
+        List<Category> categoryList = this.list(wrapper);
+        // 5. 分装并返回数据
+        return pageResult.getPage(categoryList);
     }
+
 
     /**
      * 查出所有分类及其子分类， 树形结构组装

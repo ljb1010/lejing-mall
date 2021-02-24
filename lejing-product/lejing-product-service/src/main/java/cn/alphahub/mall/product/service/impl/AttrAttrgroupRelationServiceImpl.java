@@ -9,7 +9,6 @@ import cn.alphahub.mall.product.vo.AttrGroupRelationVO;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +21,7 @@ import java.util.stream.Collectors;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-07 22:46:24
+ * @date 2021-02-24 15:36:31
  */
 @Service("attrAttrgroupRelationService")
 public class AttrAttrgroupRelationServiceImpl extends ServiceImpl<AttrAttrgroupRelationMapper, AttrAttrgroupRelation> implements AttrAttrgroupRelationService {
@@ -36,15 +35,16 @@ public class AttrAttrgroupRelationServiceImpl extends ServiceImpl<AttrAttrgroupR
      */
     @Override
     public PageResult<AttrAttrgroupRelation> queryPage(PageDomain pageDomain, AttrAttrgroupRelation attrAttrgroupRelation) {
-        pageDomain.startPage();
+        // 1. 构造mybatis-plus查询wrapper
         QueryWrapper<AttrAttrgroupRelation> wrapper = new QueryWrapper<>(attrAttrgroupRelation);
-        List<AttrAttrgroupRelation> list = this.list(wrapper);
-        PageInfo<AttrAttrgroupRelation> pageInfo = new PageInfo<>(list);
-        return PageResult.<AttrAttrgroupRelation>builder()
-                .totalCount(pageInfo.getTotal())
-                .totalPage((long) pageInfo.getPages())
-                .items(pageInfo.getList())
-                .build();
+        // 2. 创建一个分页对象
+        PageResult<AttrAttrgroupRelation> pageResult = new PageResult<>();
+        // 3. 开始分页
+        pageResult.startPage(pageDomain);
+        // 4. 执行Dao|Mapper SQL查询
+        List<AttrAttrgroupRelation> attrAttrgroupRelationList = this.list(wrapper);
+        // 5. 分装并返回数据
+        return pageResult.getPage(attrAttrgroupRelationList);
     }
 
 

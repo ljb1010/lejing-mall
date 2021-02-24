@@ -9,9 +9,9 @@ import cn.alphahub.common.to.SkuReductionTO;
 import cn.alphahub.mall.coupon.domain.SkuFullReduction;
 import cn.alphahub.mall.coupon.service.SkuFullReductionService;
 import org.apache.commons.lang3.ObjectUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.Arrays;
 
 /**
@@ -19,12 +19,12 @@ import java.util.Arrays;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-14 18:57:50
+ * @date 2021-02-24 16:31:15
  */
 @RestController
 @RequestMapping("coupon/skufullreduction")
 public class SkuFullReductionController extends BaseController {
-    @Autowired
+    @Resource
     private SkuFullReductionService skuFullReductionService;
 
     /**
@@ -34,7 +34,7 @@ public class SkuFullReductionController extends BaseController {
      * @param rows             显示行数,默认10条
      * @param orderColumn      排序排序字段,默认不排序
      * @param isAsc            排序方式,desc或者asc
-     * @param skuFullReduction 商品满减信息,查询字段选择性传入,默认为等值查询
+     * @param skuFullReduction 商品满减信息, 查询字段选择性传入, 默认为等值查询
      * @return 商品满减信息分页数据
      */
     @GetMapping("/list")
@@ -80,7 +80,7 @@ public class SkuFullReductionController extends BaseController {
     /**
      * 修改商品满减信息
      *
-     * @param skuFullReduction 商品满减信息,根据id选择性更新
+     * @param skuFullReduction 商品满减信息, 根据id选择性更新
      * @return 成功返回true, 失败返回false
      */
     @PutMapping("/update")

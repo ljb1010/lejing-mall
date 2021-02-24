@@ -8,9 +8,9 @@ import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.mall.order.domain.MqMessage;
 import cn.alphahub.mall.order.service.MqMessageService;
 import org.apache.commons.lang3.ObjectUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.Arrays;
 
 /**
@@ -18,12 +18,12 @@ import java.util.Arrays;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-14 19:01:17
+ * @date 2021-02-24 16:02:31
  */
 @RestController
 @RequestMapping("order/mqmessage")
 public class MqMessageController extends BaseController {
-    @Autowired
+    @Resource
     private MqMessageService mqMessageService;
 
     /**
@@ -33,7 +33,7 @@ public class MqMessageController extends BaseController {
      * @param rows        显示行数,默认10条
      * @param orderColumn 排序排序字段,默认不排序
      * @param isAsc       排序方式,desc或者asc
-     * @param mqMessage   MQ消息表,查询字段选择性传入,默认为等值查询
+     * @param mqMessage   MQ消息表, 查询字段选择性传入, 默认为等值查询
      * @return MQ消息表分页数据
      */
     @GetMapping("/list")
@@ -79,7 +79,7 @@ public class MqMessageController extends BaseController {
     /**
      * 修改MQ消息表
      *
-     * @param mqMessage MQ消息表,根据id选择性更新
+     * @param mqMessage MQ消息表, 根据id选择性更新
      * @return 成功返回true, 失败返回false
      */
     @PutMapping("/update")

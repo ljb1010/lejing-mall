@@ -24,9 +24,9 @@ import java.util.stream.Collectors;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-07 22:46:24
+ * @date 2021-02-24 15:36:31
  */
-@Service("attrGroupService")
+@Service
 public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupMapper, AttrGroup> implements AttrGroupService {
     @Resource
     private AttrService attrService;
@@ -40,10 +40,18 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupMapper, AttrGroup
      */
     @Override
     public PageResult<AttrGroup> queryPage(PageDomain pageDomain, AttrGroup attrGroup) {
-        pageDomain.startPage();
+        // 1. 构造mybatis-plus查询wrapper
         QueryWrapper<AttrGroup> wrapper = new QueryWrapper<>(attrGroup);
-        return getAttrGroupPageResult(wrapper);
+        // 2. 创建一个分页对象
+        PageResult<AttrGroup> pageResult = new PageResult<>();
+        // 3. 开始分页
+        pageResult.startPage(pageDomain);
+        // 4. 执行Dao|Mapper SQL查询
+        List<AttrGroup> attrGroupList = this.list(wrapper);
+        // 5. 分装并返回数据
+        return pageResult.getPage(attrGroupList);
     }
+
 
     /**
      * 根据catelogId查询属性分组列表
@@ -85,7 +93,7 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupMapper, AttrGroup
         PageInfo<AttrGroup> pageInfo = new PageInfo<>(list);
         return PageResult.<AttrGroup>builder()
                 .totalCount(pageInfo.getTotal())
-                .totalPage((long) pageInfo.getPages())
+                .totalPage(pageInfo.getPages())
                 .items(pageInfo.getList())
                 .build();
     }

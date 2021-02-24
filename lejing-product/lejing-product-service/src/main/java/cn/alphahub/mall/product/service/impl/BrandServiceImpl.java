@@ -20,9 +20,9 @@ import java.util.List;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-07 22:46:24
+ * @date 2021-02-24 15:36:31
  */
-@Service("brandService")
+@Service
 public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements BrandService {
 
     @Resource
@@ -37,10 +37,18 @@ public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements
      */
     @Override
     public PageResult<Brand> queryPage(PageDomain pageDomain, Brand brand) {
-        pageDomain.startPage();
+        // 1. 构造mybatis-plus查询wrapper
         QueryWrapper<Brand> wrapper = new QueryWrapper<>(brand);
-        return getBrandPageResult(wrapper);
+        // 2. 创建一个分页对象
+        PageResult<Brand> pageResult = new PageResult<>();
+        // 3. 开始分页
+        pageResult.startPage(pageDomain);
+        // 4. 执行Dao|Mapper SQL查询
+        List<Brand> brandList = this.list(wrapper);
+        // 5. 分装并返回数据
+        return pageResult.getPage(brandList);
     }
+
 
     /**
      * 根据关键字查询品牌分页列表
@@ -86,12 +94,11 @@ public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements
     private PageResult<Brand> getBrandPageResult(QueryWrapper<Brand> wrapper) {
         List<Brand> list = this.list(wrapper);
         PageInfo<Brand> pageInfo = new PageInfo<>(list);
-        PageResult<Brand> pageResult = PageResult.<Brand>builder()
+        return PageResult.<Brand>builder()
                 .totalCount(pageInfo.getTotal())
-                .totalPage((long) pageInfo.getPages())
+                .totalPage(pageInfo.getPages())
                 .items(pageInfo.getList())
                 .build();
-        return pageResult;
     }
 
 }

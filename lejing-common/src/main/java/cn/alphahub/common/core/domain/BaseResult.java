@@ -325,7 +325,7 @@ public class BaseResult<T> extends AbstractResult<T> implements Serializable {
      * @param totalPage  总页数
      * @return 分页数据集合
      */
-    public BaseResult<PageResult<T>> queryPage(List<T> items, Long totalCount, Long totalPage) {
+    public BaseResult<PageResult<T>> queryPage(List<T> items, Long totalCount, Integer totalPage) {
         PageResult<T> pageResult = PageResult.<T>builder()
                 .totalCount(totalCount)
                 .totalPage(totalPage)

@@ -9,7 +9,7 @@ import org.springframework.cloud.openfeign.FeignClient;
  *
  * @author liuwenjing
  */
-@FeignClient(value = "lejing-coupon",contextId = "spuBoundsClient")
+@FeignClient(value = "lejing-coupon", contextId = "spuBoundsClient")
 public interface SpuBoundsClient extends SpuBoundsApi {
 
 }

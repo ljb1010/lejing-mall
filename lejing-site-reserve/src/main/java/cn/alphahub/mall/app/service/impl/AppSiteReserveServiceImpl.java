@@ -72,13 +72,12 @@ public class AppSiteReserveServiceImpl implements AppSiteReserveService {
         }).collect(Collectors.toList());
 
         PageInfo<SiteReserveVO> pageInfo = new PageInfo<>(reserveVOList);
-        PageResult<SiteReserveVO> pageResult = PageResult.<SiteReserveVO>builder()
+
+        return PageResult.<SiteReserveVO>builder()
                 .totalCount(pageInfo.getTotal())
-                .totalPage((long) pageInfo.getPages())
+                .totalPage(pageInfo.getPages())
                 .items(pageInfo.getList())
                 .build();
-
-        return pageResult;
     }
 
     /**
@@ -205,7 +204,7 @@ public class AppSiteReserveServiceImpl implements AppSiteReserveService {
 
         PageResult<SiteOrderVO> orderVOPageResult = new PageResult<>();
         orderVOPageResult.setTotalCount(3L);
-        orderVOPageResult.setTotalPage(1L);
+        orderVOPageResult.setTotalPage(1);
         orderVOPageResult.setItems(orderVOS);
 
         return orderVOPageResult;

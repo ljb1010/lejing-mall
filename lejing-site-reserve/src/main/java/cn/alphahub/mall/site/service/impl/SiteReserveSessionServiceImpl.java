@@ -49,12 +49,11 @@ public class SiteReserveSessionServiceImpl extends ServiceImpl<SiteReserveSessio
     private PageResult<SiteReserveSession> getPageResult(QueryWrapper<SiteReserveSession> wrapper) {
         List<SiteReserveSession> list = this.list(wrapper);
         PageInfo<SiteReserveSession> pageInfo = new PageInfo<>(list);
-        PageResult<SiteReserveSession> pageResult = PageResult.<SiteReserveSession>builder()
+        return PageResult.<SiteReserveSession>builder()
                 .totalCount(pageInfo.getTotal())
-                .totalPage((long) pageInfo.getPages())
+                .totalPage(pageInfo.getPages())
                 .items(pageInfo.getList())
                 .build();
-        return pageResult;
     }
 
 }

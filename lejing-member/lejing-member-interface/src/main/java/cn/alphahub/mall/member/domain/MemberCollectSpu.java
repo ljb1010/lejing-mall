@@ -15,7 +15,7 @@ import java.util.Date;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-07 22:43:41
+ * @date 2021-02-24 16:15:38
  */
 @Data
 @Builder
@@ -23,37 +23,37 @@ import java.util.Date;
 @AllArgsConstructor
 @TableName("ums_member_collect_spu")
 public class MemberCollectSpu implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * id
-	 */
+    /**
+     * id
+     */
     @TableId
     private Long id;
 
-	/**
-	 * 会员id
-	 */
+    /**
+     * 会员id
+     */
     private Long memberId;
 
-	/**
-	 * spu_id
-	 */
+    /**
+     * spu_id
+     */
     private Long spuId;
 
-	/**
-	 * spu_name
-	 */
+    /**
+     * spu_name
+     */
     private String spuName;
 
-	/**
-	 * spu_img
-	 */
+    /**
+     * spu_img
+     */
     private String spuImg;
 
-	/**
-	 * create_time
-	 */
+    /**
+     * create_time
+     */
     private Date createTime;
 
 }

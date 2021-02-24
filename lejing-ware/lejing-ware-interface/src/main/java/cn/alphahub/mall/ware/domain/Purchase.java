@@ -16,7 +16,7 @@ import java.util.Date;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-07 22:47:37
+ * @date 2021-02-24 15:19:57
  */
 @Data
 @Builder
@@ -24,57 +24,57 @@ import java.util.Date;
 @AllArgsConstructor
 @TableName("wms_purchase")
 public class Purchase implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * 采购单id
-	 */
+    /**
+     * 采购单id
+     */
     @TableId
     private Long id;
 
-	/**
-	 * 采购人id
-	 */
+    /**
+     * 采购人id
+     */
     private Long assigneeId;
 
-	/**
-	 * 采购人名
-	 */
+    /**
+     * 采购人名
+     */
     private String assigneeName;
 
-	/**
-	 * 联系方式
-	 */
+    /**
+     * 联系方式
+     */
     private String phone;
 
-	/**
-	 * 优先级
-	 */
+    /**
+     * 优先级
+     */
     private Integer priority;
 
-	/**
-	 * 状态
-	 */
+    /**
+     * 状态
+     */
     private Integer status;
 
-	/**
-	 * 仓库id
-	 */
+    /**
+     * 仓库id
+     */
     private Long wareId;
 
-	/**
-	 * 总金额
-	 */
+    /**
+     * 总金额
+     */
     private BigDecimal amount;
 
-	/**
-	 * 创建日期
-	 */
+    /**
+     * 创建日期
+     */
     private Date createTime;
 
-	/**
-	 * 更新日期
-	 */
+    /**
+     * 更新日期
+     */
     private Date updateTime;
 
 }

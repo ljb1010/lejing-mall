@@ -49,12 +49,11 @@ public class SiteOrderRuleServiceImpl extends ServiceImpl<SiteOrderRuleMapper, S
     private PageResult<SiteOrderRule> getPageResult(QueryWrapper<SiteOrderRule> wrapper) {
         List<SiteOrderRule> list = this.list(wrapper);
         PageInfo<SiteOrderRule> pageInfo = new PageInfo<>(list);
-        PageResult<SiteOrderRule> pageResult = PageResult.<SiteOrderRule>builder()
+        return PageResult.<SiteOrderRule>builder()
                 .totalCount(pageInfo.getTotal())
-                .totalPage((long) pageInfo.getPages())
+                .totalPage(pageInfo.getPages())
                 .items(pageInfo.getList())
                 .build();
-        return pageResult;
     }
 
 }

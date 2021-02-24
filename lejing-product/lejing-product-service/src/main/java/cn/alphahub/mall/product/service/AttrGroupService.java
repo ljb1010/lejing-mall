@@ -2,7 +2,6 @@ package cn.alphahub.mall.product.service;
 
 import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
-import cn.alphahub.common.core.service.PageService;
 import cn.alphahub.mall.product.domain.AttrGroup;
 import cn.alphahub.mall.product.vo.AttrGroupWithAttrsVO;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -14,9 +13,17 @@ import java.util.List;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-07 22:46:24
+ * @date 2021-02-24 15:36:31
  */
-public interface AttrGroupService extends IService<AttrGroup>, PageService<AttrGroup> {
+public interface AttrGroupService extends IService<AttrGroup> {
+    /**
+     * 查询属性分组分页列表
+     *
+     * @param pageDomain 分页数据
+     * @param attrGroup  分页对象
+     * @return 属性分组分页数据
+     */
+    PageResult<AttrGroup> queryPage(PageDomain pageDomain, AttrGroup attrGroup);
 
     /**
      * 根据catalogId查询属性分组列表

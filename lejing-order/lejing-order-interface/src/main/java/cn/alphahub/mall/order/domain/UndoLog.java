@@ -15,7 +15,7 @@ import java.util.Date;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-07 22:45:12
+ * @date 2021-02-24 16:02:31
  */
 @Data
 @Builder
@@ -23,52 +23,52 @@ import java.util.Date;
 @AllArgsConstructor
 @TableName("undo_log")
 public class UndoLog implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * 主键id
-	 */
+    /**
+     * 主键id
+     */
     @TableId
     private Long id;
 
-	/**
-	 * 相关的branch id
-	 */
+    /**
+     * 相关的branch id
+     */
     private Long branchId;
 
-	/**
-	 * 相关的xid
-	 */
+    /**
+     * 相关的xid
+     */
     private String xid;
 
-	/**
-	 * 内容
-	 */
+    /**
+     * 内容
+     */
     private String context;
 
-	/**
-	 * 回滚信息
-	 */
+    /**
+     * 回滚信息
+     */
     private String rollbackInfo;
 
-	/**
-	 * 日志状态码
-	 */
+    /**
+     * 日志状态码
+     */
     private Integer logStatus;
 
-	/**
-	 * 日志创建时间
-	 */
+    /**
+     * 日志创建时间
+     */
     private Date logCreated;
 
-	/**
-	 * 日志修改时间
-	 */
+    /**
+     * 日志修改时间
+     */
     private Date logModified;
 
-	/**
-	 * 其他信息
-	 */
+    /**
+     * 其他信息
+     */
     private String ext;
 
 }

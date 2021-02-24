@@ -15,7 +15,7 @@ import java.util.Date;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-07 22:45:12
+ * @date 2021-02-24 16:02:31
  */
 @Data
 @Builder
@@ -23,37 +23,37 @@ import java.util.Date;
 @AllArgsConstructor
 @TableName("oms_order_operate_history")
 public class OrderOperateHistory implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * id
-	 */
+    /**
+     * id
+     */
     @TableId
     private Long id;
 
-	/**
-	 * 订单id
-	 */
+    /**
+     * 订单id
+     */
     private Long orderId;
 
-	/**
-	 * 操作人[用户；系统；后台管理员]
-	 */
+    /**
+     * 操作人[用户；系统；后台管理员]
+     */
     private String operateMan;
 
-	/**
-	 * 操作时间
-	 */
+    /**
+     * 操作时间
+     */
     private Date createTime;
 
-	/**
-	 * 订单状态【0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭；5->无效订单】
-	 */
+    /**
+     * 订单状态【0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭；5->无效订单】
+     */
     private Integer orderStatus;
 
-	/**
-	 * 备注
-	 */
+    /**
+     * 备注
+     */
     private String note;
 
 }

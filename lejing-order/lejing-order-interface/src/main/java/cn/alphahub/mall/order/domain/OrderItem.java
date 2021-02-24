@@ -15,7 +15,7 @@ import java.math.BigDecimal;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-07 22:45:12
+ * @date 2021-02-24 16:02:31
  */
 @Data
 @Builder
@@ -23,107 +23,107 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @TableName("oms_order_item")
 public class OrderItem implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * id
-	 */
+    /**
+     * id
+     */
     @TableId
     private Long id;
 
-	/**
-	 * order_id
-	 */
+    /**
+     * order_id
+     */
     private Long orderId;
 
-	/**
-	 * order_sn
-	 */
+    /**
+     * order_sn
+     */
     private String orderSn;
 
-	/**
-	 * spu_id
-	 */
+    /**
+     * spu_id
+     */
     private Long spuId;
 
-	/**
-	 * spu_name
-	 */
+    /**
+     * spu_name
+     */
     private String spuName;
 
-	/**
-	 * spu_pic
-	 */
+    /**
+     * spu_pic
+     */
     private String spuPic;
 
-	/**
-	 * 品牌
-	 */
+    /**
+     * 品牌
+     */
     private String spuBrand;
 
-	/**
-	 * 商品分类id
-	 */
+    /**
+     * 商品分类id
+     */
     private Long categoryId;
 
-	/**
-	 * 商品sku编号
-	 */
+    /**
+     * 商品sku编号
+     */
     private Long skuId;
 
-	/**
-	 * 商品sku名字
-	 */
+    /**
+     * 商品sku名字
+     */
     private String skuName;
 
-	/**
-	 * 商品sku图片
-	 */
+    /**
+     * 商品sku图片
+     */
     private String skuPic;
 
-	/**
-	 * 商品sku价格
-	 */
+    /**
+     * 商品sku价格
+     */
     private BigDecimal skuPrice;
 
-	/**
-	 * 商品购买的数量
-	 */
+    /**
+     * 商品购买的数量
+     */
     private Integer skuQuantity;
 
-	/**
-	 * 商品销售属性组合（JSON）
-	 */
+    /**
+     * 商品销售属性组合（JSON）
+     */
     private String skuAttrsVals;
 
-	/**
-	 * 商品促销分解金额
-	 */
+    /**
+     * 商品促销分解金额
+     */
     private BigDecimal promotionAmount;
 
-	/**
-	 * 优惠券优惠分解金额
-	 */
+    /**
+     * 优惠券优惠分解金额
+     */
     private BigDecimal couponAmount;
 
-	/**
-	 * 积分优惠分解金额
-	 */
+    /**
+     * 积分优惠分解金额
+     */
     private BigDecimal integrationAmount;
 
-	/**
-	 * 该商品经过优惠后的分解金额
-	 */
+    /**
+     * 该商品经过优惠后的分解金额
+     */
     private BigDecimal realAmount;
 
-	/**
-	 * 赠送积分
-	 */
+    /**
+     * 赠送积分
+     */
     private Integer giftIntegration;
 
-	/**
-	 * 赠送成长值
-	 */
+    /**
+     * 赠送成长值
+     */
     private Integer giftGrowth;
 
 }

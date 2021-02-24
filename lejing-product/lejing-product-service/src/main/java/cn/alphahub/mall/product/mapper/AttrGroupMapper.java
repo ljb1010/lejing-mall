@@ -1,19 +1,15 @@
 package cn.alphahub.mall.product.mapper;
 
-import cn.alphahub.mall.product.domain.AttrAttrgroupRelation;
 import cn.alphahub.mall.product.domain.AttrGroup;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
 
 /**
  * 属性分组
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-07 22:46:24
+ * @date 2021-02-24 15:36:31
  */
 @Mapper
 public interface AttrGroupMapper extends BaseMapper<AttrGroup> {

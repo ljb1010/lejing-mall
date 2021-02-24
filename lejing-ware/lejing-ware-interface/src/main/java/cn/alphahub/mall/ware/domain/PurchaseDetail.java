@@ -15,7 +15,7 @@ import java.math.BigDecimal;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-07 22:47:37
+ * @date 2021-02-24 15:19:57
  */
 @Data
 @Builder
@@ -23,42 +23,42 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @TableName("wms_purchase_detail")
 public class PurchaseDetail implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * 主键id
-	 */
+    /**
+     * 主键id
+     */
     @TableId
     private Long id;
 
-	/**
-	 * 采购单id
-	 */
+    /**
+     * 采购单id
+     */
     private Long purchaseId;
 
-	/**
-	 * 采购商品id
-	 */
+    /**
+     * 采购商品id
+     */
     private Long skuId;
 
-	/**
-	 * 采购数量
-	 */
+    /**
+     * 采购数量
+     */
     private Integer skuNum;
 
-	/**
-	 * 采购金额
-	 */
+    /**
+     * 采购金额
+     */
     private BigDecimal skuPrice;
 
-	/**
-	 * 仓库id
-	 */
+    /**
+     * 仓库id
+     */
     private Long wareId;
 
-	/**
-	 * 状态[0新建，1已分配，2正在采购，3已完成，4采购失败]
-	 */
+    /**
+     * 状态[0新建，1已分配，2正在采购，3已完成，4采购失败]
+     */
     private Integer status;
 
 }

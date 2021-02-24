@@ -14,7 +14,7 @@ import java.io.Serializable;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-07 22:43:41
+ * @date 2021-02-24 16:15:38
  */
 @Data
 @Builder
@@ -22,32 +22,32 @@ import java.io.Serializable;
 @AllArgsConstructor
 @TableName("ums_member_collect_subject")
 public class MemberCollectSubject implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * id
-	 */
+    /**
+     * id
+     */
     @TableId
     private Long id;
 
-	/**
-	 * subject_id
-	 */
+    /**
+     * subject_id
+     */
     private Long subjectId;
 
-	/**
-	 * subject_name
-	 */
+    /**
+     * subject_name
+     */
     private String subjectName;
 
-	/**
-	 * subject_img
-	 */
+    /**
+     * subject_img
+     */
     private String subjectImg;
 
-	/**
-	 * 活动url
-	 */
+    /**
+     * 活动url
+     */
     private String subjectUrll;
 
 }

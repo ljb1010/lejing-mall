@@ -7,7 +7,6 @@ import cn.alphahub.mall.ware.mapper.WareOrderTaskMapper;
 import cn.alphahub.mall.ware.service.WareOrderTaskService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,9 +16,9 @@ import java.util.List;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-07 22:47:37
+ * @date 2021-02-24 15:19:57
  */
-@Service("wareOrderTaskService")
+@Service
 public class WareOrderTaskServiceImpl extends ServiceImpl<WareOrderTaskMapper, WareOrderTask> implements WareOrderTaskService {
 
     /**
@@ -31,16 +30,16 @@ public class WareOrderTaskServiceImpl extends ServiceImpl<WareOrderTaskMapper, W
      */
     @Override
     public PageResult<WareOrderTask> queryPage(PageDomain pageDomain, WareOrderTask wareOrderTask) {
-        pageDomain.startPage();
+        // 1. 构造mybatis-plus查询wrapper
         QueryWrapper<WareOrderTask> wrapper = new QueryWrapper<>(wareOrderTask);
-        List<WareOrderTask> list = this.list(wrapper);
-        PageInfo<WareOrderTask> pageInfo = new PageInfo<>(list);
-        PageResult<WareOrderTask> pageResult = PageResult.<WareOrderTask>builder()
-                .totalCount(pageInfo.getTotal())
-                .totalPage((long) pageInfo.getPages())
-                .items(pageInfo.getList())
-                .build();
-        return pageResult;
+        // 2. 创建一个分页对象
+        PageResult<WareOrderTask> pageResult = new PageResult<>();
+        // 3. 开始分页
+        pageResult.startPage(pageDomain);
+        // 4. 执行Dao|Mapper SQL查询
+        List<WareOrderTask> wareOrderTaskList = this.list(wrapper);
+        // 5. 分装并返回数据
+        return pageResult.getPage(wareOrderTaskList);
     }
 
 }

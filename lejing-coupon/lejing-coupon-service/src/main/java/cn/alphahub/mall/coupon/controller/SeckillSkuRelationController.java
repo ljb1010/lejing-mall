@@ -5,13 +5,12 @@ import cn.alphahub.common.core.controller.BaseController;
 import cn.alphahub.common.core.domain.BaseResult;
 import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
-import cn.alphahub.common.to.SkuReductionTO;
 import cn.alphahub.mall.coupon.domain.SeckillSkuRelation;
 import cn.alphahub.mall.coupon.service.SeckillSkuRelationService;
 import org.apache.commons.lang3.ObjectUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.Arrays;
 
 /**
@@ -19,12 +18,12 @@ import java.util.Arrays;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-14 18:57:50
+ * @date 2021-02-24 16:31:15
  */
 @RestController
 @RequestMapping("coupon/seckillskurelation")
 public class SeckillSkuRelationController extends BaseController {
-    @Autowired
+    @Resource
     private SeckillSkuRelationService seckillSkuRelationService;
 
     /**
@@ -34,7 +33,7 @@ public class SeckillSkuRelationController extends BaseController {
      * @param rows               显示行数,默认10条
      * @param orderColumn        排序排序字段,默认不排序
      * @param isAsc              排序方式,desc或者asc
-     * @param seckillSkuRelation 秒杀活动商品关联,查询字段选择性传入,默认为等值查询
+     * @param seckillSkuRelation 秒杀活动商品关联, 查询字段选择性传入, 默认为等值查询
      * @return 秒杀活动商品关联分页数据
      */
     @GetMapping("/list")
@@ -80,7 +79,7 @@ public class SeckillSkuRelationController extends BaseController {
     /**
      * 修改秒杀活动商品关联
      *
-     * @param seckillSkuRelation 秒杀活动商品关联,根据id选择性更新
+     * @param seckillSkuRelation 秒杀活动商品关联, 根据id选择性更新
      * @return 成功返回true, 失败返回false
      */
     @PutMapping("/update")

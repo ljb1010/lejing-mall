@@ -350,6 +350,10 @@ api[12].list.push({
     order: '5',
     desc: '批量删除商品满减信息',
 });
+api[12].list.push({
+    order: '6',
+    desc: '保存满减、优惠信息',
+});
 api.push({
     alias: 'SkuLadderController',
     order: '14',

@@ -24,7 +24,6 @@ import cn.alphahub.mall.product.vo.SpuSaveVO;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -41,10 +40,10 @@ import java.util.stream.Collectors;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-07 22:46:24
+ * @date 2021-02-24 15:36:31
  */
 @Slf4j
-@Service("spuInfoService")
+@Service
 public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoMapper, SpuInfo> implements SpuInfoService {
 
     @Resource
@@ -75,15 +74,17 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoMapper, SpuInfo> impl
      */
     @Override
     public PageResult<SpuInfo> queryPage(PageDomain pageDomain, SpuInfo spuInfo) {
-        pageDomain.startPage();
+        // 1. 构造mybatis-plus查询wrapper
         QueryWrapper<SpuInfo> wrapper = new QueryWrapper<>(spuInfo);
-        List<SpuInfo> list = this.list(wrapper);
-        PageInfo<SpuInfo> pageInfo = new PageInfo<>(list);
-        return PageResult.<SpuInfo>builder()
-                .totalCount(pageInfo.getTotal())
-                .totalPage((long) pageInfo.getPages())
-                .items(pageInfo.getList())
-                .build();
+        // 2. 创建一个分页对象
+        PageResult<SpuInfo> pageResult = new PageResult<>();
+        // 3. 开始分页
+        pageResult.startPage(pageDomain);
+        // 4. 执行Dao|Mapper SQL查询
+        List<SpuInfo> spuInfoList = this.list(wrapper);
+        // 5. 分装并返回数据
+        return pageResult.getPage(spuInfoList);
+
     }
 
     @Override

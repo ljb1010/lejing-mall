@@ -49,12 +49,11 @@ public class SiteInvalidSessionServiceImpl extends ServiceImpl<SiteInvalidSessio
     private PageResult<SiteInvalidSession> getPageResult(QueryWrapper<SiteInvalidSession> wrapper) {
         List<SiteInvalidSession> list = this.list(wrapper);
         PageInfo<SiteInvalidSession> pageInfo = new PageInfo<>(list);
-        PageResult<SiteInvalidSession> pageResult = PageResult.<SiteInvalidSession>builder()
+        return PageResult.<SiteInvalidSession>builder()
                 .totalCount(pageInfo.getTotal())
-                .totalPage((long) pageInfo.getPages())
+                .totalPage(pageInfo.getPages())
                 .items(pageInfo.getList())
                 .build();
-        return pageResult;
     }
 
 }

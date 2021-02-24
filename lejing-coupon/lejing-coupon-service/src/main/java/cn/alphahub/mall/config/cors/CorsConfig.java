@@ -2,9 +2,6 @@ package cn.alphahub.mall.config.cors;
 
 import lombok.Data;
 import org.springframework.boot.SpringBootVersion;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -20,8 +17,8 @@ import java.util.List;
  * @date 2021年2月3日
  */
 @Data
-@Configuration
-@ConfigurationProperties(prefix = "cors.config")
+//@Configuration
+//@ConfigurationProperties(prefix = "cors.config")
 public class CorsConfig {
 
     /**
@@ -34,7 +31,7 @@ public class CorsConfig {
      */
     private List<String> allowedOrigins;
 
-    @Bean
+    //@Bean
     public CorsFilter corsFilter() {
         //CORS allowed Origins according to version of Springboot
         String springBootVersion = SpringBootVersion.getVersion();

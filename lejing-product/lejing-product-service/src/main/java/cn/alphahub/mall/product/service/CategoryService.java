@@ -1,6 +1,7 @@
 package cn.alphahub.mall.product.service;
 
-import cn.alphahub.common.core.service.PageService;
+import cn.alphahub.common.core.page.PageDomain;
+import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.mall.product.domain.Category;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -11,9 +12,9 @@ import java.util.List;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-07 22:46:24
+ * @date 2021-02-24 15:36:31
  */
-public interface CategoryService extends IService<Category>, PageService<Category> {
+public interface CategoryService extends IService<Category> {
 
     /**
      * 查出所有分类及其子分类， 树形结构组装
@@ -46,4 +47,13 @@ public interface CategoryService extends IService<Category>, PageService<Categor
      * @return 成功返回true, 失败返回false
      */
     boolean updateCasecade(Category category);
+
+    /**
+     * 查询商品三级分类分页列表
+     *
+     * @param pageDomain 分页数据
+     * @param category   分页对象
+     * @return 商品三级分类分页数据
+     */
+    PageResult<Category> queryPage(PageDomain pageDomain, Category category);
 }

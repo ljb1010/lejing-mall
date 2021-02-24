@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author Weasley J
  * @email 1432689025@qq.com
- * @date 2021-02-07 22:46:24
+ * @date 2021-02-24 15:36:31
  */
 @Mapper
 public interface AttrAttrgroupRelationMapper extends BaseMapper<AttrAttrgroupRelation> {
