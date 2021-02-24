@@ -97,3 +97,10 @@ JVM参数: `-Xms512m -Xmx512m -Xmn200m -Xlog:gc*`
 >
 > `mvn package`的时候不能读取common里面的一些相关类的注释，因为`java`最终编译成字节码文件后会把所有注释都清理掉，也就是项目最终的class文件不包含任何注释
 
+
+
+# 6 Q&A
+
+1.  为什么分页不用`mybatis-plus`自带的`IPage`？
+
+   `mybatis-plus`的`IPage`分页入参不利于项目的`API`文档输出，毕竟我们都不想手写接口文档，如果你喜欢手写接口文档，然后再填入什么`RAP`、`YApi`里面，我推荐你用回`Swagger`。

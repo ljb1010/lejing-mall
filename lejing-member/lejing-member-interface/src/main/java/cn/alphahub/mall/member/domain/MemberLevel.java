@@ -1,5 +1,7 @@
 package cn.alphahub.mall.member.domain;
 
+import com.baomidou.mybatisplus.annotation.SqlCondition;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -34,6 +36,7 @@ public class MemberLevel implements Serializable {
     /**
      * 等级名称
      */
+    @TableField(condition = SqlCondition.LIKE)
     private String name;
 
     /**
