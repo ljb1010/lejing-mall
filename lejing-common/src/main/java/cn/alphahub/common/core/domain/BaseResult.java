@@ -1,17 +1,13 @@
 package cn.alphahub.common.core.domain;
 
 import cn.alphahub.common.constant.HttpStatus;
-import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.common.core.top.abstraction.AbstractResult;
 import cn.alphahub.common.util.DateUtils;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 import org.apache.commons.lang3.ObjectUtils;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.Objects;
 
 /**
  * Controller数据返回封装
@@ -315,26 +311,6 @@ public class BaseResult<T> extends AbstractResult<T> implements Serializable {
      */
     public static <T> BaseResult<T> error(int code, String msg) {
         return preCreate(code, msg, false, null);
-    }
-
-    /**
-     * 返回分页列表
-     *
-     * @param items      分页集合
-     * @param totalCount 总记录数
-     * @param totalPage  总页数
-     * @return 分页数据集合
-     */
-    public BaseResult<PageResult<T>> queryPage(List<T> items, Long totalCount, Integer totalPage) {
-        PageResult<T> pageResult = PageResult.<T>builder()
-                .totalCount(totalCount)
-                .totalPage(totalPage)
-                .items(items)
-                .build();
-        if (Objects.nonNull(pageResult)) {
-            return BaseResult.success("查询成功", pageResult);
-        }
-        return BaseResult.error("查询失败");
     }
 
     public BaseResult<T> setResult(T data) {
