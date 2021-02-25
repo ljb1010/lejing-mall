@@ -96,16 +96,21 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoMapper, SpuInfo> impl
         BeanUtils.copyProperties(vo, spuInfo);
         Date currTime = new Date();
         spuInfo.setCreateTime(currTime);
+        // 2、保存Spu的描述图片 pms_spu_info_desc
         baseMapper.insert(spuInfo);
 
-        // 2、保存Spu的描述图片 pms_spu_info_desc
         List<String> decryptList = vo.getDecript();
-        SpuInfoDesc spuInfoDesc = new SpuInfoDesc();
         Long spuInfoId = spuInfo.getId();
-        spuInfoDesc.setSpuId(spuInfoId);
-        spuInfoDesc.setDecript(String.join(",", decryptList));
+        System.out.println("----------------------------------");
+        System.out.println("spuInfo.getId():" + " " + spuInfo);
+        System.out.println("----------------------------------");
+        SpuInfoDesc spuInfoDesc = SpuInfoDesc.builder()
+                .spuId(spuInfoId)
+                .decript(String.join(",", decryptList))
+                .build();
+        log.info("spu信息介绍: {}\n", spuInfoDesc);
         spuInfoDescService.saveSpuInfoDesc(spuInfoDesc);
-
+        //spuInfoDescService.save();
         // 3、保存spu的图片集 pms_spu_image
         List<String> images = vo.getImages();
         spuImagesService.saveBatch(spuInfoId, images);
@@ -156,9 +161,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoMapper, SpuInfo> impl
                         .skuId(skuId)
                         .defaultImg(img.getDefaultImg())
                         .imgUrl(img.getImgUrl())
-                        .build()).collect(Collectors.toList()
-
-                );
+                        .build()).collect(Collectors.toList());
                 // 5.2）、sku的图片信息；pms_sku_image
                 skuImagesService.saveBatch(skuImagesList);
 
@@ -178,16 +181,23 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoMapper, SpuInfo> impl
                 BeanUtils.copyProperties(bounds, spuBounds);
                 spuBounds.setSpuId(spuInfoId);
                 BaseResult<Boolean> save = spuBoundsClient.save(spuBounds);
-                if (save.getData()) {
+                if (save.getSuccess()) {
                     log.info("{}", "远程保存商品spu积分成功");
                 } else {
                     log.warn("{}", "远程保存商品spu积分失败");
                 }
+                //将前端提交的价格转换为TO对象
+                List<cn.alphahub.common.to.MemberPrice> memberPriceToList = sku.getMemberPrice().stream().map(memberPrice -> {
+                    cn.alphahub.common.to.MemberPrice memberPriceTo = new cn.alphahub.common.to.MemberPrice();
+                    BeanUtils.copyProperties(memberPrice, memberPriceTo);
+                    return memberPriceTo;
+                }).collect(Collectors.toList());
                 SkuReductionTO skuReductionTo = new SkuReductionTO();
                 skuReductionTo.setSkuId(skuId);
+                skuReductionTo.setMemberPrice(memberPriceToList);
                 BeanUtils.copyProperties(vo, skuReductionTo);
                 BaseResult<Boolean> baseResult = skuFullReductionClient.saveSkuReduction(skuReductionTo);
-                if (baseResult.getData()) {
+                if (baseResult.getSuccess()) {
                     log.info("{}", "远程保存sku成功");
                 } else {
                     log.warn("{}", "远程保存sku失败");

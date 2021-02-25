@@ -138,13 +138,6 @@
                 <artifactId>druid-spring-boot-starter</artifactId>
                 <version>${druid.starter.version}</version>
             </dependency>
-            <!-- testng -->
-            <dependency>
-                <groupId>org.testng</groupId>
-                <artifactId>testng</artifactId>
-                <version>RELEASE</version>
-                <scope>compile</scope>
-            </dependency>
             <!-- 阿里巴巴-fastjson -->
             <dependency>
                 <groupId>com.alibaba</groupId>

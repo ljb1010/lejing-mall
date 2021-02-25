@@ -2,7 +2,6 @@ package cn.alphahub.mall.coupon.service.impl;
 
 import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
-import cn.alphahub.common.to.MemberPriceTO;
 import cn.alphahub.common.to.SkuReductionTO;
 import cn.alphahub.mall.coupon.domain.MemberPrice;
 import cn.alphahub.mall.coupon.domain.SkuFullReduction;
@@ -12,6 +11,7 @@ import cn.alphahub.mall.coupon.service.MemberPriceService;
 import cn.alphahub.mall.coupon.service.SkuFullReductionService;
 import cn.alphahub.mall.coupon.service.SkuLadderService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -76,16 +76,18 @@ public class SkuFullReductionServiceImpl extends ServiceImpl<SkuFullReductionMap
         boolean b2 = this.save(reduction);
 
         // insert into sms_member_price
-        List<MemberPriceTO> memberPrice = reductionTO.getMemberPrice();
-        List<MemberPrice> memberPrices = memberPrice.stream().map(item -> MemberPrice.builder()
-                .skuId(reductionTO.getSkuId())
-                .memberLevelId(item.getId())
-                .memberLevelName(item.getName())
-                .memberPrice(item.getPrice())
-                .addOther(1)
-                .build()).collect(Collectors.toList());
-        boolean b3 = memberPriceService.saveBatch(memberPrices);
-
-        return b1 && b2 && b3;
+        List<cn.alphahub.common.to.MemberPrice> memberPriceList = reductionTO.getMemberPrice();
+        if (CollectionUtils.isNotEmpty(memberPriceList)) {
+            List<MemberPrice> memberPrices = memberPriceList.stream().map(item -> MemberPrice.builder()
+                    .skuId(reductionTO.getSkuId())
+                    .memberLevelId(item.getId())
+                    .memberLevelName(item.getName())
+                    .memberPrice(item.getPrice())
+                    .addOther(1)
+                    .build()).collect(Collectors.toList());
+            boolean b3 = memberPriceService.saveBatch(memberPrices);
+            return b1 && b2 && b3;
+        }
+        return b1 && b2;
     }
 }

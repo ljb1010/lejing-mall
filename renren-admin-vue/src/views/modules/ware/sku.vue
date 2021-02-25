@@ -92,10 +92,10 @@ export default {
         method: "get",
         params: this.$http.adornParams({
           page: 1,
-          limit: 500
+          rows: 500
         })
       }).then(({ data }) => {
-        this.wareList = data.page.list;
+        this.wareList = data.data.items;
       });
     },
     // 获取数据列表
@@ -112,8 +112,8 @@ export default {
         })
       }).then(({ data }) => {
         if (data && data.code === 200) {
-          this.dataList = data.page.list;
-          this.totalPage = data.page.totalCount;
+          this.dataList = data.data.items;
+          this.totalPage = data.data.totalCount;
         } else {
           this.dataList = [];
           this.totalPage = 0;

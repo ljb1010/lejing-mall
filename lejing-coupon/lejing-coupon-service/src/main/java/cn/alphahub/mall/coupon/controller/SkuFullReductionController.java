@@ -109,7 +109,7 @@ public class SkuFullReductionController extends BaseController {
      */
     @PostMapping("/saveinfo")
     BaseResult<Boolean> saveSkuReduction(@RequestBody SkuReductionTO skuReductionTo) {
-        Boolean reduction = skuFullReductionService.saveSkuReduction(skuReductionTo);
-        return reduction ? BaseResult.ok("保存成功", reduction) : BaseResult.fail("保存失败", reduction);
+        Boolean flag = skuFullReductionService.saveSkuReduction(skuReductionTo);
+        return flag ? BaseResult.ok("保存成功") : BaseResult.fail("保存失败");
     }
 }

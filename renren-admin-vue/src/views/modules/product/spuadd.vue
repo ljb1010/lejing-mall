@@ -349,7 +349,7 @@
 
 <script>
 //这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
-//例如：import 《组件名称》 from '《组件路径》';
+//例如：import 《组件名称》 from '《组件路径》';
 import CategoryCascader from "../common/category-cascader";
 import BrandSelect from "../common/brand-select";
 import MultiUpload from "@/components/upload/multiUpload";
@@ -371,7 +371,7 @@ export default {
         spuName: "",
         spuDescription: "",
         catalogId: 0,
-        brandId: "1",
+        brandId: "",
         weight: "",
         publishStatus: 0,
         decript: [], //商品详情
@@ -395,7 +395,7 @@ export default {
           {required: true, message: "请选择一个分类", trigger: "blur"}
         ],
         brandId: [
-          {required: false, message: "请选择一个品牌", trigger: "blur"}
+          { required: true, message: "请选择一个品牌", trigger: "blur" }
         ],
         decript: [
           {required: true, message: "请上传商品详情图集", trigger: "blur"}
@@ -486,7 +486,7 @@ export default {
         })
       })
         .then(({data}) => {
-          this.dataResp.memberLevels = data.page.list;
+          this.dataResp.memberLevels = data.data.items;
         })
         .catch(e => {
           console.log(e);
@@ -646,17 +646,16 @@ export default {
       //获取当前分类可以使用的销售属性
       if (!this.dataResp.steped[1]) {
         this.$http({
-          url: this.$http.adornUrl(
-            `/product/attr/sale/list/${this.spu.catalogId}`
-          ),
+          url: this.$http.adornUrl(`/product/attr/sale/list/${this.spu.catalogId}`),
           method: "get",
           params: this.$http.adornParams({
             page: 1,
             rows: 500
           })
         }).then(({data}) => {
-          this.dataResp.saleAttrs = data.page.list;
-          data.page.list.forEach(item => {
+          console.log("/product/attr/sale/list/${this.spu.catalogId}:", data.data)
+          this.dataResp.saleAttrs = data.data.items;
+          data.data.items.forEach(item => {
             this.dataResp.tempSaleAttrs.push({
               attrId: item.attrId,
               attrValues: [],
@@ -672,9 +671,7 @@ export default {
     showBaseAttrs() {
       if (!this.dataResp.steped[0]) {
         this.$http({
-          url: this.$http.adornUrl(
-            `/product/attrgroup/${this.spu.catalogId}/withattr`
-          ),
+          url: this.$http.adornUrl(`/product/attrgroup/${this.spu.catalogId}/withattr`),
           method: "get",
           params: this.$http.adornParams({})
         }).then(({data}) => {
@@ -709,7 +706,7 @@ export default {
             method: "post",
             data: this.$http.adornData(this.spu, false)
           }).then(({data}) => {
-            if (data.code == 0) {
+            if (data.code === 200) {
               this.$message({
                 type: "success",
                 message: "新增商品成功!"
@@ -806,8 +803,8 @@ export default {
   updated() {
   }, //生命周期 - 更新之后
   beforeDestroy() {
-    PubSub.unsubscribe(this.catPathSub);
-    PubSub.unsubscribe(this.brandIdSub);
+    this.PubSub.unsubscribe(this.catPathSub);
+    this.PubSub.unsubscribe(this.brandIdSub);
   }, //生命周期 - 销毁之前
   destroyed() {
   }, //生命周期 - 销毁完成

@@ -29,6 +29,6 @@ public class SkuReductionTO {
 
     private int priceStatus;
 
-    private List<MemberPriceTO> memberPrice;
+    private List<MemberPrice> memberPrice;
 
 }

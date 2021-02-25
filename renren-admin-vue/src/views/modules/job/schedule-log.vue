@@ -108,13 +108,13 @@
           method: 'get',
           params: this.$http.adornParams({
             'page': this.pageIndex,
-            'limit': this.pageSize,
+            'rows': this.pageSize,
             'jobId': this.dataForm.id
           })
         }).then(({data}) => {
-          if (data && data.code === 0) {
-            this.dataList = data.page.list
-            this.totalPage = data.page.totalCount
+          if (data && data.code === 200) {
+            this.dataList = data.data.items;
+            this.totalPage = data.data.totalCount;
           } else {
             this.dataList = []
             this.totalPage = 0

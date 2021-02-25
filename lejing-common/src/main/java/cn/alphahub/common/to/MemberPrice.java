@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MemberPriceTO {
+public class MemberPrice {
 
     private Long id;
 
