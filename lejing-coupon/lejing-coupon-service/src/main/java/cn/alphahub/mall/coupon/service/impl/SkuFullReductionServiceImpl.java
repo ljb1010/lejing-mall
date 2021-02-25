@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,6 +61,7 @@ public class SkuFullReductionServiceImpl extends ServiceImpl<SkuFullReductionMap
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean saveSkuReduction(SkuReductionTO reductionTO) {
+        boolean b1 = false, b2 = false, b3 = false;
         // 1. 保存满减、打折、会员价
         //  5.4）、sku的优惠、满减等信息；lejing_sms -> sms_sku_ladder|sms_sku_full_reduction|sms_member_price
         // insert into sms_sku_ladder
@@ -68,12 +70,16 @@ public class SkuFullReductionServiceImpl extends ServiceImpl<SkuFullReductionMap
         skuLadder.setFullCount(reductionTO.getFullCount());
         skuLadder.setDiscount(reductionTO.getDiscount());
         skuLadder.setAddOther(reductionTO.getCountStatus());
-        boolean b1 = skuLadderService.save(skuLadder);
+        if (skuLadder.getFullCount() > 0) {
+            b1 = skuLadderService.save(skuLadder);
+        }
 
         // insert into sms_sku_full_reduction
         SkuFullReduction reduction = new SkuFullReduction();
         BeanUtils.copyProperties(reductionTO, reduction);
-        boolean b2 = this.save(reduction);
+        if (reduction.getFullPrice().compareTo(BigDecimal.ZERO) > 0) {
+            b2 = this.save(reduction);
+        }
 
         // insert into sms_member_price
         List<cn.alphahub.common.to.MemberPrice> memberPriceList = reductionTO.getMemberPrice();
@@ -84,10 +90,11 @@ public class SkuFullReductionServiceImpl extends ServiceImpl<SkuFullReductionMap
                     .memberLevelName(item.getName())
                     .memberPrice(item.getPrice())
                     .addOther(1)
-                    .build()).collect(Collectors.toList());
-            boolean b3 = memberPriceService.saveBatch(memberPrices);
-            return b1 && b2 && b3;
+                    .build())
+                    .filter(memberPrice -> memberPrice.getMemberPrice().compareTo(BigDecimal.ZERO) > 0)
+                    .collect(Collectors.toList());
+            b3 = memberPriceService.saveBatch(memberPrices);
         }
-        return b1 && b2;
+        return b1 || b2 || b3;
     }
 }

@@ -395,7 +395,7 @@ export default {
           {required: true, message: "请选择一个分类", trigger: "blur"}
         ],
         brandId: [
-          { required: true, message: "请选择一个品牌", trigger: "blur" }
+          {required: false, message: "请选择一个品牌", trigger: "blur"}
         ],
         decript: [
           {required: true, message: "请上传商品详情图集", trigger: "blur"}
@@ -790,7 +790,11 @@ export default {
       this.spu.catalogId = val[val.length - 1];
     });
     this.brandIdSub = PubSub.subscribe("brandId", (msg, val) => {
-      this.spu.brandId = val;
+      if (val == undefined || val=='') {
+        this.spu.brandId = 1;
+      } else {
+        this.spu.brandId = val;
+      }
     });
     this.getMemberLevels();
   },

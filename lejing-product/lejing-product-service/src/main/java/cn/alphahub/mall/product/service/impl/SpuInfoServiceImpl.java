@@ -25,11 +25,13 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -101,9 +103,6 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoMapper, SpuInfo> impl
 
         List<String> decryptList = vo.getDecript();
         Long spuInfoId = spuInfo.getId();
-        System.out.println("----------------------------------");
-        System.out.println("spuInfo.getId():" + " " + spuInfo);
-        System.out.println("----------------------------------");
         SpuInfoDesc spuInfoDesc = SpuInfoDesc.builder()
                 .spuId(spuInfoId)
                 .decript(String.join(",", decryptList))
@@ -137,13 +136,14 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoMapper, SpuInfo> impl
         if (CollectionUtils.isNotEmpty(skusList)) {
 
             skusList.forEach(sku -> {
-                List<Images> imagesList = sku.getImages();
+
                 String defaultImg = "";
-                for (Images img : imagesList) {
+                for (Images img : sku.getImages()) {
                     if (Objects.equals(img.getDefaultImg(), 1)) {
                         defaultImg = img.getImgUrl();
                     }
                 }
+
                 SkuInfo skuInfo = SkuInfo.builder().build();
                 BeanUtils.copyProperties(sku, skuInfo);
                 skuInfo.setSpuId(spuInfo.getId());
@@ -161,7 +161,9 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoMapper, SpuInfo> impl
                         .skuId(skuId)
                         .defaultImg(img.getDefaultImg())
                         .imgUrl(img.getImgUrl())
-                        .build()).collect(Collectors.toList());
+                        .build())
+                        .filter(img -> StringUtils.isNotBlank(img.getImgUrl()))
+                        .collect(Collectors.toList());
                 // 5.2）、sku的图片信息；pms_sku_image
                 skuImagesService.saveBatch(skuImagesList);
 
@@ -196,11 +198,13 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoMapper, SpuInfo> impl
                 skuReductionTo.setSkuId(skuId);
                 skuReductionTo.setMemberPrice(memberPriceToList);
                 BeanUtils.copyProperties(vo, skuReductionTo);
-                BaseResult<Boolean> baseResult = skuFullReductionClient.saveSkuReduction(skuReductionTo);
-                if (baseResult.getSuccess()) {
-                    log.info("{}", "远程保存sku成功");
-                } else {
-                    log.warn("{}", "远程保存sku失败");
+                if (skuReductionTo.getFullCount() > 0 || skuReductionTo.getFullPrice().compareTo(BigDecimal.ZERO) > 0) {
+                    BaseResult<Boolean> baseResult = skuFullReductionClient.saveSkuReduction(skuReductionTo);
+                    if (baseResult.getSuccess()) {
+                        log.info("{}", "远程保存sku成功");
+                    } else {
+                        log.warn("{}", "远程保存sku失败");
+                    }
                 }
             });
         }
