@@ -1,5 +1,6 @@
 package cn.alphahub.mall.product.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -22,17 +23,17 @@ import java.io.Serializable;
 @AllArgsConstructor
 @TableName("pms_spu_info_desc")
 public class SpuInfoDesc implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * 商品id
-	 */
-    @TableId
+    /**
+     * 商品id
+     */
+    @TableId(type = IdType.INPUT)
     private Long spuId;
 
-	/**
-	 * 商品介绍
-	 */
+    /**
+     * 商品介绍
+     */
     private String decript;
 
 }
