@@ -2,55 +2,55 @@
   <div class="mod-config">
     <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
       <el-form-item>
-        <el-input v-model="dataForm.key" placeholder="参数名" clearable></el-input>
+        <el-input v-model="dataForm.key" clearable placeholder="参数名"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button @click="getDataList()">查询</el-button>
       </el-form-item>
     </el-form>
     <el-table
+      v-loading="dataListLoading"
       :data="dataList"
       border
-      v-loading="dataListLoading"
-      @selection-change="selectionChangeHandle"
       style="width: 100%;"
+      @selection-change="selectionChangeHandle"
     >
-      <el-table-column type="selection" header-align="center" align="center" width="50"></el-table-column>
-      <el-table-column prop="id" header-align="center" align="center" label="id"></el-table-column>
-      <el-table-column prop="couponId" header-align="center" align="center" label="优惠券id"></el-table-column>
-      <el-table-column prop="memberId" header-align="center" align="center" label="会员id"></el-table-column>
-      <el-table-column prop="memberNickName" header-align="center" align="center" label="会员名字"></el-table-column>
-      <el-table-column prop="getType" header-align="center" align="center" label="获取方式">
+      <el-table-column align="center" header-align="center" type="selection" width="50"></el-table-column>
+      <el-table-column align="center" header-align="center" label="id" prop="id"></el-table-column>
+      <el-table-column align="center" header-align="center" label="优惠券id" prop="couponId"></el-table-column>
+      <el-table-column align="center" header-align="center" label="会员id" prop="memberId"></el-table-column>
+      <el-table-column align="center" header-align="center" label="会员名字" prop="memberNickName"></el-table-column>
+      <el-table-column align="center" header-align="center" label="获取方式" prop="getType">
         <template slot-scope="scope">
-          <el-tag type="primary" v-if="scope.row.getType==0">后台赠送</el-tag>
-          <el-tag type="success" v-else>主动领取</el-tag>
+          <el-tag v-if="scope.row.getType==0" type="primary">后台赠送</el-tag>
+          <el-tag v-else type="success">主动领取</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="createTime" header-align="center" align="center" label="创建时间"></el-table-column>
+      <el-table-column align="center" header-align="center" label="创建时间" prop="createTime"></el-table-column>
       <el-table-column
-        prop="useType"
-        header-align="center"
         align="center"
+        header-align="center"
         label="使用状态"
+        prop="useType"
       >
         <template slot-scope="scope">
-          <el-tag type="primary" v-if="scope.row.useType==0">未使用</el-tag>
-          <el-tag type="success" v-if="scope.row.useType==1">已使用</el-tag>
-          <el-tag type="warning" v-if="scope.row.useType==2">已过期</el-tag>
+          <el-tag v-if="scope.row.useType==0" type="primary">未使用</el-tag>
+          <el-tag v-if="scope.row.useType==1" type="success">已使用</el-tag>
+          <el-tag v-if="scope.row.useType==2" type="warning">已过期</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="useTime" header-align="center" align="center" label="使用时间"></el-table-column>
-      <el-table-column prop="orderId" header-align="center" align="center" label="订单id"></el-table-column>
-      <el-table-column prop="orderSn" header-align="center" align="center" label="订单号"></el-table-column>
+      <el-table-column align="center" header-align="center" label="使用时间" prop="useTime"></el-table-column>
+      <el-table-column align="center" header-align="center" label="订单id" prop="orderId"></el-table-column>
+      <el-table-column align="center" header-align="center" label="订单号" prop="orderSn"></el-table-column>
     </el-table>
     <el-pagination
-      @size-change="sizeChangeHandle"
-      @current-change="currentChangeHandle"
       :current-page="pageIndex"
-      :page-sizes="[10, 20, 50, 100]"
       :page-size="pageSize"
+      :page-sizes="[10, 20, 50, 100]"
       :total="totalPage"
       layout="total, sizes, prev, pager, next, jumper"
+      @size-change="sizeChangeHandle"
+      @current-change="currentChangeHandle"
     ></el-pagination>
     <!-- 弹窗, 新增 / 修改 -->
   </div>
@@ -72,8 +72,7 @@ export default {
       addOrUpdateVisible: false
     };
   },
-  components: {
-  },
+  components: {},
   activated() {
     this.getDataList();
   },
@@ -89,7 +88,7 @@ export default {
           rows: this.pageSize,
           key: this.dataForm.key
         })
-      }).then(({ data }) => {
+      }).then(({data}) => {
         if (data && data.code === 200) {
           this.dataList = data.data.items;
           this.totalPage = data.totalCount;
@@ -127,8 +126,8 @@ export default {
       var ids = id
         ? [id]
         : this.dataListSelections.map(item => {
-            return item.id;
-          });
+          return item.id;
+        });
       this.$confirm(
         `确定对[id=${ids.join(",")}]进行[${id ? "删除" : "批量删除"}]操作?`,
         "提示",
@@ -142,7 +141,7 @@ export default {
           url: this.$http.adornUrl("/coupon/couponhistory/delete"),
           method: "post",
           data: this.$http.adornData(ids, false)
-        }).then(({ data }) => {
+        }).then(({data}) => {
           if (data && data.code === 200) {
             this.$message({
               message: "操作成功",

@@ -7,6 +7,7 @@ import cn.alphahub.mall.ware.mapper.WareInfoMapper;
 import cn.alphahub.mall.ware.service.WareInfoService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,6 +40,19 @@ public class WareInfoServiceImpl extends ServiceImpl<WareInfoMapper, WareInfo> i
         // 4. 执行Dao|Mapper SQL查询
         List<WareInfo> wareInfoList = this.list(wrapper);
         // 5. 分装并返回数据
+        return pageResult.getPage(wareInfoList);
+    }
+
+    @Override
+    public PageResult<WareInfo> queryPage(PageDomain pageDomain, WareInfo wareInfo, String key) {
+        QueryWrapper<WareInfo> wrapper = new QueryWrapper<>(wareInfo);
+        wrapper.lambda().and(StringUtils.isNotBlank(key), w -> w.eq(WareInfo::getId, key)
+                .or().like(WareInfo::getName, key)
+                .or().like(WareInfo::getAddress, key)
+                .or().eq(WareInfo::getAreacode, key));
+        PageResult<WareInfo> pageResult = new PageResult<>();
+        pageResult.startPage(pageDomain);
+        List<WareInfo> wareInfoList = this.list(wrapper);
         return pageResult.getPage(wareInfoList);
     }
 

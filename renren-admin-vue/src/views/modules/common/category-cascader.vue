@@ -9,12 +9,12 @@
         -->
   <div>
     <el-cascader
-      filterable
-      clearable
-      placeholder="试试搜索：手机"
       v-model="paths"
       :options="categorys"
       :props="setting"
+      clearable
+      filterable
+      placeholder="试试搜索：手机"
     ></el-cascader>
   </div>
 </template>

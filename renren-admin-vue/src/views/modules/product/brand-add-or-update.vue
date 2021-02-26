@@ -138,7 +138,7 @@ export default {
         if (valid) {
           this.$http({
             url: this.$http.adornUrl(`/product/brand/${!this.dataForm.brandId ? 'save' : 'update'}`),
-            method: !this.dataForm.brandId ? 'post' : 'put',
+            method: !this.dataForm.id ? 'post' : 'put',
             data: this.$http.adornData({
               'brandId': this.dataForm.brandId || undefined,
               'name': this.dataForm.name,

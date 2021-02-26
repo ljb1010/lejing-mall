@@ -3,30 +3,30 @@
     <el-row :gutter="20">
       <el-col :span="16">
         <el-card class="box-card">
-          <el-tabs tab-position="left" style="width:98%">
+          <el-tabs style="width:98%" tab-position="left">
             <el-tab-pane
-              :label="group.attrGroupName"
               v-for="(group,gidx) in dataResp.attrGroups"
               :key="group.attrGroupId"
+              :label="group.attrGroupName"
             >
               <!-- 遍历属性,每个tab-pane对应一个表单，每个属性是一个表单项  spu.baseAttrs[0] = [{attrId:xx,val:}]-->
               <el-form ref="form" :model="dataResp">
                 <el-form-item
-                  :label="attr.attrName"
                   v-for="(attr,aidx) in group.attrs"
                   :key="attr.attrId"
+                  :label="attr.attrName"
                 >
                   <el-input
+                    v-show="false"
                     v-model="dataResp.baseAttrs[gidx][aidx].attrId"
                     type="hidden"
-                    v-show="false"
                   ></el-input>
                   <el-select
                     v-model="dataResp.baseAttrs[gidx][aidx].attrValues"
                     :multiple="attr.valueType == 1"
-                    filterable
                     allow-create
                     default-first-option
+                    filterable
                     placeholder="请选择或输入值"
                   >
                     <el-option
@@ -38,15 +38,16 @@
                   </el-select>
                   <el-checkbox
                     v-model="dataResp.baseAttrs[gidx][aidx].showDesc"
-                    :true-label="1"
                     :false-label="0"
-                  >快速展示</el-checkbox>
+                    :true-label="1"
+                  >快速展示
+                  </el-checkbox>
                 </el-form-item>
               </el-form>
             </el-tab-pane>
           </el-tabs>
           <div style="margin:auto">
-            <el-button type="success" style="float:right" @click="submitSpuAttrs">确认修改</el-button>
+            <el-button style="float:right" type="success" @click="submitSpuAttrs">确认修改</el-button>
           </div>
         </el-card>
       </el-col>
@@ -72,7 +73,7 @@ export default {
   },
   computed: {},
   methods: {
-    clearData(){
+    clearData() {
       this.dataResp.attrGroups = [];
       this.dataResp.baseAttrs = [];
       this.spuAttrsMap = {};
@@ -81,7 +82,7 @@ export default {
       this.$http({
         url: this.$http.adornUrl(`/product/attr/base/listforspu/${this.spuId}`),
         method: "get"
-      }).then(({ data }) => {
+      }).then(({data}) => {
         data.data.forEach(item => {
           this.spuAttrsMap["" + item.attrId] = item;
         });
@@ -101,7 +102,7 @@ export default {
         ),
         method: "get",
         params: this.$http.adornParams({})
-      }).then(({ data }) => {
+      }).then(({data}) => {
         //先对表单的baseAttrs进行初始化
         data.data.forEach(item => {
           let attrArray = [];
@@ -161,7 +162,7 @@ export default {
             url: this.$http.adornUrl(`/product/attr/update/${this.spuId}`),
             method: "put",
             data: this.$http.adornData(submitData, false)
-          }).then(({ data }) => {
+          }).then(({data}) => {
             this.$message({
               type: "success",
               message: "属性修改成功!"
@@ -171,12 +172,13 @@ export default {
         .catch((e) => {
           this.$message({
             type: "info",
-            message: "已取消修改"+e
+            message: "已取消修改" + e
           });
         });
     }
   },
-  created() {},
+  created() {
+  },
   activated() {
     this.clearData();
     this.getQueryParams();

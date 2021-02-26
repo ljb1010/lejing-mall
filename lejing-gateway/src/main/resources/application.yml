@@ -57,6 +57,13 @@ spring:
             - Path=/api/member/**
           filters:
             - RewritePath=/api/(?<segment>.*),/$\{segment}
+        #库存服务路由
+        - id: ware_route
+          uri: lb://lejing-ware
+          predicates:
+            - Path=/api/ware/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
         #后台管理路由
         - id: admin_route
           uri: lb://renren-fast

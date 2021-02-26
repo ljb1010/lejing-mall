@@ -1,10 +1,10 @@
 <template>
   <el-dialog
-    :title="!dataForm.id ? '新增' : '修改'"
     :close-on-click-modal="false"
+    :title="!dataForm.id ? '新增' : '修改'"
     :visible.sync="visible">
-    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()"
-             label-width="120px">
+    <el-form ref="dataForm" :model="dataForm" :rules="dataRule" label-width="120px"
+             @keyup.enter.native="dataFormSubmit()">
       <el-form-item label="会员等级id" prop="levelId">
         <el-input v-model="dataForm.levelId" placeholder="会员等级id"></el-input>
       </el-form-item>
@@ -186,7 +186,7 @@ export default {
         if (valid) {
           this.$http({
             url: this.$http.adornUrl(`/member/member/${!this.dataForm.id ? 'save' : 'update'}`),
-            method: !this.dataForm.brandId ? 'post' : 'put',
+            method: !this.dataForm.id ? 'post' : 'put',
             data: this.$http.adornData({
               'id': this.dataForm.id || undefined,
               'levelId': this.dataForm.levelId,

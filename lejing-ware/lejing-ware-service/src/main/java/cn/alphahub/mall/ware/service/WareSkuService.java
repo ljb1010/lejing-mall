@@ -22,5 +22,4 @@ public interface WareSkuService extends IService<WareSku> {
      * @return 商品库存分页数据
      */
     PageResult<WareSku> queryPage(PageDomain pageDomain, WareSku wareSku);
-
 }

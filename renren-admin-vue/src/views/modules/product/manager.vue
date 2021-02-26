@@ -9,11 +9,12 @@
           <brand-select style="width:160px"></brand-select>
         </el-form-item>
         <el-form-item label="价格">
-          <el-input-number style="width:160px" v-model="dataForm.price.min" :min="0"></el-input-number>-
-          <el-input-number style="width:160px" v-model="dataForm.price.max" :min="0"></el-input-number>
+          <el-input-number v-model="dataForm.price.min" :min="0" style="width:160px"></el-input-number>
+          -
+          <el-input-number v-model="dataForm.price.max" :min="0" style="width:160px"></el-input-number>
         </el-form-item>
         <el-form-item label="检索">
-          <el-input style="width:160px" v-model="dataForm.key" clearable></el-input>
+          <el-input v-model="dataForm.key" clearable style="width:160px"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="searchSkuInfo">查询</el-button>
@@ -21,48 +22,48 @@
       </el-form>
     </el-form>
     <el-table
+      v-loading="dataListLoading"
       :data="dataList"
       border
-      v-loading="dataListLoading"
-      @selection-change="selectionChangeHandle"
       style="width: 100%;"
+      @selection-change="selectionChangeHandle"
       @expand-change="getSkuDetails"
     >
       <el-table-column type="expand">
         <template slot-scope="scope">
-          商品标题：{{scope.row.skuTitle}}
-          <br />
-          商品副标题：{{scope.row.skuSubtitle}}
-          <br />
-          商品描述：{{scope.row.skuDesc}}
-          <br />
-          分类ID：{{scope.row.catalogId}}
-          <br />
-          SpuID：{{scope.row.spuId}}
-          <br />
-          品牌ID：{{scope.row.brandId}}
-          <br />
+          商品标题：{{ scope.row.skuTitle }}
+          <br/>
+          商品副标题：{{ scope.row.skuSubtitle }}
+          <br/>
+          商品描述：{{ scope.row.skuDesc }}
+          <br/>
+          分类ID：{{ scope.row.catalogId }}
+          <br/>
+          SpuID：{{ scope.row.spuId }}
+          <br/>
+          品牌ID：{{ scope.row.brandId }}
+          <br/>
         </template>
       </el-table-column>
-      <el-table-column type="selection" header-align="center" align="center" width="50"></el-table-column>
-      <el-table-column prop="skuId" header-align="center" align="center" label="skuId"></el-table-column>
-      <el-table-column prop="skuName" header-align="center" align="center" label="名称"></el-table-column>
-      <el-table-column prop="skuDefaultImg" header-align="center" align="center" label="默认图片">
+      <el-table-column align="center" header-align="center" type="selection" width="50"></el-table-column>
+      <el-table-column align="center" header-align="center" label="skuId" prop="skuId"></el-table-column>
+      <el-table-column align="center" header-align="center" label="名称" prop="skuName"></el-table-column>
+      <el-table-column align="center" header-align="center" label="默认图片" prop="skuDefaultImg">
         <template slot-scope="scope">
-          <img :src="scope.row.skuDefaultImg" style="width:80px;height:80px;" />
+          <img :src="scope.row.skuDefaultImg" style="width:80px;height:80px;"/>
         </template>
       </el-table-column>
-      <el-table-column prop="price" header-align="center" align="center" label="价格"></el-table-column>
-      <el-table-column prop="saleCount" header-align="center" align="center" label="销量"></el-table-column>
-      <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
+      <el-table-column align="center" header-align="center" label="价格" prop="price"></el-table-column>
+      <el-table-column align="center" header-align="center" label="销量" prop="saleCount"></el-table-column>
+      <el-table-column align="center" fixed="right" header-align="center" label="操作" width="150">
         <template slot-scope="scope">
-          <el-button type="text" size="small" @click="previewHandle(scope.row.skuId)">预览</el-button>
-          <el-button type="text" size="small" @click="commentHandle(scope.row.skuId)">评论</el-button>
+          <el-button size="small" type="text" @click="previewHandle(scope.row.skuId)">预览</el-button>
+          <el-button size="small" type="text" @click="commentHandle(scope.row.skuId)">评论</el-button>
           <el-dropdown
-            @command="handleCommand(scope.row,$event)"
             size="small"
             split-button
             type="text"
+            @command="handleCommand(scope.row,$event)"
           >
             更多
             <el-dropdown-menu slot="dropdown">
@@ -79,13 +80,13 @@
       </el-table-column>
     </el-table>
     <el-pagination
-      @size-change="sizeChangeHandle"
-      @current-change="currentChangeHandle"
       :current-page="pageIndex"
-      :page-sizes="[10, 20, 50, 100]"
       :page-size="pageSize"
+      :page-sizes="[10, 20, 50, 100]"
       :total="totalPage"
       layout="total, sizes, prev, pager, next, jumper"
+      @size-change="sizeChangeHandle"
+      @current-change="currentChangeHandle"
     ></el-pagination>
   </div>
 </template>
@@ -93,6 +94,7 @@
 <script>
 import CategoryCascader from "../common/category-cascader";
 import BrandSelect from "../common/brand-select";
+
 export default {
   data() {
     return {
@@ -133,7 +135,7 @@ export default {
     handleCommand(row, command) {
       console.log("~~~~~", row, command);
       if ("stockSettings" == command) {
-        this.$router.push({ path: "/ware-sku", query: { skuId: row.skuId } });
+        this.$router.push({path: "/ware-sku", query: {skuId: row.skuId}});
       }
     },
     searchSkuInfo() {
@@ -154,8 +156,9 @@ export default {
           min: this.dataForm.price.min,
           max: this.dataForm.price.max
         })
-      }).then(({ data }) => {
+      }).then(({data}) => {
         if (data && data.code === 200) {
+          console.log("data.data: ", data.data)
           this.dataList = data.data.items;
           this.totalPage = data.data.totalCount;
         } else {

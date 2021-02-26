@@ -7,6 +7,7 @@ import cn.alphahub.mall.ware.mapper.WareSkuMapper;
 import cn.alphahub.mall.ware.service.WareSkuService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,5 +42,4 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuMapper, WareSku> impl
         // 5. 分装并返回数据
         return pageResult.getPage(wareSkuList);
     }
-
 }

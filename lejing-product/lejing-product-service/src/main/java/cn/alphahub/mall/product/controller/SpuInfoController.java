@@ -10,6 +10,7 @@ import cn.alphahub.mall.product.feign.SpuBoundsClient;
 import cn.alphahub.mall.product.service.SpuInfoService;
 import cn.alphahub.mall.product.vo.SpuSaveVO;
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,7 +40,13 @@ public class SpuInfoController extends BaseController {
      * @param orderColumn 排序排序字段,默认不排序
      * @param isAsc       排序方式,desc或者asc
      * @param spuInfo     spu信息,查询字段选择性传入,默认为等值查询
-     * @return spu信息分页数据
+     * @param key         检索关键字
+     * @param sidx        排序字段
+     * @param order       排序方式:asc/desc
+     * @param catelogId   三级分类id
+     * @param brandId     品牌id
+     * @param status      商品状态
+     * @return spu信息列表分页数据
      */
     @GetMapping("/list")
     public BaseResult<PageResult<SpuInfo>> list(
@@ -47,10 +54,33 @@ public class SpuInfoController extends BaseController {
             @RequestParam(value = "rows", defaultValue = "10") Integer rows,
             @RequestParam(value = "orderColumn", defaultValue = "") String orderColumn,
             @RequestParam(value = "isAsc", defaultValue = "") String isAsc,
-            SpuInfo spuInfo
+            SpuInfo spuInfo,
+            @RequestParam(value = "key", defaultValue = "") String key,
+            @RequestParam(value = "sidx", defaultValue = "") String sidx,
+            @RequestParam(value = "order", defaultValue = "") String order,
+            @RequestParam(value = "catelogId",defaultValue = "") Integer catelogId,
+            @RequestParam(value = "brandId", defaultValue = "") Integer brandId,
+            @RequestParam(value = "status",defaultValue = "") Integer status
     ) {
-        PageDomain pageDomain = new PageDomain(page, rows, orderColumn, isAsc);
-        PageResult<SpuInfo> pageResult = spuInfoService.queryPage(pageDomain, spuInfo);
+        /*
+        {
+            page: 1,//当前页码
+            rows: 10,//每页记录数
+            sidx: 'id',//排序字段
+            order: 'asc/desc',//排序方式
+            key: '华为',//检索关键字
+            catelogId: 6,//三级分类id
+            brandId: 1,//品牌id
+            status: 0,//商品状态
+        }
+        */
+        PageDomain pageDomain;
+        if (StringUtils.isAllBlank(sidx, order)) {
+            pageDomain = new PageDomain(page, rows, sidx, order);
+        } else {
+            pageDomain = new PageDomain(page, rows, orderColumn, isAsc);
+        }
+        PageResult<SpuInfo> pageResult = spuInfoService.queryPage(pageDomain, spuInfo, key, catelogId, brandId, status);
         if (ObjectUtils.isNotEmpty(pageResult.getItems())) {
             return BaseResult.ok(pageResult);
         }

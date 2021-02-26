@@ -8,6 +8,7 @@ import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.mall.product.domain.SkuInfo;
 import cn.alphahub.mall.product.service.SkuInfoService;
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -34,6 +35,13 @@ public class SkuInfoController extends BaseController {
      * @param orderColumn 排序排序字段,默认不排序
      * @param isAsc       排序方式,desc或者asc
      * @param skuInfo     sku信息,查询字段选择性传入,默认为等值查询
+     * @param sidx        排序字段
+     * @param order       排序方式:asc/desc
+     * @param key         检索关键字
+     * @param catelogId   三級分類id
+     * @param brandId     品牌id
+     * @param min         最低價格
+     * @param max         最大價格
      * @return sku信息分页数据
      */
     @GetMapping("/list")
@@ -42,10 +50,33 @@ public class SkuInfoController extends BaseController {
             @RequestParam(value = "rows", defaultValue = "10") Integer rows,
             @RequestParam(value = "orderColumn", defaultValue = "") String orderColumn,
             @RequestParam(value = "isAsc", defaultValue = "") String isAsc,
-            SkuInfo skuInfo
+            SkuInfo skuInfo,
+            @RequestParam(value = "sidx", defaultValue = "") String sidx,
+            @RequestParam(value = "order", defaultValue = "") String order,
+            @RequestParam(value = "key", defaultValue = "") String key,
+            @RequestParam(value = "catelogId", defaultValue = "") Long catelogId,
+            @RequestParam(value = "brandId", defaultValue = "") Long brandId,
+            @RequestParam(value = "min", defaultValue = "") Long min,
+            @RequestParam(value = "max", defaultValue = "") Long max
     ) {
-        PageDomain pageDomain = new PageDomain(page, rows, orderColumn, isAsc);
-        PageResult<SkuInfo> pageResult = skuInfoService.queryPage(pageDomain, skuInfo);
+        /*
+        {
+            sidx: 'id',//排序字段
+            order: 'asc/desc',//排序方式
+            key: '华为',//检索关键字
+            catelogId: 0,
+            brandId: 0,
+            min: 0,
+            max: 0
+        }
+        */
+        PageDomain pageDomain;
+        if (StringUtils.isAllBlank(sidx, order)) {
+            pageDomain = new PageDomain(page, rows, sidx, order);
+        } else {
+            pageDomain = new PageDomain(page, rows, orderColumn, isAsc);
+        }
+        PageResult<SkuInfo> pageResult = skuInfoService.queryPage(pageDomain, skuInfo, key, catelogId, brandId, min, max);
         if (ObjectUtils.isNotEmpty(pageResult.getItems())) {
             return BaseResult.ok(pageResult);
         }

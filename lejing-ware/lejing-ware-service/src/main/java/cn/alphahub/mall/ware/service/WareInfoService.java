@@ -23,4 +23,12 @@ public interface WareInfoService extends IService<WareInfo> {
      */
     PageResult<WareInfo> queryPage(PageDomain pageDomain, WareInfo wareInfo);
 
+    /**
+     * 查询仓库信息列表
+     *
+     * @param wareInfo    仓库信息, 查询字段选择性传入, 默认为等值查询
+     * @param key         检索关键字
+     * @return 仓库信息分页数据
+     */
+    PageResult<WareInfo> queryPage(PageDomain pageDomain, WareInfo wareInfo, String key);
 }

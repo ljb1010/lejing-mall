@@ -2,186 +2,185 @@
   <div class="mod-config">
     <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
       <el-form-item>
-        <el-input v-model="dataForm.key" placeholder="参数名" clearable></el-input>
+        <el-input v-model="dataForm.key" clearable placeholder="参数名"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button @click="getDataList()">查询</el-button>
-        <el-button v-if="isAuth('coupon:seckillsession:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
-        <el-button v-if="isAuth('coupon:seckillsession:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
+        <el-button
+          v-if="isAuth('coupon:seckillsession:save')"
+          type="primary"
+          @click="addOrUpdateHandle()"
+        >新增
+        </el-button>
+        <el-button
+          v-if="isAuth('coupon:seckillsession:delete')"
+          :disabled="dataListSelections.length <= 0"
+          type="danger"
+          @click="deleteHandle()"
+        >批量删除
+        </el-button>
       </el-form-item>
     </el-form>
     <el-table
+      v-loading="dataListLoading"
       :data="dataList"
       border
-      v-loading="dataListLoading"
+      style="width: 100%;"
       @selection-change="selectionChangeHandle"
-      style="width: 100%;">
-      <el-table-column
-        type="selection"
-        header-align="center"
-        align="center"
-        width="50">
-      </el-table-column>
-      <el-table-column
-        prop="id"
-        header-align="center"
-        align="center"
-        label="id">
-      </el-table-column>
-      <el-table-column
-        prop="name"
-        header-align="center"
-        align="center"
-        label="场次名称">
-      </el-table-column>
-      <el-table-column
-        prop="startTime"
-        header-align="center"
-        align="center"
-        label="每日开始时间">
-      </el-table-column>
-      <el-table-column
-        prop="endTime"
-        header-align="center"
-        align="center"
-        label="每日结束时间">
-      </el-table-column>
-      <el-table-column
-        prop="status"
-        header-align="center"
-        align="center"
-        label="启用状态">
-      </el-table-column>
-      <el-table-column
-        prop="createTime"
-        header-align="center"
-        align="center"
-        label="创建时间">
-      </el-table-column>
-      <el-table-column
-        fixed="right"
-        header-align="center"
-        align="center"
-        width="150"
-        label="操作">
+    >
+      <el-table-column align="center" header-align="center" type="selection" width="50"></el-table-column>
+      <el-table-column align="center" header-align="center" label="id" prop="id"></el-table-column>
+      <el-table-column align="center" header-align="center" label="场次名称" prop="name"></el-table-column>
+      <el-table-column align="center" header-align="center" label="每日开始时间" prop="startTime"></el-table-column>
+      <el-table-column align="center" header-align="center" label="每日结束时间" prop="endTime"></el-table-column>
+      <el-table-column align="center" header-align="center" label="启用状态" prop="status"></el-table-column>
+      <el-table-column align="center" header-align="center" label="创建时间" prop="createTime"></el-table-column>
+      <el-table-column align="center" fixed="right" header-align="center" label="操作" width="150">
         <template slot-scope="scope">
-          <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
-          <el-button type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
+          <el-button size="small" type="text" @click="relationProduct(scope.row.id)">关联商品</el-button>
+          <br/>
+          <el-button size="small" type="text" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
+          <el-button size="small" type="text" @click="deleteHandle(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
     <el-pagination
+      :current-page="pageIndex"
+      :page-size="pageSize"
+      :page-sizes="[10, 20, 50, 100]"
+      :total="totalPage"
+      layout="total, sizes, prev, pager, next, jumper"
       @size-change="sizeChangeHandle"
       @current-change="currentChangeHandle"
-      :current-page="pageIndex"
-      :page-sizes="[10, 20, 50, 100]"
-      :page-size="pageSize"
-      :total="totalPage"
-      layout="total, sizes, prev, pager, next, jumper">
-    </el-pagination>
+    ></el-pagination>
     <!-- 弹窗, 新增 / 修改 -->
     <add-or-update v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList"></add-or-update>
+    <div>
+      <el-dialog
+        :close-on-click-modal="false"
+        :visible.sync="visible"
+        append-to-body
+        title="关联秒杀商品"
+        width="60%"
+      >
+        <seckillsku-relation ref="seckillskuRelation" :sessionId="currentId"></seckillsku-relation>
+      </el-dialog>
+    </div>
   </div>
 </template>
 
 <script>
-  import AddOrUpdate from './seckillsession-add-or-update'
-  export default {
-    data () {
-      return {
-        dataForm: {
-          key: ''
-        },
-        dataList: [],
-        pageIndex: 1,
-        pageSize: 10,
-        totalPage: 0,
-        dataListLoading: false,
-        dataListSelections: [],
-        addOrUpdateVisible: false
-      }
+import AddOrUpdate from "./seckillsession-add-or-update";
+import SeckillskuRelation from "./seckillskurelation";
+
+export default {
+  data() {
+    return {
+      dataForm: {
+        key: ""
+      },
+      dataList: [],
+      pageIndex: 1,
+      pageSize: 10,
+      totalPage: 0,
+      dataListLoading: false,
+      dataListSelections: [],
+      addOrUpdateVisible: false,
+      visible: false,
+      currentId: 0
+    };
+  },
+  components: {
+    AddOrUpdate,
+    SeckillskuRelation
+  },
+  activated() {
+    this.getDataList()
+  },
+  methods: {
+    // 获取数据列表
+    getDataList() {
+      this.dataListLoading = true
+      this.$http({
+        url: this.$http.adornUrl('/coupon/seckillsession/list'),
+        method: 'get',
+        params: this.$http.adornParams({
+          'page': this.pageIndex,
+          'rows': this.pageSize,
+          'key': this.dataForm.key
+        })
+      }).then(({data}) => {
+        if (data && data.code === 200) {
+          this.dataList = data.data.items;
+          this.totalPage = data.data.totalCount;
+        } else {
+          this.dataList = []
+          this.totalPage = 0
+        }
+        this.dataListLoading = false
+      })
     },
-    components: {
-      AddOrUpdate
+    getRealtionDataList() {
     },
-    activated () {
+    // 每页数
+    sizeChangeHandle(val) {
+      this.pageSize = val
+      this.pageIndex = 1
       this.getDataList()
     },
-    methods: {
-      // 获取数据列表
-      getDataList () {
-        this.dataListLoading = true
+    // 当前页
+    currentChangeHandle(val) {
+      this.pageIndex = val
+      this.getDataList()
+    },
+    // 多选
+    selectionChangeHandle(val) {
+      this.dataListSelections = val
+    },
+    // 新增 / 修改
+    addOrUpdateHandle(id) {
+      this.addOrUpdateVisible = true
+      this.$nextTick(() => {
+        this.$refs.addOrUpdate.init(id)
+      })
+    },
+    relationProduct(id) {
+      this.visible = true;
+      this.currentId = id;
+      this.$nextTick(() => {
+        this.$refs.seckillskuRelation.getDataList();
+      });
+    },
+    // 删除
+    deleteHandle(id) {
+      var ids = id ? [id] : this.dataListSelections.map(item => {
+        return item.id
+      })
+      this.$confirm(`确定对[id=${ids.join(',')}]进行[${id ? '删除' : '批量删除'}]操作?`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
         this.$http({
-          url: this.$http.adornUrl('/coupon/seckillsession/list'),
-          method: 'get',
-          params: this.$http.adornParams({
-            'page': this.pageIndex,
-            'rows': this.pageSize,
-            'key': this.dataForm.key
-          })
+          url: this.$http.adornUrl(`/coupon/seckillsession/delete/${ids.join(",")}`),
+          method: 'delete',
+          data: this.$http.adornData(ids, false)
         }).then(({data}) => {
           if (data && data.code === 200) {
-            this.dataList = data.data.items;
-            this.totalPage = data.data.totalCount;
+            this.$message({
+              message: '操作成功',
+              type: 'success',
+              duration: 1500,
+              onClose: () => {
+                this.getDataList()
+              }
+            })
           } else {
-            this.dataList = []
-            this.totalPage = 0
+            this.$message.error(data.msg)
           }
-          this.dataListLoading = false
         })
-      },
-      // 每页数
-      sizeChangeHandle (val) {
-        this.pageSize = val
-        this.pageIndex = 1
-        this.getDataList()
-      },
-      // 当前页
-      currentChangeHandle (val) {
-        this.pageIndex = val
-        this.getDataList()
-      },
-      // 多选
-      selectionChangeHandle (val) {
-        this.dataListSelections = val
-      },
-      // 新增 / 修改
-      addOrUpdateHandle (id) {
-        this.addOrUpdateVisible = true
-        this.$nextTick(() => {
-          this.$refs.addOrUpdate.init(id)
-        })
-      },
-      // 删除
-      deleteHandle (id) {
-        var ids = id ? [id] : this.dataListSelections.map(item => {
-          return item.id
-        })
-        this.$confirm(`确定对[id=${ids.join(',')}]进行[${id ? '删除' : '批量删除'}]操作?`, '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.$http({
-            url: this.$http.adornUrl(`/coupon/seckillsession/delete/${ids.join(",")}`),
-            method: 'delete',
-            data: this.$http.adornData(ids, false)
-          }).then(({data}) => {
-            if (data && data.code === 200) {
-              this.$message({
-                message: '操作成功',
-                type: 'success',
-                duration: 1500,
-                onClose: () => {
-                  this.getDataList()
-                }
-              })
-            } else {
-              this.$message.error(data.msg)
-            }
-          })
-        })
-      }
+      })
     }
   }
+}
 </script>

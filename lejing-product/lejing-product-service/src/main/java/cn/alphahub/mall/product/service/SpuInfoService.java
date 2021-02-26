@@ -25,4 +25,16 @@ public interface SpuInfoService extends IService<SpuInfo> {
      * @return spu信息分页数据
      */
     PageResult<SpuInfo> queryPage(PageDomain pageDomain, SpuInfo spuInfo);
+
+    /**
+     * 查询spu信息列表
+     *
+     * @param spuInfo   spu信息,查询字段选择性传入,默认为等值查询
+     * @param key       检索关键字
+     * @param catelogId 三级分类id
+     * @param brandId   品牌id
+     * @param status    商品状态
+     * @return spu信息列表分页数据
+     */
+    PageResult<SpuInfo> queryPage(PageDomain pageDomain, SpuInfo spuInfo, String key, Integer catelogId, Integer brandId, Integer status);
 }

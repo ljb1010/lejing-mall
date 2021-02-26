@@ -7,8 +7,12 @@ import cn.alphahub.mall.product.mapper.SkuInfoMapper;
 import cn.alphahub.mall.product.service.SkuInfoService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -18,6 +22,7 @@ import java.util.List;
  * @email 1432689025@qq.com
  * @date 2021-02-24 15:36:31
  */
+@Slf4j
 @Service
 public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoMapper, SkuInfo> implements SkuInfoService {
 
@@ -39,6 +44,46 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoMapper, SkuInfo> impl
         // 4. 执行Dao|Mapper SQL查询
         List<SkuInfo> skuInfoList = this.list(wrapper);
         // 5. 分装并返回数据
+        return pageResult.getPage(skuInfoList);
+    }
+
+    @Override
+    public PageResult<SkuInfo> queryPage(PageDomain pageDomain, SkuInfo skuInfo, String key, Long catelogId, Long brandId, Long min, Long max) {
+        log.info("参数列表:key->{},catelogId->{},brandId->{},min->{},max->{}", key, catelogId, brandId, min, max);
+        QueryWrapper<SkuInfo> wrapper = new QueryWrapper<>(skuInfo);
+        if (StringUtils.isNotBlank(key)) {
+            wrapper.lambda().and(w -> w.eq(SkuInfo::getSkuId, key).or().like(SkuInfo::getSkuName, key));
+        }
+        if (ObjectUtils.isNotEmpty(catelogId) && catelogId != 0) {
+            wrapper.lambda().eq(SkuInfo::getCatalogId, catelogId);
+        }
+        if (ObjectUtils.isNotEmpty(brandId) && brandId != 0) {
+            wrapper.lambda().eq(SkuInfo::getBrandId, brandId);
+        }
+
+        if (ObjectUtils.isNotEmpty(min)) {
+            try {
+                if (new BigDecimal(min).compareTo(BigDecimal.ZERO) > 0) {
+                    wrapper.lambda().ge(SkuInfo::getPrice, min);
+                }
+            } catch (Exception e) {
+                log.error("输入min数值不规范:{},{}", e.getMessage(), e);
+            }
+        }
+
+        if (ObjectUtils.isNotEmpty(max)) {
+            try {
+                if (new BigDecimal(max).compareTo(BigDecimal.ZERO) > 0) {
+                    wrapper.lambda().le(SkuInfo::getPrice, max);
+                }
+            } catch (Exception e) {
+                log.error("输入max数值不规范:{},{}", e.getMessage(), e);
+            }
+        }
+
+        PageResult<SkuInfo> pageResult = new PageResult<>();
+        pageResult.startPage(pageDomain);
+        List<SkuInfo> skuInfoList = this.list(wrapper);
         return pageResult.getPage(skuInfoList);
     }
 

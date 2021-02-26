@@ -146,9 +146,9 @@ export default {
           key: this.dataForm.key
         })
       }).then(({data}) => {
-          if (data && data.code === 200) {
-            this.dataList = data.data.items;
-            this.totalPage = data.data.totalCount;
+        if (data && data.code === 200) {
+          this.dataList = data.data.items;
+          this.totalPage = data.data.totalCount;
         } else {
           this.dataList = [];
           this.totalPage = 0;
@@ -195,11 +195,11 @@ export default {
         }
       ).then(() => {
         this.$http({
-            url: this.$http.adornUrl(`/product/attrgroup/delete/${ids.join(",")}`),
+          url: this.$http.adornUrl(`/product/attrgroup/delete/${ids.join(",")}`),
           method: "delete",
           data: this.$http.adornData(ids, false)
         }).then(({data}) => {
-            if (data && data.code === 200) {
+          if (data && data.code === 200) {
             this.$message({
               message: "操作成功",
               type: "success",
