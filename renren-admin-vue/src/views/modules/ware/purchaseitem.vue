@@ -209,7 +209,6 @@ export default {
         })
       }).then(({data}) => {
         this.wareList = data.data.items;
-
       });
     },
     // 获取数据列表

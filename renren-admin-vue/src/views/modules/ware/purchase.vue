@@ -178,7 +178,7 @@ export default {
         method: "get",
         params: this.$http.adornParams({
           page: 1,
-          limit: 500
+          limit: 200
         })
       }).then(({data}) => {
         this.userList = data.page.list;

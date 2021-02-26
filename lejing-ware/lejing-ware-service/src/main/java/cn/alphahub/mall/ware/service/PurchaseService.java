@@ -23,4 +23,12 @@ public interface PurchaseService extends IService<Purchase> {
      */
     PageResult<Purchase> queryPage(PageDomain pageDomain, Purchase purchase);
 
+    /**
+     * 查询w未领取的采购单列表
+     *
+     * @param pageDomain 分页数据
+     * @param purchase   采购信息, 查询字段选择性传入, 默认为等值查询
+     * @return 采购信息分页数据
+     */
+    PageResult<Purchase> unReceiveList(PageDomain pageDomain, Purchase purchase);
 }

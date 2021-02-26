@@ -7,6 +7,7 @@ import cn.alphahub.mall.ware.mapper.PurchaseDetailMapper;
 import cn.alphahub.mall.ware.service.PurchaseDetailService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,6 +40,26 @@ public class PurchaseDetailServiceImpl extends ServiceImpl<PurchaseDetailMapper,
         // 4. 执行Dao|Mapper SQL查询
         List<PurchaseDetail> purchaseDetailList = this.list(wrapper);
         // 5. 分装并返回数据
+        return pageResult.getPage(purchaseDetailList);
+    }
+
+    /**
+     * 查询仓储采购表列表
+     *
+     * @param purchaseDetail 仓储采购表, 查询字段选择性传入, 默认为等值查询
+     * @param key            检索关键字
+     * @return 仓储采购表分页数据
+     */
+    @Override
+    public PageResult<PurchaseDetail> queryPage(PageDomain pageDomain, PurchaseDetail purchaseDetail, String key) {
+        QueryWrapper<PurchaseDetail> wrapper = new QueryWrapper<>(purchaseDetail);
+        wrapper.lambda().and(StringUtils.isNotBlank(key),
+                w -> w.eq(PurchaseDetail::getPurchaseId, key)
+                        .or().eq(PurchaseDetail::getSkuId, key)
+        );
+        PageResult<PurchaseDetail> pageResult = new PageResult<>();
+        pageResult.startPage(pageDomain);
+        List<PurchaseDetail> purchaseDetailList = this.list(wrapper);
         return pageResult.getPage(purchaseDetailList);
     }
 

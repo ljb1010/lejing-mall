@@ -34,6 +34,7 @@ public class PurchaseDetailController extends BaseController {
      * @param orderColumn    排序排序字段,默认不排序
      * @param isAsc          排序方式,desc或者asc
      * @param purchaseDetail 仓储采购表, 查询字段选择性传入, 默认为等值查询
+     * @param key            检索关键字
      * @return 仓储采购表分页数据
      */
     @GetMapping("/list")
@@ -42,10 +43,11 @@ public class PurchaseDetailController extends BaseController {
             @RequestParam(value = "rows", defaultValue = "10") Integer rows,
             @RequestParam(value = "orderColumn", defaultValue = "") String orderColumn,
             @RequestParam(value = "isAsc", defaultValue = "") String isAsc,
-            PurchaseDetail purchaseDetail
+            PurchaseDetail purchaseDetail,
+            @RequestParam(value = "key", defaultValue = "") String key
     ) {
         PageDomain pageDomain = new PageDomain(page, rows, orderColumn, isAsc);
-        PageResult<PurchaseDetail> pageResult = purchaseDetailService.queryPage(pageDomain, purchaseDetail);
+        PageResult<PurchaseDetail> pageResult = purchaseDetailService.queryPage(pageDomain, purchaseDetail,key);
         if (ObjectUtils.isNotEmpty(pageResult.getItems())) {
             return BaseResult.ok(pageResult);
         }

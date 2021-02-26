@@ -27,6 +27,32 @@ public class PurchaseController extends BaseController {
     private PurchaseService purchaseService;
 
     /**
+     * 查询w未领取的采购单列表
+     *
+     * @param page        当前页码,默认第1页
+     * @param rows        显示行数,默认10条
+     * @param orderColumn 排序排序字段,默认不排序
+     * @param isAsc       排序方式,desc或者asc
+     * @param purchase    采购信息, 查询字段选择性传入, 默认为等值查询
+     * @return 采购信息分页数据
+     */
+    @GetMapping("/unreceive/list")
+    public BaseResult<PageResult<Purchase>> unReceiveList(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "rows", defaultValue = "10") Integer rows,
+            @RequestParam(value = "orderColumn", defaultValue = "") String orderColumn,
+            @RequestParam(value = "isAsc", defaultValue = "") String isAsc,
+            Purchase purchase
+    ) {
+        PageDomain pageDomain = new PageDomain(page, rows, orderColumn, isAsc);
+        PageResult<Purchase> pageResult = purchaseService.unReceiveList(pageDomain, purchase);
+        if (ObjectUtils.isNotEmpty(pageResult.getItems())) {
+            return BaseResult.ok(pageResult);
+        }
+        return BaseResult.fail(HttpStatus.NOT_FOUND, "查询结果为空");
+    }
+
+    /**
      * 查询采购信息列表
      *
      * @param page        当前页码,默认第1页

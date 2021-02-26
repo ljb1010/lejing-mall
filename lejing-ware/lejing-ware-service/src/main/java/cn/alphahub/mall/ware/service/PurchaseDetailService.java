@@ -23,4 +23,12 @@ public interface PurchaseDetailService extends IService<PurchaseDetail> {
      */
     PageResult<PurchaseDetail> queryPage(PageDomain pageDomain, PurchaseDetail purchaseDetail);
 
+    /**
+     * 查询仓储采购表列表
+     *
+     * @param purchaseDetail 仓储采购表, 查询字段选择性传入, 默认为等值查询
+     * @param key            检索关键字
+     * @return 仓储采购表分页数据
+     */
+    PageResult<PurchaseDetail> queryPage(PageDomain pageDomain, PurchaseDetail purchaseDetail, String key);
 }

@@ -79,7 +79,7 @@ export default {
           limit: 500
         })
       }).then(({data}) => {
-        this.wareList = data.page.list;
+        this.wareList = data.data.items
       });
     },
     init(id) {

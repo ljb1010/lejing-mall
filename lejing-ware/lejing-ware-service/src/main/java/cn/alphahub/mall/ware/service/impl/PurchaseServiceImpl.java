@@ -42,4 +42,14 @@ public class PurchaseServiceImpl extends ServiceImpl<PurchaseMapper, Purchase> i
         return pageResult.getPage(purchaseList);
     }
 
+    @Override
+    public PageResult<Purchase> unReceiveList(PageDomain pageDomain, Purchase purchase) {
+        QueryWrapper<Purchase> wrapper = new QueryWrapper<>(purchase);
+        wrapper.lambda().eq(Purchase::getStatus, 0).or().eq(Purchase::getStatus, 1);
+        PageResult<Purchase> pageResult = new PageResult<>();
+        pageResult.startPage(pageDomain);
+        List<Purchase> purchaseList = this.list(wrapper);
+        return pageResult.getPage(purchaseList);
+    }
+
 }
