@@ -47,7 +47,7 @@ public class PurchaseDetailController extends BaseController {
             @RequestParam(value = "key", defaultValue = "") String key
     ) {
         PageDomain pageDomain = new PageDomain(page, rows, orderColumn, isAsc);
-        PageResult<PurchaseDetail> pageResult = purchaseDetailService.queryPage(pageDomain, purchaseDetail,key);
+        PageResult<PurchaseDetail> pageResult = purchaseDetailService.queryPage(pageDomain, purchaseDetail, key);
         if (ObjectUtils.isNotEmpty(pageResult.getItems())) {
             return BaseResult.ok(pageResult);
         }
@@ -74,6 +74,18 @@ public class PurchaseDetailController extends BaseController {
      */
     @PostMapping("/save")
     public BaseResult<Boolean> save(@RequestBody PurchaseDetail purchaseDetail) {
+        boolean save = purchaseDetailService.save(purchaseDetail);
+        return toOperationResult(save);
+    }
+
+    /**
+     * 合并仓储采购表
+     *
+     * @param purchaseDetail 仓储采购表元数据
+     * @return 成功返回true, 失败返回false
+     */
+    @PostMapping("/merge")
+    public BaseResult<Boolean> merge(@RequestBody PurchaseDetail purchaseDetail) {
         boolean save = purchaseDetailService.save(purchaseDetail);
         return toOperationResult(save);
     }

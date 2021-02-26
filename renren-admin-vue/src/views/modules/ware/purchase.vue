@@ -118,8 +118,18 @@ export default {
       addOrUpdateVisible: false,
       caigoudialogVisible: false,
       userId: "",
-      userList: []
-    };
+      userList: [{
+        "userId": 123,
+        "username": "lindanda",
+      }, {
+        "userId": 456,
+        "username": "zhangsan",
+      }, {
+        "userId": 789,
+        "username": "zhaoliu",
+      }]
+    }
+      ;
   },
   components: {
     AddOrUpdate
@@ -149,7 +159,7 @@ export default {
         url: this.$http.adornUrl(
           `/ware/purchase/update`
         ),
-        method: "post",
+        method: "put",
         data: this.$http.adornData({
           id: this.currentRow.id || undefined,
           assigneeId: user.userId,
@@ -173,6 +183,7 @@ export default {
       });
     },
     getUserList() {
+      /*
       this.$http({
         url: this.$http.adornUrl("/sys/user/list"),
         method: "get",
@@ -183,6 +194,7 @@ export default {
       }).then(({data}) => {
         this.userList = data.page.list;
       });
+      */
     },
     // 获取数据列表
     getDataList() {
