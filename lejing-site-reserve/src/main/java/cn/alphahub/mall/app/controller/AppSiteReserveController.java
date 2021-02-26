@@ -60,9 +60,7 @@ public class AppSiteReserveController extends BaseController {
     public BaseResult<PageResult<SiteReserveVO>> reserveList(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             @RequestParam(value = "rows", defaultValue = "10") Integer rows,
-            @RequestParam(value = "projectId", defaultValue = "LJ1000") String projectId,
-            HttpServletRequest request,
-            HttpServletResponse response
+            @RequestParam(value = "projectId", defaultValue = "LJ1000") String projectId
     ) throws Exception {
         SiteReserveVO reserveVO = SiteReserveVO.builder().projectId(projectId).build();
         PageDomain pageDomain = new PageDomain();

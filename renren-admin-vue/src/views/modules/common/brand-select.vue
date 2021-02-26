@@ -33,6 +33,7 @@ export default {
   //监控data中的数据变化
   watch: {
     brandId(val) {
+      console.log("brand-select:", val)
       this.PubSub.publish("brandId", val);
     }
   },

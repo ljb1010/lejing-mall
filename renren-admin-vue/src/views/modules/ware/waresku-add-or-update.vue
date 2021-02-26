@@ -72,10 +72,11 @@ export default {
         method: "get",
         params: this.$http.adornParams({
           page: 1,
-          limit: 500
+          rows: 500
         })
       }).then(({data}) => {
-        this.wareList = data.page.list;
+        console.log("/ware/wareinfo/list: ", data.data)
+        this.wareList = data.data.items;
       });
     },
     init(id) {

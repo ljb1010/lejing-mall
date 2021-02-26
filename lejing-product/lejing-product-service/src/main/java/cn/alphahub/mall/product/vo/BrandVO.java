@@ -19,7 +19,7 @@ public class BrandVO {
     /**
      * 品牌id
      */
-    private Long branId;
+    private Long brandId;
 
     /**
      * 品牌名称

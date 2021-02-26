@@ -113,7 +113,7 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
         return brandRelations.stream().map(categoryBrandRelation -> {
             Brand brand = brandService.getById(categoryBrandRelation.getBrandId());
             return BrandVO.builder()
-                    .branId(brand.getBrandId())
+                    .brandId(brand.getBrandId())
                     .brandName(brand.getName())
                     .build();
         }).collect(Collectors.toList());
