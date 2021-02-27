@@ -23,6 +23,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
+import java.util.Objects;
 
 /**
  * 多数据源，切面处理类
@@ -51,11 +52,7 @@ public class DataSourceAspect {
         DataSource methodDataSource = method.getAnnotation(DataSource.class);
         if(targetDataSource != null || methodDataSource != null){
             String value;
-            if(methodDataSource != null){
-                value = methodDataSource.value();
-            }else {
-                value = targetDataSource.value();
-            }
+            value = Objects.requireNonNullElse(methodDataSource, targetDataSource).value();
 
             DynamicContextHolder.push(value);
             logger.debug("set datasource is {}", value);

@@ -183,7 +183,6 @@ export default {
       });
     },
     getUserList() {
-      /*
       this.$http({
         url: this.$http.adornUrl("/sys/user/list"),
         method: "get",
@@ -194,7 +193,6 @@ export default {
       }).then(({data}) => {
         this.userList = data.page.list;
       });
-      */
     },
     // 获取数据列表
     getDataList() {
