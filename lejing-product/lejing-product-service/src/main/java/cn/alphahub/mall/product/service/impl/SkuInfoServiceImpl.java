@@ -48,9 +48,9 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoMapper, SkuInfo> impl
     }
 
     @Override
-    public PageResult<SkuInfo> queryPage(PageDomain pageDomain, SkuInfo skuInfo, String key, Long catelogId, Long brandId, Long min, Long max) {
+    public PageResult<SkuInfo> queryPage(PageDomain pageDomain, String key, Long catelogId, Long brandId, Long min, Long max) {
         log.info("参数列表:key->{},catelogId->{},brandId->{},min->{},max->{}", key, catelogId, brandId, min, max);
-        QueryWrapper<SkuInfo> wrapper = new QueryWrapper<>(skuInfo);
+        QueryWrapper<SkuInfo> wrapper = new QueryWrapper<>();
         if (StringUtils.isNotBlank(key)) {
             wrapper.lambda().and(w -> w.eq(SkuInfo::getSkuId, key).or().like(SkuInfo::getSkuName, key));
         }

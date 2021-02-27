@@ -18,3 +18,7 @@ npm run dev
 ```
 
 浏览器访问 http://localhost:8001
+
+## `Node` & `NPM` 版本
+
+![image-20210227215337727](https://alphahub-test-bucket.oss-cn-shanghai.aliyuncs.com/image/image-20210227215337727.png)

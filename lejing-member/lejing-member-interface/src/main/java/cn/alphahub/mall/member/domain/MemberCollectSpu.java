@@ -1,7 +1,9 @@
 package cn.alphahub.mall.member.domain;
 
+import cn.alphahub.common.util.IdSerializer;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,16 +31,19 @@ public class MemberCollectSpu implements Serializable {
      * id
      */
     @TableId
+    @JsonSerialize(using = IdSerializer.class)
     private Long id;
 
     /**
      * 会员id
      */
+    @JsonSerialize(using = IdSerializer.class)
     private Long memberId;
 
     /**
      * spu_id
      */
+    @JsonSerialize(using = IdSerializer.class)
     private Long spuId;
 
     /**

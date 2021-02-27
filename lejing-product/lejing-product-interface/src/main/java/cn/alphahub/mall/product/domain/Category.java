@@ -1,10 +1,12 @@
 package cn.alphahub.mall.product.domain;
 
+import cn.alphahub.common.util.IdSerializer;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,6 +34,7 @@ public class Category implements Serializable {
      * 分类id
      */
     @TableId
+    @JsonSerialize(using = IdSerializer.class)
     private Long catId;
     /**
      * 分类名称
@@ -40,6 +43,7 @@ public class Category implements Serializable {
     /**
      * 父分类id
      */
+    @JsonSerialize(using = IdSerializer.class)
     private Long parentCid;
     /**
      * 层级

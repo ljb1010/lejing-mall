@@ -1,5 +1,7 @@
 package cn.alphahub.mall.product.vo;
 
+import cn.alphahub.common.util.IdSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +21,7 @@ public class BrandVO {
     /**
      * 品牌id
      */
+    @JsonSerialize(using = IdSerializer.class)
     private Long brandId;
 
     /**

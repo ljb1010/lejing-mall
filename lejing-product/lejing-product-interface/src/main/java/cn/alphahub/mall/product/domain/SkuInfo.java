@@ -1,7 +1,9 @@
 package cn.alphahub.mall.product.domain;
 
+import cn.alphahub.common.util.IdSerializer;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,13 +30,15 @@ public class SkuInfo implements Serializable {
 	/**
 	 * skuId
 	 */
-    @TableId
-    private Long skuId;
+	@TableId
+	@JsonSerialize(using = IdSerializer.class)
+	private Long skuId;
 
 	/**
 	 * spuId
 	 */
-    private Long spuId;
+	@JsonSerialize(using = IdSerializer.class)
+	private Long spuId;
 
 	/**
 	 * sku名称
@@ -49,12 +53,14 @@ public class SkuInfo implements Serializable {
 	/**
 	 * 所属分类id
 	 */
-    private Long catalogId;
+	@JsonSerialize(using = IdSerializer.class)
+	private Long catalogId;
 
 	/**
 	 * 品牌id
 	 */
-    private Long brandId;
+	@JsonSerialize(using = IdSerializer.class)
+	private Long brandId;
 
 	/**
 	 * 默认图片

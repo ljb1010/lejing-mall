@@ -1,11 +1,13 @@
 package cn.alphahub.mall.product.domain;
 
+import cn.alphahub.common.util.IdSerializer;
 import cn.alphahub.common.valid.InsertGroup;
 import cn.alphahub.common.valid.UpdateGroup;
 import cn.alphahub.common.valid.UpdateStatusGroup;
 import cn.alphahub.common.valid.custom.ListValue;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -40,6 +42,7 @@ public class Brand implements Serializable {
     @Null(message = "新增不能指定id", groups = {InsertGroup.class})
     @NotNull(message = "修改必须指定id", groups = {UpdateGroup.class})
     @TableId
+    @JsonSerialize(using = IdSerializer.class)
     private Long brandId;
 
     /**

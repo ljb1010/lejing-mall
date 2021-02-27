@@ -1,7 +1,9 @@
 package cn.alphahub.mall.site.domain;
 
+import cn.alphahub.common.util.IdSerializer;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,16 +32,19 @@ public class SiteReserveStatus implements Serializable {
      * 场地状态id
      */
     @TableId
+    @JsonSerialize(using = IdSerializer.class)
     private Long siteStatusId;
 
     /**
      * 场地场次id
      */
+    @JsonSerialize(using = IdSerializer.class)
     private Long siteSessionId;
 
     /**
      * 场地id
      */
+    @JsonSerialize(using = IdSerializer.class)
     private Long siteId;
 
     /**

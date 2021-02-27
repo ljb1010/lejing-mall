@@ -1,6 +1,8 @@
 package cn.alphahub.common.to;
 
 
+import cn.alphahub.common.util.IdSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,6 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 public class SkuReductionTO {
 
+    @JsonSerialize(using = IdSerializer.class)
     private Long skuId;
 
     private int fullCount;

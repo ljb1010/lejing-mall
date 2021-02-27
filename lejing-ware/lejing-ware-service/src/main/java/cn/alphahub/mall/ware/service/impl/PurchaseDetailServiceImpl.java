@@ -11,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 仓储采购表Service业务层处理
@@ -61,6 +62,12 @@ public class PurchaseDetailServiceImpl extends ServiceImpl<PurchaseDetailMapper,
         pageResult.startPage(pageDomain);
         List<PurchaseDetail> purchaseDetailList = this.list(wrapper);
         return pageResult.getPage(purchaseDetailList);
+    }
+
+    @Override
+    public List<PurchaseDetail> listDetailByPurchaseId(Long purchaseId) {
+        QueryWrapper<PurchaseDetail> wrapper = new QueryWrapper<>();
+        return list(wrapper.lambda().eq(Objects.nonNull(purchaseId), PurchaseDetail::getPurchaseId, purchaseId));
     }
 
 }

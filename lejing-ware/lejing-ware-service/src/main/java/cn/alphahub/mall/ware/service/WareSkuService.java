@@ -22,4 +22,14 @@ public interface WareSkuService extends IService<WareSku> {
      * @return 商品库存分页数据
      */
     PageResult<WareSku> queryPage(PageDomain pageDomain, WareSku wareSku);
+
+
+    /**
+     * 更新库存信息
+     *
+     * @param skuId  产品skuId
+     * @param wareId 库存id
+     * @param skuNum 添加的库存量
+     */
+    Integer addStock(Long skuId, Long wareId, Integer skuNum);
 }

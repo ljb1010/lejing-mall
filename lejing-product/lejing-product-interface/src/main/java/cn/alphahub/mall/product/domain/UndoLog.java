@@ -1,7 +1,9 @@
 package cn.alphahub.mall.product.domain;
 
+import cn.alphahub.common.util.IdSerializer;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,18 +30,21 @@ public class UndoLog implements Serializable {
 	/**
 	 * 主键id
 	 */
-    @TableId
-    private Long id;
+	@TableId
+	@JsonSerialize(using = IdSerializer.class)
+	private Long id;
 
 	/**
 	 * 相关的branch id
 	 */
-    private Long branchId;
+	@JsonSerialize(using = IdSerializer.class)
+	private Long branchId;
 
 	/**
 	 * 相关的xid
 	 */
-    private String xid;
+	@JsonSerialize(using = IdSerializer.class)
+	private String xid;
 
 	/**
 	 * 内容

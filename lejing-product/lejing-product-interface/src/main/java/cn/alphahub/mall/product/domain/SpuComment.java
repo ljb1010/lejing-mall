@@ -1,7 +1,9 @@
 package cn.alphahub.mall.product.domain;
 
+import cn.alphahub.common.util.IdSerializer;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,18 +30,21 @@ public class SpuComment implements Serializable {
 	/**
 	 * id
 	 */
-    @TableId
-    private Long id;
+	@TableId
+	@JsonSerialize(using = IdSerializer.class)
+	private Long id;
 
 	/**
 	 * sku_id
 	 */
-    private Long skuId;
+	@JsonSerialize(using = IdSerializer.class)
+	private Long skuId;
 
 	/**
 	 * spu_id
 	 */
-    private Long spuId;
+	@JsonSerialize(using = IdSerializer.class)
+	private Long spuId;
 
 	/**
 	 * 商品名字

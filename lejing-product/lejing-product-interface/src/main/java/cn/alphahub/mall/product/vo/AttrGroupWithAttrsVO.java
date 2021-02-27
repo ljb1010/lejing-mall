@@ -1,6 +1,8 @@
 package cn.alphahub.mall.product.vo;
 
+import cn.alphahub.common.util.IdSerializer;
 import cn.alphahub.mall.product.domain.Attr;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,6 +24,7 @@ public class AttrGroupWithAttrsVO {
     /**
      * 分组id
      */
+    @JsonSerialize(using = IdSerializer.class)
     private Long attrGroupId;
 
     /**
@@ -47,6 +50,7 @@ public class AttrGroupWithAttrsVO {
     /**
      * 所属分类id
      */
+    @JsonSerialize(using = IdSerializer.class)
     private Long catelogId;
 
     private List<Attr> attrs;

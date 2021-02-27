@@ -1,8 +1,10 @@
 package cn.alphahub.mall.product.domain;
 
+import cn.alphahub.common.util.IdSerializer;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,6 +31,7 @@ public class SpuInfoDesc implements Serializable {
      * 商品id
      */
     @TableId(type = IdType.INPUT)
+    @JsonSerialize(using = IdSerializer.class)
     private Long spuId;
 
     /**

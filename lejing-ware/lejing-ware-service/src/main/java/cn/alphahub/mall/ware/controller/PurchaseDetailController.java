@@ -7,6 +7,7 @@ import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.mall.ware.domain.PurchaseDetail;
 import cn.alphahub.mall.ware.service.PurchaseDetailService;
+import cn.alphahub.mall.ware.vo.MergeVo;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -74,18 +75,6 @@ public class PurchaseDetailController extends BaseController {
      */
     @PostMapping("/save")
     public BaseResult<Boolean> save(@RequestBody PurchaseDetail purchaseDetail) {
-        boolean save = purchaseDetailService.save(purchaseDetail);
-        return toOperationResult(save);
-    }
-
-    /**
-     * 合并仓储采购表
-     *
-     * @param purchaseDetail 仓储采购表元数据
-     * @return 成功返回true, 失败返回false
-     */
-    @PostMapping("/merge")
-    public BaseResult<Boolean> merge(@RequestBody PurchaseDetail purchaseDetail) {
         boolean save = purchaseDetailService.save(purchaseDetail);
         return toOperationResult(save);
     }

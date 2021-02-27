@@ -26,4 +26,12 @@ public interface ProductAttrValueService extends IService<ProductAttrValue> {
     PageResult<ProductAttrValue> queryPage(PageDomain pageDomain, ProductAttrValue productAttrValue);
 
     void saveProductAttrValues(List<ProductAttrValue> productAttrValues);
+
+    /**
+     * 获取spu规格
+     *
+     * @param spuId spu Id
+     * @return spu规格列表
+     */
+    List<ProductAttrValue> listSpuBySpuId(Long spuId);
 }

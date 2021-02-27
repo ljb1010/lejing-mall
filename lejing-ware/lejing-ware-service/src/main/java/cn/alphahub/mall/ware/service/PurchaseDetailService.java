@@ -5,6 +5,8 @@ import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.mall.ware.domain.PurchaseDetail;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * 仓储采购表Service接口
  *
@@ -31,4 +33,12 @@ public interface PurchaseDetailService extends IService<PurchaseDetail> {
      * @return 仓储采购表分页数据
      */
     PageResult<PurchaseDetail> queryPage(PageDomain pageDomain, PurchaseDetail purchaseDetail, String key);
+
+    /**
+     * 根据采购单id查询仓储采购列表
+     *
+     * @param purchaseId 采购单id
+     * @return 仓储采购列表
+     */
+    List<PurchaseDetail> listDetailByPurchaseId(Long purchaseId);
 }

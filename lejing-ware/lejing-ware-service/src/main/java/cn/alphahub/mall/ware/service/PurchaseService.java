@@ -3,7 +3,11 @@ package cn.alphahub.mall.ware.service;
 import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.mall.ware.domain.Purchase;
+import cn.alphahub.mall.ware.vo.MergeVo;
+import cn.alphahub.mall.ware.vo.PurchaseDoneVo;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * 采购信息Service接口
@@ -31,4 +35,28 @@ public interface PurchaseService extends IService<Purchase> {
      * @return 采购信息分页数据
      */
     PageResult<Purchase> unReceiveList(PageDomain pageDomain, Purchase purchase);
+
+    /**
+     * 合并仓储采购表
+     *
+     * @param mergeVo 合并采购单元数据
+     * @return 成功返回true, 失败返回false
+     */
+    boolean merge(MergeVo mergeVo);
+
+    /**
+     * 领取采购单
+     *
+     * @param ids 采购单id集合
+     * @return 成功返回true, 失败返回false
+     */
+    boolean received(List<Long> ids);
+
+    /**
+     * 完成采购
+     *
+     * @param purchaseDoneVo 完成采购的参数元数据
+     * @return 成功返回true, 失败返回false
+     */
+    boolean done(PurchaseDoneVo purchaseDoneVo);
 }

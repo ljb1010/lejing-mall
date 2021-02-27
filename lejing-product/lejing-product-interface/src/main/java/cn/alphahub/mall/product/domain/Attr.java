@@ -1,7 +1,9 @@
 package cn.alphahub.mall.product.domain;
 
+import cn.alphahub.common.util.IdSerializer;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,8 +29,9 @@ public class Attr implements Serializable {
 	/**
 	 * 属性id
 	 */
-    @TableId
-    private Long attrId;
+	@TableId
+	@JsonSerialize(using = IdSerializer.class)
+	private Long attrId;
 
 	/**
 	 * 属性名
@@ -63,7 +66,8 @@ public class Attr implements Serializable {
 	/**
 	 * 所属分类
 	 */
-    private Long catelogId;
+	@JsonSerialize(using = IdSerializer.class)
+	private Long catelogId;
 
 	/**
 	 * 快速展示【是否展示在介绍上；0-否 1-是】，在sku中仍然可以调整

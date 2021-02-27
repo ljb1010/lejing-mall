@@ -1,7 +1,9 @@
 package cn.alphahub.mall.ware.domain;
 
+import cn.alphahub.common.util.IdSerializer;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,6 +30,7 @@ public class WareInfo implements Serializable {
      * id
      */
     @TableId
+    @JsonSerialize(using = IdSerializer.class)
     private Long id;
 
     /**

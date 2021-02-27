@@ -76,6 +76,7 @@ public class GenUtils {
         //配置信息
         Configuration config = getConfig();
         boolean hasBigDecimal = false;
+        boolean hasLong = false;
         boolean hasList = false;
         //表信息
         TableEntity tableEntity = new TableEntity();
@@ -104,10 +105,14 @@ public class GenUtils {
             String attrType = config.getString(columnEntity.getDataType(), columnToJava(columnEntity.getDataType()));
             columnEntity.setAttrType(attrType);
 
-
             if (!hasBigDecimal && "BigDecimal".equals(attrType)) {
                 hasBigDecimal = true;
             }
+
+            if (!hasLong && "Long".equals(attrType)) {
+                hasLong = true;
+            }
+
             if (!hasList && "array".equals(columnEntity.getExtra())) {
                 hasList = true;
             }
@@ -141,6 +146,7 @@ public class GenUtils {
         map.put("pathName", tableEntity.getClassname().toLowerCase());
         map.put("columns", tableEntity.getColumns());
         map.put("hasBigDecimal", hasBigDecimal);
+        map.put("hasLong", hasLong);
         map.put("hasList", hasList);
         map.put("mainPath", mainPath);
         map.put("package", config.getString("package"));

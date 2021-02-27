@@ -7,6 +7,7 @@ import cn.alphahub.mall.product.mapper.ProductAttrValueMapper;
 import cn.alphahub.mall.product.service.ProductAttrValueService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,5 +47,18 @@ public class ProductAttrValueServiceImpl extends ServiceImpl<ProductAttrValueMap
     @Override
     public void saveProductAttrValues(List<ProductAttrValue> productAttrValues) {
         this.saveBatch(productAttrValues);
+    }
+
+    /**
+     * 获取spu规格
+     *
+     * @param spuId spu Id
+     * @return spu规格列表
+     */
+    @Override
+    public List<ProductAttrValue> listSpuBySpuId(Long spuId) {
+        QueryWrapper<ProductAttrValue> wrapper = new QueryWrapper<>();
+        wrapper.lambda().eq(ObjectUtils.isNotEmpty(spuId), ProductAttrValue::getSpuId, spuId);
+        return this.list(wrapper);
     }
 }

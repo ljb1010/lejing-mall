@@ -162,8 +162,8 @@ export default {
         type: 'warning'
       }).then(() => {
         this.$http({
-          url: this.$http.adornUrl('/coupon/skufullreduction/delete'),
-          method: 'post',
+          url: this.$http.adornUrl(`/coupon/skufullreduction/delete/${ids.join(",")}`),
+          method: 'delete',
           data: this.$http.adornData(ids, false)
         }).then(({data}) => {
           if (data && data.code === 200) {

@@ -1,5 +1,7 @@
 package cn.alphahub.mall.product.vo;
 
+import cn.alphahub.common.util.IdSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,6 +25,7 @@ public class AttrVO implements Serializable {
     /**
      * 属性id
      */
+    @JsonSerialize(using = IdSerializer.class)
     private Long attrId;
 
     /**

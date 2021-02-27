@@ -1,7 +1,9 @@
 package cn.alphahub.mall.product.domain;
 
+import cn.alphahub.common.util.IdSerializer;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,13 +29,15 @@ public class CommentReplay implements Serializable {
 	/**
 	 * id
 	 */
-    @TableId
-    private Long id;
+	@TableId
+	@JsonSerialize(using = IdSerializer.class)
+	private Long id;
 
 	/**
 	 * 评论id
 	 */
-    private Long commentId;
+	@JsonSerialize(using = IdSerializer.class)
+	private Long commentId;
 
 	/**
 	 * 回复id

@@ -26,13 +26,12 @@ public interface SkuInfoService extends IService<SkuInfo> {
     /**
      * 查询sku信息列表
      *
-     * @param skuInfo     sku信息,查询字段选择性传入,默认为等值查询
-     * @param key         检索关键字
-     * @param catelogId   三級分類id
-     * @param brandId     品牌id
-     * @param min         最低價格
-     * @param max         最大價格
+     * @param key       检索关键字
+     * @param catelogId 三級分類id
+     * @param brandId   品牌id
+     * @param min       最低價格
+     * @param max       最大價格
      * @return sku信息分页数据
      */
-    PageResult<SkuInfo> queryPage(PageDomain pageDomain, SkuInfo skuInfo, String key, Long catelogId, Long brandId, Long min, Long max);
+    PageResult<SkuInfo> queryPage(PageDomain pageDomain, String key, Long catelogId, Long brandId, Long min, Long max);
 }

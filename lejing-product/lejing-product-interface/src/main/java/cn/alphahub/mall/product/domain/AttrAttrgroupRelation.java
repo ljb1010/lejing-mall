@@ -1,7 +1,9 @@
 package cn.alphahub.mall.product.domain;
 
+import cn.alphahub.common.util.IdSerializer;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,18 +29,21 @@ public class AttrAttrgroupRelation implements Serializable {
 	/**
 	 * id
 	 */
-    @TableId
-    private Long id;
+	@TableId
+	@JsonSerialize(using = IdSerializer.class)
+	private Long id;
 
 	/**
 	 * 属性id
 	 */
-    private Long attrId;
+	@JsonSerialize(using = IdSerializer.class)
+	private Long attrId;
 
 	/**
 	 * 属性分组id
 	 */
-    private Long attrGroupId;
+	@JsonSerialize(using = IdSerializer.class)
+	private Long attrGroupId;
 
 	/**
 	 * 属性组内排序

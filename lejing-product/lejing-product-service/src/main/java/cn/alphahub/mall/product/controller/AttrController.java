@@ -6,7 +6,9 @@ import cn.alphahub.common.core.domain.BaseResult;
 import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.mall.product.domain.Attr;
+import cn.alphahub.mall.product.domain.ProductAttrValue;
 import cn.alphahub.mall.product.service.AttrService;
+import cn.alphahub.mall.product.service.ProductAttrValueService;
 import cn.alphahub.mall.product.vo.AttrRespVO;
 import cn.alphahub.mall.product.vo.AttrVO;
 import org.apache.commons.lang3.ObjectUtils;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * 商品属性Controller
@@ -27,6 +30,19 @@ import java.util.Arrays;
 public class AttrController extends BaseController {
     @Resource
     private AttrService attrService;
+    @Resource
+    private ProductAttrValueService productAttrValueService;
+
+    /**
+     * 获取spu规格
+     *
+     * @param spuId spu Id
+     * @return spu规格列表
+     */
+    @GetMapping("/base/listforspu/{spuId}")
+    public BaseResult<List<ProductAttrValue>> listSpuBySpuId(@PathVariable("spuId") Long spuId) {
+        return BaseResult.ok(productAttrValueService.listSpuBySpuId(spuId));
+    }
 
     /**
      * 查询属性base/sale list

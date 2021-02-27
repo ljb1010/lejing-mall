@@ -7,11 +7,16 @@ import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.mall.ware.domain.Purchase;
 import cn.alphahub.mall.ware.service.PurchaseService;
+import cn.alphahub.mall.ware.vo.MergeVo;
+import cn.alphahub.mall.ware.vo.PurchaseDoneVo;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 采购信息Controller
@@ -98,7 +103,44 @@ public class PurchaseController extends BaseController {
      */
     @PostMapping("/save")
     public BaseResult<Boolean> save(@RequestBody Purchase purchase) {
+        purchase.setCreateTime(new Date());
         boolean save = purchaseService.save(purchase);
+        return toOperationResult(save);
+    }
+
+    /**
+     * 合并仓储采购表
+     *
+     * @param mergeVo 合并采购单元数据
+     * @return 成功返回true, 失败返回false
+     */
+    @PostMapping("/merge")
+    public BaseResult<Boolean> merge(@RequestBody MergeVo mergeVo) {
+        boolean save = purchaseService.merge(mergeVo);
+        return toOperationResult(save);
+    }
+
+    /**
+     * 领取采购单
+     *
+     * @param ids 采购单id集合
+     * @return 成功返回true, 失败返回false
+     */
+    @PostMapping("/received")
+    public BaseResult<Boolean> received(@RequestBody List<Long> ids) {
+        boolean save = purchaseService.received(ids);
+        return toOperationResult(save);
+    }
+
+    /**
+     * 完成采购
+     *
+     * @param purchaseDoneVo 完成采购的参数元数据
+     * @return 成功返回true, 失败返回false
+     */
+    @PostMapping("/done")
+    public BaseResult<Boolean> done(@RequestBody PurchaseDoneVo purchaseDoneVo) {
+        boolean save = purchaseService.done(purchaseDoneVo);
         return toOperationResult(save);
     }
 

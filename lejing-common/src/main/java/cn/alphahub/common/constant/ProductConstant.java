@@ -4,6 +4,8 @@ import lombok.Getter;
 
 /**
  * 商品相关常量类
+ *
+ * @author liuwenjing
  */
 public class ProductConstant {
 
@@ -14,11 +16,11 @@ public class ProductConstant {
     public enum AttrEnum {
 
         /**
-         * 1-基本属性
+         * 1 基本属性
          */
         BASE(1, "基本属性"),
         /**
-         * 0-销售属性
+         * 0 销售属性
          */
         SALE(0, "销售属性");
 

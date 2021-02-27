@@ -1,7 +1,9 @@
 package cn.alphahub.mall.order.domain;
 
+import cn.alphahub.common.util.IdSerializer;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,6 +32,7 @@ public class OrderMaster implements Serializable {
      * 主订单id
      */
     @TableId
+    @JsonSerialize(using = IdSerializer.class)
     private Long masterOrderId;
 
     /**
@@ -40,6 +43,7 @@ public class OrderMaster implements Serializable {
     /**
      * 下单人ID
      */
+    @JsonSerialize(using = IdSerializer.class)
     private Long userId;
 
     /**

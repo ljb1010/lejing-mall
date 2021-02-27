@@ -299,8 +299,8 @@ export default {
         type: 'warning'
       }).then(() => {
         this.$http({
-          url: this.$http.adornUrl('/order/orderreturnapply/delete'),
-          method: 'post',
+          url: this.$http.adornUrl(`/order/orderreturnapply/delete/${ids.join(",")}`),
+          method: 'delete',
           data: this.$http.adornData(ids, false)
         }).then(({data}) => {
           if (data && data.code === 200) {
