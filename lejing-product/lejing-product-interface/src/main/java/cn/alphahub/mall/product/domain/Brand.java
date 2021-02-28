@@ -5,6 +5,8 @@ import cn.alphahub.common.valid.InsertGroup;
 import cn.alphahub.common.valid.UpdateGroup;
 import cn.alphahub.common.valid.UpdateStatusGroup;
 import cn.alphahub.common.valid.custom.ListValue;
+import com.baomidou.mybatisplus.annotation.SqlCondition;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -48,7 +50,8 @@ public class Brand implements Serializable {
     /**
      * 品牌名
      */
-    @NotBlank(message = "品牌名不能为空", groups = {InsertGroup.class, UpdateGroup.class})
+    @NotBlank(message = "品牌名不能为空" , groups = {InsertGroup.class, UpdateGroup.class})
+    @TableField(condition = SqlCondition.LIKE)
     private String name;
 
     /**

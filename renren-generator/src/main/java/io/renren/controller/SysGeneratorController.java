@@ -45,7 +45,7 @@ public class SysGeneratorController {
     public R list(@RequestParam Map<String, Object> params) {
         PageUtils pageUtil = sysGeneratorService.queryList(new Query(params));
 
-        return R.ok().put("page", pageUtil);
+        return R.ok().put("page" , pageUtil);
     }
 
     /**
@@ -58,8 +58,8 @@ public class SysGeneratorController {
         zipFileName = StringUtils.isNotEmpty(zipFileName) ? zipFileName : "renren";
         byte[] data = sysGeneratorService.generatorCode(tables.split(","));
         response.reset();
-        response.setHeader("Content-Disposition", "attachment; filename=\"" + zipFileName + ".zip\"");
-        response.addHeader("Content-Length", "" + data.length);
+        response.setHeader("Content-Disposition" , "attachment; filename=\"" + zipFileName + ".zip\"");
+        response.addHeader("Content-Length" , "" + data.length);
         response.setContentType("application/octet-stream; charset=UTF-8");
 
         IOUtils.write(data, response.getOutputStream());

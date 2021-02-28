@@ -5,13 +5,13 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
- * ${comments}
- * 
+ * ${comments}Mapper接口
+ *
  * @author ${author}
  * @email ${email}
  * @date ${datetime}
  */
 @Mapper
 public interface ${className}Mapper extends BaseMapper<${className}> {
-	
+
 }

@@ -7,14 +7,16 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import java.io.IOException;
 
 /**
- * 返回数据给前端时将long型ID转为String
+ * <p>id序列化器</p>
+ * <b>将返回给前端的Long型id转为String，防止精度丢失</b>
  * <li>
- * 用法：@JsonSerialize(using = IdSerializer.class)
- * private Long id;
- * 添加到实体类的主键id上，jackson在序列化是会自动序列化id为string类型
+ * 添加到实体类的主键id上，jackson在序列化是会自动序列化id为string类型<br/>
+ * 用法示例：<br/>@JsonSerialize(using = IdSerializer.class)<br/>private Long id;<br/>
  * </li>
  *
  * @author liuwenjing
+ * @date 2021年2月28日
+ * @see com.fasterxml.jackson.databind.JsonSerializer
  */
 public class IdSerializer extends JsonSerializer<Long> {
 
