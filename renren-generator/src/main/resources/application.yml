@@ -47,7 +47,7 @@ spring:
 #  database: test
 
 mybatis-plus:
-  mapperLocations: classpath:mapper/**/*.xml
+  mapperLocations: classpath:mapper/**/*Dao.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 

@@ -91,6 +91,8 @@ JVM参数: `-Xms512m -Xmx512m -Xmn200m -Xlog:gc*`
 
 - [ ] 微服务计划
 
+进行中......
+
 - [x] 移除`spring-cloud-alibaba 2.2.5.RELEASE` 版本中微服务中通过`feign`远程调用时使用`ribbon`负载均衡的支持, 采用`spring-cloud 2020.0.1`的`spring cloud loadbalancer`代替
 
 
@@ -101,7 +103,24 @@ JVM参数: `-Xms512m -Xmx512m -Xmn200m -Xlog:gc*`
 >
 > `mvn package`的时候不能读取common里面的一些相关类的注释，因为`java`最终编译成字节码文件后会把所有注释都清理掉，也就是项目最终的class文件不包含任何注释
 
+1. `nacos MySQL`数据持久配置：`nacos-server/nacos-server-1.4.1/nacos/conf/application.properties`
 
+```properties
+### Count of DB:
+db.num=1
+
+### Connect URL of DB:
+db.url.0=jdbc:mysql://192.168.40.132:33306/nacos_config?serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true&autoReconnect=true&allowMultiQueries=true
+db.user.0=root
+db.password.0=123456
+```
+
+2. 服务启动顺序
+
+- 启动`nacos`，进入终端：`nacos-server/nacos-server-1.4.1/nacos/run-nacos-standalone.bat`
+- 启动授权服务
+- 启动网关服务 `lejing-gateway`
+- 再启动其他相关服务
 
 # 6 Q&A
 

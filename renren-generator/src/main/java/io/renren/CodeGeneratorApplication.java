@@ -7,10 +7,10 @@ import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfigurat
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 
 @SpringBootApplication(exclude = {MongoAutoConfiguration.class, MongoDataAutoConfiguration.class})
-@MapperScan("io.renren.dao")
+@MapperScan(value = {"io.renren.dao"})
 public class CodeGeneratorApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(CodeGeneratorApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(CodeGeneratorApplication.class, args);
+    }
 }
