@@ -50,7 +50,7 @@ public class Brand implements Serializable {
     /**
      * 品牌名
      */
-    @NotBlank(message = "品牌名不能为空" , groups = {InsertGroup.class, UpdateGroup.class})
+    @NotBlank(message = "品牌名不能为空", groups = {InsertGroup.class, UpdateGroup.class})
     @TableField(condition = SqlCondition.LIKE)
     private String name;
 
