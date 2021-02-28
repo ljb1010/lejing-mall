@@ -5,9 +5,17 @@
 ## 1 **项目说明** 
 
 - 可在线生成domain、xml、mapper、service、controller、html、js、sql代码，减少70%以上的开发任务
+- 整合smart-doc，执行项目的 `mvn package` 可直接输出Restful api，支持调试
 
-- 整合smart-doc，可直接输出Restful api，支持调试
-- 生成的接口：获取xx分页列表、获取xx详情、修改xx、批量删除xx
+![image-20210228214456831](https://alphahub-test-bucket.oss-cn-shanghai.aliyuncs.com/image/image-20210228214456831.png)
+
+- 生成的接口：获取xx分页列表、获取xx详情、保存xx、修改xx、批量删除xx
+
+![image-20210228214229671](https://alphahub-test-bucket.oss-cn-shanghai.aliyuncs.com/image/image-20210228214229671.png)
+
+![image-20210228214309598](https://alphahub-test-bucket.oss-cn-shanghai.aliyuncs.com/image/image-20210228214309598.png)
+
+![image-20210228214348571](https://alphahub-test-bucket.oss-cn-shanghai.aliyuncs.com/image/image-20210228214348571.png)
 
 ## 2 **本地部署**
 
