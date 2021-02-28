@@ -1,25 +1,54 @@
-**项目说明** 
-- renren-generator是人人开源项目的代码生成器，可在线生成entity、xml、dao、service、html、js、sql代码，减少70%以上的开发任务
-<br> 
+# 代码生成器
 
+> 基于人人开源项目二次开发，做了大量优化
 
-**如何交流、反馈、参与贡献？** 
-- Git仓库：https://gitee.com/renrenio/renren-generator
-- [人人开源](https://www.renren.io)：https://www.renren.io   
-- [人人开源社区](https://www.renren.io/community)：https://www.renren.io/community   
-- 官方QQ群：324780204、145799952
-- 技术讨论、二次开发等咨询、问题和建议，请移步到人人开源社区，我会在第一时间进行解答和回复
-- 如需关注项目最新动态，请Watch、Star项目，同时也是对项目最好的支持
-- 微信扫码并关注【人人开源】，获得项目最新动态及更新提醒<br>
-![输入图片说明](http://cdn.renren.io/47c26201804031918312618.jpg "在这里输入图片标题")
-<br> 
-<br> 
+## 1 **项目说明** 
 
- **本地部署**
+- 可在线生成domain、xml、mapper、service、controller、html、js、sql代码，减少70%以上的开发任务
+
+- 整合smart-doc，可直接输出Restful api，支持调试
+- 生成的接口：获取xx分页列表、获取xx详情、修改xx、批量删除xx
+
+## 2 **本地部署**
+
 - 通过git下载源码
 - 修改application.yml，更新MySQL账号和密码、数据库名称
-- Eclipse、IDEA运行RenrenApplication.java，则可启动项目
+
+```yaml
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.40.132:33306/lejing_sms?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+```
+
+- 修改generator.properties文件，重点修改下面这几项：
+
+```properties
+#
+# 代码生成配置信息
+#
+#域名|组织名取反
+mainPath=cn.alphahub
+#包名
+package=cn.alphahub.mall
+#模块名称
+moduleName=coupon
+#作者
+author=Weasley J
+#email
+email=1432689025@qq.com
+#表前缀(类名不会包含表前缀)
+tablePrefix=sms_
+#代码生成后下载的zip包名称
+codeZipFileName=lejing-coupon
+```
+
+
+
+- Eclipse、IDEA运行CodeGeneratorApplication.java，则可启动项目
 - 项目访问路径：http://localhost
 
 **演示效果图：**
-![输入图片说明](https://images.gitee.com/uploads/images/2018/0731/150920_761d8835_63154.jpeg "aa.jpg")
+![image-20210228212825348](https://alphahub-test-bucket.oss-cn-shanghai.aliyuncs.com/image/image-20210228212825348.png)
