@@ -135,6 +135,19 @@ public class AttrController extends BaseController {
     }
 
     /**
+     * 根据spuId修改商品属性
+     *
+     * @param spuId      商品spuId
+     * @param attrValues spu属性值列表
+     * @return 成功返回true, 失败返回false
+     */
+    @PutMapping("/update/{spuId}")
+    public BaseResult<Boolean> updateSpuAttr(@PathVariable("spuId") Long spuId, @RequestBody List<ProductAttrValue> attrValues) {
+        boolean update = productAttrValueService.updateSpuAttr(spuId, attrValues);
+        return toOperationResult(update);
+    }
+
+    /**
      * 批量删除商品属性
      *
      * @param attrIds 商品属性id集合

@@ -92,5 +92,5 @@ cors:
     allowed-origins:
       - http://127.0.0.1
       - http://127.0.0.1:7000
-      - http://*.alphahub.cn
-      - http://*.leyou.com
+      - http://www.alphahub.cn
+      - http://www.leyou.com

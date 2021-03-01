@@ -3,6 +3,7 @@ package cn.alphahub.mall.product.service;
 import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.mall.product.domain.Attr;
+import cn.alphahub.mall.product.domain.ProductAttrValue;
 import cn.alphahub.mall.product.vo.AttrGroupVO;
 import cn.alphahub.mall.product.vo.AttrRespVO;
 import cn.alphahub.mall.product.vo.AttrVO;

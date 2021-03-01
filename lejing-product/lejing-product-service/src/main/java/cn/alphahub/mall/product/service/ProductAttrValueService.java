@@ -34,4 +34,13 @@ public interface ProductAttrValueService extends IService<ProductAttrValue> {
      * @return spu规格列表
      */
     List<ProductAttrValue> listSpuBySpuId(Long spuId);
+
+    /**
+     * 根据spuId修改商品属性
+     *
+     * @param spuId      商品spuId
+     * @param attrValues spu属性值列表
+     * @return 成功返回true, 失败返回false
+     */
+    boolean updateSpuAttr(Long spuId, List<ProductAttrValue> attrValues);
 }

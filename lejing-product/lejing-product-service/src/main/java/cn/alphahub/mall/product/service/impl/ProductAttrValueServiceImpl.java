@@ -9,8 +9,10 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * spu属性值Service业务层处理
@@ -60,5 +62,26 @@ public class ProductAttrValueServiceImpl extends ServiceImpl<ProductAttrValueMap
         QueryWrapper<ProductAttrValue> wrapper = new QueryWrapper<>();
         wrapper.lambda().eq(ObjectUtils.isNotEmpty(spuId), ProductAttrValue::getSpuId, spuId);
         return this.list(wrapper);
+    }
+
+    /**
+     * 根据spuId修改商品属性
+     *
+     * @param spuId      商品spuId
+     * @param attrValues spu属性值列表
+     * @return 成功返回true, 失败返回false
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean updateSpuAttr(Long spuId, List<ProductAttrValue> attrValues) {
+        //删除所有旧spu属性值
+        QueryWrapper<ProductAttrValue> wrapper = new QueryWrapper<>();
+        boolean delete = this.remove(wrapper.lambda().eq(ObjectUtils.isNotEmpty(spuId), ProductAttrValue::getSpuId, spuId));
+        List<ProductAttrValue> valueList = attrValues.stream()
+                .peek(productAttrValue -> productAttrValue.setSpuId(spuId))
+                .collect(Collectors.toList());
+        //保存新spu属性
+        boolean saveBatch = this.saveBatch(valueList);
+        return delete || saveBatch;
     }
 }
