@@ -65,6 +65,9 @@
         <aliyun-sdk-oss.version>3.11.3</aliyun-sdk-oss.version>
         <aliyun-oss.version>1.0.0</aliyun-oss.version>
         <redisson.version>3.15.0</redisson.version>
+        <!-- 替换spring-boot-starter自带的elasticsearch版本 -->
+        <elasticsearch.version>7.10.1</elasticsearch.version>
+        <logstash.logback.version>6.6</logstash.logback.version>
     </properties>
 
     <dependencyManagement>
@@ -236,6 +239,13 @@
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>aliyun-oss-spring-boot-starter</artifactId>
                 <version>${aliyun-oss.version}</version>
+            </dependency>
+            <!-- ELK logstash logback日志依赖 -->
+            <!-- https://mvnrepository.com/artifact/net.logstash.logback/logstash-logback-encoder -->
+            <dependency>
+                <groupId>net.logstash.logback</groupId>
+                <artifactId>logstash-logback-encoder</artifactId>
+                <version>${logstash.logback.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
