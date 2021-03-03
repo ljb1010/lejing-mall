@@ -114,7 +114,27 @@ cd shell
 chmod 0777 -vR *.sh && ./run_elk_install.sh
 ```
 
+## 5.2 修改`logback-spring.xml`中`logstash`的参数
 
+![image-20210303224138777](https://alphahub-test-bucket.oss-cn-shanghai.aliyuncs.com/image/image-20210303224138777.png)
+
+```xml
+<destination>192.168.40.132:5044</destination>
+```
+
+以上标签值改为你自己的 `Logstash` 能接受log的主机`ip:port`
+
+## 5.3 `Logstash` 成功接受日志的效果
+
+1. 终端
+
+![image-20210303224508305](https://alphahub-test-bucket.oss-cn-shanghai.aliyuncs.com/image/image-20210303224508305.png)
+
+2. es中的索引数据
+
+![image-20210303224559097](https://alphahub-test-bucket.oss-cn-shanghai.aliyuncs.com/image/image-20210303224559097.png)
+
+![image-20210303224642551](https://alphahub-test-bucket.oss-cn-shanghai.aliyuncs.com/image/image-20210303224642551.png)
 
 # 6 TIPS
 

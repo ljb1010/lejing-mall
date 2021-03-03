@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
     <!--读取spring容器中的属性，这里是获取项目名称和运行的服务器IP-->
     <springProperty scope="context" name="server_port" source="server.port"/>
     <springProperty scope="context" name="app_name" source="spring.application.name"/>
     <springProperty scope="context" name="run_env" source="spring.profiles.active"/>
-
-    <logger name="org.springframework.web" level="INFO"/>
-    <logger name="org.springboot.sample" level="TRACE"/>
 
     <!--定义日志输出文件的存储位置，勿在 logback 的配置中使用相对路径-->
     <property name="LOG_HOME" value="/home/log"/>
@@ -55,10 +53,7 @@
 
     <!-- 在application.yml中指定spring.profiles.active属性值，配置线上与线下环境日志的输出 -->
     <!-- 开发环境 -->
-    <springProfile name="dev">
-        <logger name="org.springframework.web" level="INFO"/>
-        <logger name="org.springboot.sample" level="INFO"/>
-        <logger name="io.renren" level="DEBUG"/>
+    <springProfile name="dev,lwj">
         <!-- 日志输出级别 -->
         <root level="INFO">
             <appender-ref ref="CONSOLE"/>
@@ -68,9 +63,6 @@
 
     <!-- 测试环境 -->
     <springProfile name="test">
-        <logger name="org.springframework.web" level="INFO"/>
-        <logger name="org.springboot.sample" level="INFO"/>
-        <logger name="io.renren" level="DEBUG"/>
         <root level="INFO">
             <appender-ref ref="FILE"/>
             <appender-ref ref="CONSOLE"/>
@@ -80,9 +72,6 @@
 
     <!-- 生产环境 -->
     <springProfile name="prod">
-        <logger name="org.springframework.web" level="ERROR"/>
-        <logger name="org.springboot.sample" level="ERROR"/>
-        <logger name="io.renren" level="ERROR"/>
         <root level="INFO">
             <appender-ref ref="FILE"/>
             <appender-ref ref="CONSOLE"/>
