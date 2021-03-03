@@ -85,7 +85,7 @@ JVM参数: `-Xms512m -Xmx512m -Xmn200m -Xlog:gc*`
 
 # 4 待完成清单
 
-- [x] 整合人人框架，提供：domain--> dao --> service --> controller --> 全自动api文档在线输出&在线调试，
+- [x] 整合人人框架，提供：`domain`--> `dao` --> `service` --> `controller` --> 全自动`api`文档在线输出, 支持在线调试
 
   目的：让今后因业务变动影响数据库的变动只需要码农修改数据库对应的领域模型即可，节省更多的时间
 
@@ -97,7 +97,26 @@ JVM参数: `-Xms512m -Xmx512m -Xmn200m -Xlog:gc*`
 
 
 
-# 5 TIPS
+# 5 `Ubuntu`环境`Docker`插件安装指南
+
+## 5.1 安装ELK
+
+1. 下载本项目
+
+```shell
+git clone https://github.com/Weasley-J/lejing-mall
+```
+
+2. 切换工作目录
+
+```shell
+cd shell
+chmod 0777 -vR *.sh && ./run_elk_install.sh
+```
+
+
+
+# 6 TIPS
 
 > 本项目的`api`文档输出基于smart-doc和common工程里面我写的一些类完成的，不建议把common工程上传到maven私服上面，这会导致项目执行：
 >
@@ -122,7 +141,7 @@ db.password.0=123456
 - 启动网关服务 `lejing-gateway`
 - 再启动其他相关服务
 
-# 6 Q&A
+# 7 Q&A
 
 1.  为什么分页不用`mybatis-plus`自带的`IPage`？
 
