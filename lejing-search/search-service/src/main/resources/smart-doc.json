@@ -1,6 +1,6 @@
 {
-  // "serverUrl": "http://127.0.0.1:10000",
-  "serverUrl": "http://localhost:88/api",
+  // "serverUrl": "http://localhost:88/api",
+  "serverUrl": "http://localhost:12000",
   "isStrict": false,
   "allInOne": true,
   "outPath": "src/main/resources/static",

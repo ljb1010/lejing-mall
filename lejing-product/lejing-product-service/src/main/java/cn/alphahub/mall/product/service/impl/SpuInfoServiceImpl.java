@@ -1,5 +1,6 @@
 package cn.alphahub.mall.product.service.impl;
 
+import cn.alphahub.common.constant.ProductConstant;
 import cn.alphahub.common.core.domain.BaseResult;
 import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
@@ -16,6 +17,7 @@ import cn.alphahub.mall.product.feign.SkuFullReductionClient;
 import cn.alphahub.mall.product.feign.SpuBoundsClient;
 import cn.alphahub.mall.product.mapper.SpuInfoMapper;
 import cn.alphahub.mall.product.service.*;
+import cn.alphahub.mall.product.to.SkuModel;
 import cn.alphahub.mall.product.vo.BaseAttrs;
 import cn.alphahub.mall.product.vo.Bounds;
 import cn.alphahub.mall.product.vo.Images;
@@ -33,6 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -102,7 +105,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoMapper, SpuInfo> impl
      */
     @Override
     public PageResult<SpuInfo> queryPage(PageDomain pageDomain, SpuInfo spuInfo, String key, Integer catelogId, Integer brandId, Integer status) {
-        log.info("参数:key-{},catelogId-{},brandId-{},status-{}",key,catelogId,brandId,status);
+        log.info("参数:key-{},catalogId-{},brandId-{},status-{}", key, catelogId, brandId, status);
         QueryWrapper<SpuInfo> wrapper = new QueryWrapper<>(spuInfo);
         // 检索关键字不为空
         if (StringUtils.isNotBlank(key)) {
@@ -113,17 +116,41 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoMapper, SpuInfo> impl
             wrapper.lambda().eq(SpuInfo::getPublishStatus, status);
         }
         // 品牌id
-        if (ObjectUtils.isNotEmpty(brandId) && !StringUtils.equals("0",String.valueOf(brandId))) {
+        if (ObjectUtils.isNotEmpty(brandId) &&
+                !StringUtils.equals(ProductConstant.AttrEnum.SALE.getCode().toString(), String.valueOf(brandId))
+        ) {
             wrapper.lambda().eq(SpuInfo::getBrandId, brandId);
         }
         // 三级分类id
-        if (ObjectUtils.isNotEmpty(catelogId)&& !StringUtils.equals("0",String.valueOf(catelogId))) {
+        if (ObjectUtils.isNotEmpty(catelogId) &&
+                !StringUtils.equals(ProductConstant.AttrEnum.SALE.getCode().toString(), String.valueOf(catelogId))
+        ) {
             wrapper.lambda().eq(SpuInfo::getCatalogId, catelogId);
         }
         PageResult<SpuInfo> pageResult = new PageResult<>();
         pageResult.startPage(pageDomain);
         List<SpuInfo> spuInfoList = this.list(wrapper);
         return pageResult.getPage(spuInfoList);
+    }
+
+    /**
+     * 上架商品
+     *
+     * @param spuId 商品spu id
+     * @return 成功返回true, 失败返回false
+     */
+    @Override
+    public boolean spuOnShelves(Long spuId) {
+        /*
+         * 要上架的商品列表
+         */
+        List<SkuModel> productOnShelvesList = new ArrayList<>();
+        /*
+         * 要上架的商品信息
+         */
+        SkuModel skuModel = new SkuModel();
+
+        return false;
     }
 
     @Override

@@ -37,4 +37,12 @@ public interface SpuInfoService extends IService<SpuInfo> {
      * @return spu信息列表分页数据
      */
     PageResult<SpuInfo> queryPage(PageDomain pageDomain, SpuInfo spuInfo, String key, Integer catelogId, Integer brandId, Integer status);
+
+    /**
+     * 上架商品
+     *
+     * @param spuId 商品spu id
+     * @return 成功返回true, 失败返回false
+     */
+    boolean spuOnShelves(Long spuId);
 }

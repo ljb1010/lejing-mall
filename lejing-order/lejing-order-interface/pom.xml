@@ -12,6 +12,7 @@
 
     <packaging>jar</packaging>
     <artifactId>lejing-order-interface</artifactId>
+    <version>${lejing-mall.latest.version}</version>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -19,17 +20,10 @@
     </properties>
 
     <dependencies>
+        <!-- common工程 -->
         <dependency>
             <groupId>cn.alphahub.mall</groupId>
             <artifactId>lejing-common</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
         </dependency>
         <dependency>
             <groupId>javax.persistence</groupId>

@@ -59,6 +59,7 @@
             <appender-ref ref="CONSOLE"/>
             <appender-ref ref="LOGSTASH"/>
         </root>
+        <Logger name="org.springframework.data.convert.CustomConversions" level="ERROR"/>
     </springProfile>
 
     <!-- 测试环境 -->
@@ -68,6 +69,7 @@
             <appender-ref ref="CONSOLE"/>
             <appender-ref ref="LOGSTASH"/>
         </root>
+        <Logger name="org.springframework.data.convert.CustomConversions" level="ERROR"/>
     </springProfile>
 
     <!-- 生产环境 -->
@@ -77,6 +79,7 @@
             <appender-ref ref="CONSOLE"/>
             <appender-ref ref="LOGSTASH"/>
         </root>
+        <Logger name="org.springframework.data.convert.CustomConversions" level="ERROR"/>
     </springProfile>
 
 </configuration>

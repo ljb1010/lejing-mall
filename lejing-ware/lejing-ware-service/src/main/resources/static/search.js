@@ -8,22 +8,38 @@ api.push({
 })
 api[0].list.push({
     order: '1',
-    desc: '查询采购信息列表',
+    desc: '查询w未领取的采购单列表',
 });
 api[0].list.push({
     order: '2',
-    desc: '获取采购信息详情',
+    desc: '查询采购信息列表',
 });
 api[0].list.push({
     order: '3',
-    desc: '新增采购信息',
+    desc: '获取采购信息详情',
 });
 api[0].list.push({
     order: '4',
-    desc: '修改采购信息',
+    desc: '新增采购信息',
 });
 api[0].list.push({
     order: '5',
+    desc: '合并仓储采购表',
+});
+api[0].list.push({
+    order: '6',
+    desc: '领取采购单',
+});
+api[0].list.push({
+    order: '7',
+    desc: '完成采购',
+});
+api[0].list.push({
+    order: '8',
+    desc: '修改采购信息',
+});
+api[0].list.push({
+    order: '9',
     desc: '批量删除采购信息',
 });
 api.push({

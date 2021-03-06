@@ -43,6 +43,7 @@ import java.util.regex.Pattern;
  * @author Cal Hendersen
  * @author Michael Semb Wever
  */
+@SuppressWarnings(value = {"unchecked"})
 public final class HTMLFilter {
 
     /**

@@ -4,14 +4,20 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>lejing-ware</artifactId>
-        <groupId>cn.alphahub.mall</groupId>
+        <groupId>cn.alphahub.mall.search</groupId>
+        <artifactId>lejing-search</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>lejing-ware-service</artifactId>
+    <artifactId>search-service</artifactId>
     <version>${lejing-mall.latest.version}</version>
+
+    <description>
+        Elasticsearch搜索服务;
+        其实RestHighLevelClient，spring-boot-starter-data-elasticsearch已经封装好了, 没必要像百度里面90%的垃圾教程一样重复造轮子!
+        本项目采用Spring提供的elasticsearch的模板方法：ElasticsearchRepository对ES进行CRUD,ElasticsearchRestTemplate对ES进行DSL查询
+    </description>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -19,38 +25,30 @@
     </properties>
 
     <dependencies>
+        <!-- search interface -->
+        <dependency>
+            <groupId>cn.alphahub.mall.search</groupId>
+            <artifactId>search-interface</artifactId>
+            <version>${lejing-mall.latest.version}</version>
+        </dependency>
+        <!-- feign远程调用 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
         <!-- 引入Logstash日志系统 -->
         <dependency>
             <groupId>net.logstash.logback</groupId>
             <artifactId>logstash-logback-encoder</artifactId>
         </dependency>
-        <dependency>
-            <groupId>cn.alphahub.mall</groupId>
-            <artifactId>lejing-ware-interface</artifactId>
-            <version>${lejing-mall.latest.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
-        </dependency>
+        <!-- Rabbit MQ启动器-->
+        <!--
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-        </dependency>
-        <!-- nacos 注册与发现 -->
+        -->
+        <!-- nacos 服务注册/发现 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
@@ -66,20 +64,39 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
+        <!-- 负载均衡器 -->
         <dependency>
-            <groupId>cn.alphahub.mall</groupId>
-            <artifactId>lejing-product-interface</artifactId>
-            <version>${lejing-mall.latest.version}</version>
-            <scope>compile</scope>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+        </dependency>
+        <!-- 配置类属性映射 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!-- spring测试 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
     <build>
-        <finalName>${project.artifactId}</finalName>
+        <finalName>${parent.artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
             </plugin>
             <plugin>
                 <!-- https://mvnrepository.com/artifact/com.github.shalousun/smart-doc-maven-plugin -->
@@ -115,5 +132,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

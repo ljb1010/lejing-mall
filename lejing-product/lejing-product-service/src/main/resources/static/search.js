@@ -35,26 +35,34 @@ api.push({
 })
 api[1].list.push({
     order: '1',
-    desc: '查询属性base/sale list',
+    desc: '获取spu规格',
 });
 api[1].list.push({
     order: '2',
-    desc: '查询商品属性列表',
+    desc: '查询属性base/sale list',
 });
 api[1].list.push({
     order: '3',
-    desc: '获取商品属性详情',
+    desc: '查询商品属性列表',
 });
 api[1].list.push({
     order: '4',
-    desc: '新增商品属性',
+    desc: '获取商品属性详情',
 });
 api[1].list.push({
     order: '5',
-    desc: '修改商品属性',
+    desc: '新增商品属性',
 });
 api[1].list.push({
     order: '6',
+    desc: '修改商品属性',
+});
+api[1].list.push({
+    order: '7',
+    desc: '根据spuId修改商品属性',
+});
+api[1].list.push({
+    order: '8',
     desc: '批量删除商品属性',
 });
 api.push({
@@ -419,10 +427,14 @@ api[13].list.push({
 });
 api[13].list.push({
     order: '4',
-    desc: '修改spu信息',
+    desc: '上架商品',
 });
 api[13].list.push({
     order: '5',
+    desc: '修改spu信息',
+});
+api[13].list.push({
+    order: '6',
     desc: '批量删除spu信息',
 });
 api.push({

@@ -58,9 +58,9 @@ public class SpuInfoController extends BaseController {
             @RequestParam(value = "key", defaultValue = "") String key,
             @RequestParam(value = "sidx", defaultValue = "") String sidx,
             @RequestParam(value = "order", defaultValue = "") String order,
-            @RequestParam(value = "catelogId",defaultValue = "") Integer catelogId,
+            @RequestParam(value = "catelogId", defaultValue = "") Integer catelogId,
             @RequestParam(value = "brandId", defaultValue = "") Integer brandId,
-            @RequestParam(value = "status",defaultValue = "") Integer status
+            @RequestParam(value = "status", defaultValue = "") Integer status
     ) {
         /*
         {
@@ -109,6 +109,18 @@ public class SpuInfoController extends BaseController {
     public BaseResult<Boolean> save(@RequestBody SpuSaveVO spuSaveVO) {
         spuInfoService.saveSpuInfo(spuSaveVO);
         return BaseResult.ok();
+    }
+
+    /**
+     * 上架商品
+     *
+     * @param spuId 商品spu id
+     * @return 成功返回true, 失败返回false
+     */
+    @PostMapping("/{spuId}/up")
+    public BaseResult<Boolean> spuOnShelves(@PathVariable("spuId") Long spuId) {
+        boolean OnShelves = spuInfoService.spuOnShelves(spuId);
+        return BaseResult.ok(OnShelves);
     }
 
     /**

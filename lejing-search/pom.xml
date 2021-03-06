@@ -9,138 +9,19 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
+    <groupId>cn.alphahub.mall.search</groupId>
     <artifactId>lejing-search</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
     <name>lejing-search</name>
+    <packaging>pom</packaging>
+    <description>乐璟商城-搜索服务</description>
 
-    <description>
-        乐璟商城-Elasticsearch搜索服务，
-        其实RestHighLevelClient，spring-boot-starter-data-elasticsearch已经封装好了, 没必要像百度里面90%的垃圾教程一样重复造轮子!
-        本项目采用Spring提供的elasticsearch的模板方法：ElasticsearchRepository对ES进行CRUD,ElasticsearchRestTemplate对ES进行DSL查询
-    </description>
-
-    <properties>
-        <java.version>11</java.version>
-    </properties>
-
-    <dependencies>
-        <!-- spring data elasticsearch -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
-        </dependency>
-        <!-- feign远程调用 -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-        <!-- 引入Logstash日志系统 -->
-        <dependency>
-            <groupId>net.logstash.logback</groupId>
-            <artifactId>logstash-logback-encoder</artifactId>
-        </dependency>
-        <!-- common工程 -->
-        <dependency>
-            <groupId>cn.alphahub.mall</groupId>
-            <artifactId>lejing-common</artifactId>
-            <exclusions>
-                <!-- 不需要查询db -->
-                <exclusion>
-                    <groupId>com.github.pagehelper</groupId>
-                    <artifactId>pagehelper-spring-boot-starter</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <!-- Rabbit MQ启动器-->
-        <!--
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-amqp</artifactId>
-        </dependency>
-        -->
-        <!-- nacos 服务注册/发现 -->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.cloud</groupId>
-                    <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <!-- nacos 配置中心 -->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-        </dependency>
-        <!-- 负载均衡器 -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
-        </dependency>
-        <!-- 配置类属性映射 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <!-- 测试 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-
-    <build>
-        <finalName>${project.artifactId}</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-            <plugin>
-                <!-- https://mvnrepository.com/artifact/com.github.shalousun/smart-doc-maven-plugin -->
-                <groupId>com.github.shalousun</groupId>
-                <artifactId>smart-doc-maven-plugin</artifactId>
-                <version>${smart-doc.version}</version>
-                <configuration>
-                    <!--指定生成文档的使用的配置文件,配置文件放在自己的项目中-->
-                    <configFile>./src/main/resources/smart-doc.json</configFile>
-                    <!--指定项目名称-->
-                    <projectName>${project.artifactId}</projectName>
-                    <!--smart-doc实现自动分析依赖树加载第三方依赖的源码，如果一些框架依赖库加载不到导致报错，这时请使用excludes排除掉-->
-                    <excludes>
-                        <!--格式为：groupId:artifactId;参考如下-->
-                        <exclude>com.alibaba:fastjson</exclude>
-                    </excludes>
-                    <!--自1.0.8版本开始，插件提供includes支持-->
-                    <!--smart-doc能自动分析依赖树加载所有依赖源码，原则上会影响文档构建效率，因此你可以使用includes来让插件加载你配置的组件-->
-                    <includes>
-                        <!--格式为：groupId:artifactId;参考如下-->
-                        <include>com.alibaba:fastjson</include>
-                    </includes>
-                </configuration>
-                <executions>
-                    <execution>
-                        <!--如果不需要在执行编译时启动smart-doc，则将phase注释掉-->
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>html</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+    <!--
+        二级子模块的父工程不要添加版本号，
+           如：1级->2级(pom打包,2.1,2.2)中间的2级父工程就不要添加版本号->3级
+    -->
+    <modules>
+        <module>search-interface</module>
+        <module>search-service</module>
+    </modules>
 
 </project>
