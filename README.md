@@ -49,11 +49,11 @@ JVM参数: `-Xms512m -Xmx512m -Xmn200m -Xlog:gc*`
 
 # 3 已完成清单
 
-- [x] 分装好BaseController，用于Controller数据返回
+- [x] 已封装BaseController，用于Controller数据返回
 
 ![image-20210204005654609](https://alphahub-test-bucket.oss-cn-shanghai.aliyuncs.com/image/image-20210204005654609.png)
 
-- [x] 分装好BaseResult，返回结果封装 ，让接口的输入和输出更加明确
+- [x] 已封装BaseResult，返回结果封装 ，让接口的输入和输出更加明确
 
 ![image-20210204010657082](https://alphahub-test-bucket.oss-cn-shanghai.aliyuncs.com/image/image-20210204010657082.png)
 
@@ -99,7 +99,7 @@ JVM参数: `-Xms512m -Xmx512m -Xmn200m -Xlog:gc*`
 
 # 5 `Ubuntu`环境`Docker`插件安装指南
 
-## 5.1 安装ELK
+## 5.1 安装ELK全家桶
 
 1. 下载本项目
 
@@ -145,11 +145,14 @@ chmod 0777 -vR *.sh && ./run_elk_install.sh
 1. `nacos MySQL`数据持久配置：`nacos-server/nacos-server-1.4.1/nacos/conf/application.properties`
 
 ```properties
+### If use MySQL as datasource:
+spring.datasource.platform=mysql
+
 ### Count of DB:
 db.num=1
 
 ### Connect URL of DB:
-db.url.0=jdbc:mysql://192.168.40.132:33306/nacos_config?serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true&autoReconnect=true&allowMultiQueries=true
+db.url.0=jdbc:mysql://192.168.40.132:3306/nacos_config?serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true&autoReconnect=true&allowMultiQueries=true
 db.user.0=root
 db.password.0=123456
 ```

@@ -10,7 +10,14 @@
     </parent>
     <packaging>jar</packaging>
     <artifactId>lejing-common</artifactId>
-    <description>通用工程模块(各微服务的公共依赖、bean、工具类)</description>
+
+    <description>
+        通用工程模块(各微服务的公共依赖、bean、工具类);
+        已加入spring-boot的启动器: spring-boot-starter-web, pagehelper-spring-boot-starter;
+        提示:
+        (1) 不需要web启动器的应用, 引入lejing-common模块时在dependency里面排除spring-boot-starter-web
+        (2) 不需要查询数db的应用, 引入lejing-common模块时在dependency里面排除pagehelper-spring-boot-starter
+    </description>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>

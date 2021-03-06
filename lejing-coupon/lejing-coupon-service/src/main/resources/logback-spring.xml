@@ -8,7 +8,7 @@
     <springProperty scope="context" name="run_env" source="spring.profiles.active"/>
 
     <!--定义日志输出文件的存储位置，勿在 logback 的配置中使用相对路径-->
-    <property name="LOG_HOME" value="/home/log"/>
+    <property name="LOG_HOME" value="/root/log"/>
     <property name="COLOR_PATTERN"
               value="%black(%contextName-) %red(%d{yyyy-MM-dd HH:mm:ss}) %green([%thread]) %highlight(%-5level) %boldMagenta( %replace(%caller{1}){'\t|Caller.{1}0|\r\n', ''})- %gray(%msg%xEx%n)"/>
 

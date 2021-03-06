@@ -26,6 +26,7 @@
         <module>lejing-common</module>
         <module>lejing-gateway</module>
         <module>lejing-site-reserve</module>
+        <module>lejing-search</module>
         <module>lejing-third-party</module>
         <module>renren-admin</module>
         <module>renren-generator</module>

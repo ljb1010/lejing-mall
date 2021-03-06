@@ -6,31 +6,38 @@
         <groupId>cn.alphahub.mall</groupId>
         <artifactId>lejing-mall</artifactId>
         <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>lejing-third-party</artifactId>
-    <version>${lejing-mall.latest.version}</version>
-    <name>lejing-third-party</name>
-    <description>乐璟商城-第三方服务</description>
+    <artifactId>lejing-search</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>lejing-search</name>
+
+    <description>
+        乐璟商城-Elasticsearch搜索服务，
+        其实RestHighLevelClient，spring-boot-starter-data-elasticsearch已经封装好了, 没必要像百度里面90%的垃圾教程一样重复造轮子!
+        本项目采用Spring提供的elasticsearch的模板方法：ElasticsearchRepository对ES进行CRUD,ElasticsearchRestTemplate对ES进行DSL查询
+    </description>
 
     <properties>
         <java.version>11</java.version>
     </properties>
 
     <dependencies>
-        <!-- 引入Logstash日志系统 -->
+        <!-- spring data elasticsearch -->
         <dependency>
-            <groupId>net.logstash.logback</groupId>
-            <artifactId>logstash-logback-encoder</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
         </dependency>
+        <!-- feign远程调用 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
+        <!-- 引入Logstash日志系统 -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
         </dependency>
         <!-- common工程 -->
         <dependency>
@@ -44,21 +51,41 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- nacos 服务注册,发现-->
+        <!-- Rabbit MQ启动器-->
+        <!--
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+        -->
+        <!-- nacos 服务注册/发现 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.cloud</groupId>
+                    <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- nacos 配置中心 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
-        <!-- aliyun oss spring boot starter -->
+        <!-- 负载均衡器 -->
         <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>aliyun-oss-spring-boot-starter</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
         </dependency>
+        <!-- 配置类属性映射 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!-- 测试 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
