@@ -104,7 +104,7 @@ JVM参数: `-Xms512m -Xmx512m -Xmn200m -Xlog:gc*`
 
 
 
-# 5 `Ubuntu`环境`Docker`插件安装指南
+# 5 `Ubuntu`环境`Docker`软件安装指南
 
 ## 5.1 安装ELK全家桶
 
