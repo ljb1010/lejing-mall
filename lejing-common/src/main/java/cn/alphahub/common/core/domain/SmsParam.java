@@ -17,7 +17,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SmsParam implements Serializable {
-    private static final long serialVersionUID = -7268040542410710010L;
+    private static final long serialVersionUID = -726542410710010L;
     /**
      * 验证码(短信内容)
      */

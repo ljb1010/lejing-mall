@@ -19,7 +19,7 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class BaseResult<T> extends AbstractResult<T> implements Serializable {
-    private static final long serialVersionUID = -7268040542410710086L;
+    private static final long serialVersionUID = -7804054241710086L;
 
     /**
      * 初始化一个新创建的 T 对象，使其表示一个空消息

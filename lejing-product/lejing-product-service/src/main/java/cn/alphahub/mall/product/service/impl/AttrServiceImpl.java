@@ -106,11 +106,12 @@ public class AttrServiceImpl extends ServiceImpl<AttrMapper, Attr> implements At
             // 设置分类和分组名
             QueryWrapper<AttrAttrgroupRelation> queryWrapper = new QueryWrapper<>();
             // 基础属性才设置
-            if (StringUtils.isBlank(attrType) || StringUtils.equalsIgnoreCase(attrType, "base")) {
+            if (StringUtils.isBlank(attrType) || Objects.equals(val, ProductConstant.AttrEnum.BASE.getCode())) {
                 queryWrapper.lambda().eq(AttrAttrgroupRelation::getAttrId, respVo.getAttrId());
-                AttrAttrgroupRelation attrgroupRelation = this.attrAttrgroupRelationMapper.selectOne(queryWrapper);
-                if (ObjectUtils.isNotEmpty(attrgroupRelation)) {
-                    Long attrGroupId = attrgroupRelation.getAttrGroupId();
+
+                List<AttrAttrgroupRelation> relations = this.attrAttrgroupRelationMapper.selectList(queryWrapper);
+                if (ObjectUtils.isNotEmpty(relations)) {
+                    Long attrGroupId = relations.get(0).getAttrGroupId();
                     AttrGroup attrGroup = attrGroupMapper.selectById(attrGroupId);
                     if (ObjectUtils.isNotEmpty(attrGroup)) {
                         respVo.setGroupName(attrGroup.getAttrGroupName());
