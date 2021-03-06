@@ -78,9 +78,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrMapper, Attr> implements At
 
         QueryWrapper<Attr> wrapper = new QueryWrapper<>(attr);
 
-        int attrVal = StringUtils.equalsIgnoreCase(attrType, "base")
-                ? ProductConstant.AttrEnum.BASE.getCode()
-                : ProductConstant.AttrEnum.SALE.getCode();
+        int attrVal = StringUtils.equalsIgnoreCase(attrType, "base") ? ProductConstant.AttrEnum.BASE.getCode() : ProductConstant.AttrEnum.SALE.getCode();
         wrapper.lambda().eq(Attr::getAttrType, attrVal);
 
         if (!Objects.equals(catelogId, 0L)) {
@@ -88,12 +86,10 @@ public class AttrServiceImpl extends ServiceImpl<AttrMapper, Attr> implements At
         }
 
         if (StringUtils.isNotBlank(key)) {
-            wrapper.and(attrQueryWrapper -> {
-                attrQueryWrapper.lambda()
-                        .eq(Attr::getAttrId, key)
-                        .or()
-                        .like(Attr::getAttrName, key);
-            });
+            wrapper.and(attrQueryWrapper -> attrQueryWrapper.lambda()
+                    .eq(Attr::getAttrId, key)
+                    .or()
+                    .like(Attr::getAttrName, key));
         }
 
         // 处理数据
@@ -169,7 +165,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrMapper, Attr> implements At
      * 修改商品属性
      *
      * @param attrVo 商品属性-视图对象
-     * @return
+     * @return 是否成功
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
