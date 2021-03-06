@@ -98,6 +98,8 @@ JVM参数: `-Xms512m -Xmx512m -Xmn200m -Xlog:gc*`
 
 进行中......
 
+
+
 - [x] 移除`spring-cloud-alibaba 2.2.5.RELEASE` 版本中微服务中通过`feign`远程调用时使用`ribbon`负载均衡的支持, 采用`spring-cloud 2020.0.1`的`spring cloud loadbalancer`代替
 
 
