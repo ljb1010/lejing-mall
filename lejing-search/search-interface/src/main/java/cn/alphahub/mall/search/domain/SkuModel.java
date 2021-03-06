@@ -98,7 +98,7 @@ public class SkuModel implements Serializable {
     /**
      * 商品品牌名称
      */
-    @Field(type = FieldType.Keyword, analyzer = "ik_smart", searchAnalyzer = "ik_max_word")
+    @Field(type = FieldType.Keyword)
     private String brandName;
 
     /**
