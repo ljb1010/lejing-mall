@@ -78,10 +78,10 @@ public class AttrServiceImpl extends ServiceImpl<AttrMapper, Attr> implements At
 
         QueryWrapper<Attr> wrapper = new QueryWrapper<>(attr);
 
-        int val = StringUtils.equalsIgnoreCase(attrType, "base")
+        int attrVal = StringUtils.equalsIgnoreCase(attrType, "base")
                 ? ProductConstant.AttrEnum.BASE.getCode()
                 : ProductConstant.AttrEnum.SALE.getCode();
-        wrapper.lambda().eq(Attr::getAttrType, val);
+        wrapper.lambda().eq(Attr::getAttrType, attrVal);
 
         if (!Objects.equals(catelogId, 0L)) {
             wrapper.lambda().eq(Attr::getCatelogId, catelogId);
@@ -106,7 +106,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrMapper, Attr> implements At
             // 设置分类和分组名
             QueryWrapper<AttrAttrgroupRelation> queryWrapper = new QueryWrapper<>();
             // 基础属性才设置
-            if (StringUtils.isBlank(attrType) || Objects.equals(val, ProductConstant.AttrEnum.BASE.getCode())) {
+            if (StringUtils.isBlank(attrType) || Objects.equals(attrVal, ProductConstant.AttrEnum.BASE.getCode())) {
                 queryWrapper.lambda().eq(AttrAttrgroupRelation::getAttrId, respVo.getAttrId());
 
                 List<AttrAttrgroupRelation> relations = this.attrAttrgroupRelationMapper.selectList(queryWrapper);
