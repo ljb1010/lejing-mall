@@ -48,7 +48,7 @@ public class SearchServiceImpl implements SearchService {
         }
 
         /*
-         *你不需要创建索引和映射数据类型，因为我们已经通过Elasticsearch JPA的同通过注解指定好了
+         *你不需要创建索引和映射数据类型，因为我们已经通过Elasticsearch JPA的注解指定好了
          *索引不存在的情况restTemplate会根据实体类的注解：
          *      (1) 为该IndexOperations绑定到的实体创建索引映射
          *      (2) 将映射写入此IndexOperations绑定到的类的索引
