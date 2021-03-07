@@ -8,15 +8,19 @@ import cn.alphahub.mall.ware.domain.WareSku;
 import cn.alphahub.mall.ware.feign.SkuInfoClient;
 import cn.alphahub.mall.ware.mapper.WareSkuMapper;
 import cn.alphahub.mall.ware.service.WareSkuService;
+import cn.alphahub.mall.ware.vo.WareSkuVO;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * 商品库存Service业务层处理
@@ -89,5 +93,19 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuMapper, WareSku> impl
             }
             return wareSkuMapper.insert(entity);
         }
+    }
+
+    @Override
+    public List<WareSkuVO> getSkuHasStock(List<Long> skuIds) {
+        List<WareSkuVO> vos = skuIds.stream().map(skuId -> {
+            // 查当前sku可用库存总量: 每个仓库的总库存量 - 每个仓库锁定的总库存量
+            Integer stock = baseMapper.getSkuStockBySkuId(skuId);
+            return WareSkuVO.builder()
+                    .skuId(skuId)
+                    .stock(Objects.isNull(stock) ? 0 : stock)
+                    .hasStock(ObjectUtils.isNotEmpty(stock) && stock > 0)
+                    .build();
+        }).collect(Collectors.toList());
+        return vos;
     }
 }

@@ -5,6 +5,8 @@ import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.mall.product.domain.SkuInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * sku信息Service接口
  *
@@ -34,4 +36,13 @@ public interface SkuInfoService extends IService<SkuInfo> {
      * @return sku信息分页数据
      */
     PageResult<SkuInfo> queryPage(PageDomain pageDomain, String key, Long catelogId, Long brandId, Long min, Long max);
+
+    /**
+     * 根据spuId查出对应的所有sku信息，品牌名字
+     *
+     * @param spuId spuId
+     * @return 所有sku信息
+     */
+    List<SkuInfo> getSkusBySpuId(Long spuId);
+
 }

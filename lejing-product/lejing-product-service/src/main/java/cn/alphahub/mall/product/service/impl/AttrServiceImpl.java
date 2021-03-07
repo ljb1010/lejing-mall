@@ -284,4 +284,15 @@ public class AttrServiceImpl extends ServiceImpl<AttrMapper, Attr> implements At
         List<Attr> attrs = this.list(wrapper2);
         return pageResult.getPage(attrs);
     }
+
+    @Override
+    public List<Long> querySearchAttrIds(List<Long> attrValueIdList) {
+        return this.baseMapper.querySearchAttrIds(attrValueIdList);
+        /*
+        QueryWrapper<Attr> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().in(Attr::getAttrId, attrValueIdList).eq(Attr::getSearchType, 1);
+        List<Attr> attrList = this.list(queryWrapper);
+        return attrList.stream().map(Attr::getAttrId).collect(Collectors.toList());
+        */
+    }
 }

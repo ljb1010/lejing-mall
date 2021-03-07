@@ -2,6 +2,7 @@ package cn.alphahub.mall.search.repository;
 
 import cn.alphahub.mall.search.domain.SkuModel;
 import cn.hutool.json.JSONUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,6 +19,7 @@ import java.util.Map;
  * @author liuwenjing
  * @date 2021年3月7日
  */
+@Slf4j
 @SpringBootTest
 class ProductRepositoryTest {
     @Autowired
@@ -46,9 +48,9 @@ class ProductRepositoryTest {
 
         // 通过restTemplate获取IndexOperations操作索引的实例
         IndexOperations indexOps = restTemplate.indexOps(SkuModel.class);
-        // 为该IndexOperations绑定到的实体创建索引映射。
+        // 为该IndexOperations绑定到的实体创建索引映射
         indexOps.createMapping();
-        // 将映射写入此IndexOperations绑定到的类的索
+        // 将映射写入此IndexOperations绑定到的类的索引
         indexOps.putMapping();
     }
 
@@ -59,13 +61,39 @@ class ProductRepositoryTest {
     void testGetIndex() {
         // 此方法已过时
         Map<String, Object> mapping = restTemplate.getMapping(SkuModel.class);
-        mapping.forEach((s, o) -> System.out.println(s + " " + o));
+        String prettyStr = JSONUtil.toJsonPrettyStr(mapping);
+        System.out.println(prettyStr);
         System.out.println("--------------------------------------------------");
         // 通过restTemplate获取IndexOperations操作索引的实例
         IndexOperations indexOps = restTemplate.indexOps(SkuModel.class);
         mapping = indexOps.getMapping();
-        String prettyStr = JSONUtil.toJsonPrettyStr(mapping);
+        prettyStr = JSONUtil.toJsonPrettyStr(mapping);
         System.out.println(prettyStr);
+        System.out.println();
+        System.out.println(indexOps.getIndexCoordinates().getIndexName());
+    }
+
+    /**
+     * 删除索引
+     */
+    @Test
+    void testDelIndex() {
+        // 通过restTemplate获取IndexOperations操作索引的实例
+        IndexOperations indexOps = restTemplate.indexOps(SkuModel.class);
+        String indexName = indexOps.getIndexCoordinates().getIndexName();
+        log.info("索引名称：{}", indexName);
+        boolean delete = indexOps.delete();
+        log.info("删除结果：{}", delete);
+    }
+
+    /**
+     * 索引是否存在，不存在会自动创建
+     */
+    @Test
+    void indexExists() {
+        IndexOperations indexOps = restTemplate.indexOps(SkuModel.class);
+        boolean exists = indexOps.exists();
+        System.out.println(exists);
     }
 
     /**
@@ -106,7 +134,6 @@ class ProductRepositoryTest {
             rows = pageResult.getItems().size();
             page++;
         } while (rows == 100);
-
         */
 
     }

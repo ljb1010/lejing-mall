@@ -3,7 +3,6 @@ package cn.alphahub.mall.product.service;
 import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.mall.product.domain.Attr;
-import cn.alphahub.mall.product.domain.ProductAttrValue;
 import cn.alphahub.mall.product.vo.AttrGroupVO;
 import cn.alphahub.mall.product.vo.AttrRespVO;
 import cn.alphahub.mall.product.vo.AttrVO;
@@ -89,4 +88,12 @@ public interface AttrService extends IService<Attr> {
      * @return 属性分组分页数据
      */
     PageResult<Attr> getAttrNoRelations(PageDomain pageDomain, Long attrGroupId, String key);
+
+    /**
+     * 根据spu属性值id检索出是搜索属性的属性id集合
+     *
+     * @param attrValueIdList spu属性值id集合
+     * @return 具备搜索属性的属性id集合
+     */
+    List<Long> querySearchAttrIds(List<Long> attrValueIdList);
 }

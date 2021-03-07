@@ -38,4 +38,47 @@ public class ProductConstant {
             this.name = name;
         }
     }
+
+    /**
+     * 商品状态枚举
+     */
+    @Getter
+    public enum StatusEnum {
+        /**
+         * 新建商品
+         */
+        NEW_SPU(0, "新建商品"),
+        /**
+         * 商品上架
+         */
+        SPU_UP(1, "商品上架"),
+        /**
+         * 商品下架
+         */
+        SPU_DOWN(2, "商品下架");
+
+        /**
+         * 属性类型码
+         */
+        private final Integer code;
+
+        /**
+         * 属性类型名称
+         */
+        private final String name;
+
+        StatusEnum(int code, String name) {
+            this.code = code;
+            this.name = name;
+        }
+
+        public int getCode() {
+            return code;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+    }
 }

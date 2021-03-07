@@ -23,4 +23,12 @@ public interface WareSkuMapper extends BaseMapper<WareSku> {
      * @param skuNum 添加的库存量
      */
     Integer addStock(@Param("skuId") Long skuId, @Param("wareId") Long wareId, @Param("skuNum") Integer skuNum);
+
+    /**
+     * 查当前sku可用库存总量: 每个仓库的总库存量 - 每个仓库锁定的总库存量
+     *
+     * @param skuId skuId
+     * @return 可用库存总量
+     */
+    Integer getSkuStockBySkuId(@Param("skuId") Long skuId);
 }

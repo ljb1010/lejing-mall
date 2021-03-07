@@ -5,7 +5,7 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
 import org.springframework.stereotype.Repository;
 
 /**
- * 商品持久层接口
+ * 商品-持久层接口
  *
  * @author Weasley J
  * @date 2021年3月7日

@@ -6,15 +6,11 @@ import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.common.to.SkuReductionTO;
 import cn.alphahub.mall.coupon.domain.SpuBounds;
-import cn.alphahub.mall.product.domain.Attr;
-import cn.alphahub.mall.product.domain.ProductAttrValue;
-import cn.alphahub.mall.product.domain.SkuImages;
-import cn.alphahub.mall.product.domain.SkuInfo;
-import cn.alphahub.mall.product.domain.SkuSaleAttrValue;
-import cn.alphahub.mall.product.domain.SpuInfo;
-import cn.alphahub.mall.product.domain.SpuInfoDesc;
+import cn.alphahub.mall.product.domain.*;
+import cn.alphahub.mall.product.feign.SearchClient;
 import cn.alphahub.mall.product.feign.SkuFullReductionClient;
 import cn.alphahub.mall.product.feign.SpuBoundsClient;
+import cn.alphahub.mall.product.feign.WareSkuClient;
 import cn.alphahub.mall.product.mapper.SpuInfoMapper;
 import cn.alphahub.mall.product.service.*;
 import cn.alphahub.mall.product.vo.BaseAttrs;
@@ -22,7 +18,9 @@ import cn.alphahub.mall.product.vo.Bounds;
 import cn.alphahub.mall.product.vo.Images;
 import cn.alphahub.mall.product.vo.Skus;
 import cn.alphahub.mall.product.vo.SpuSaveVO;
+import cn.alphahub.mall.search.domain.Attrs;
 import cn.alphahub.mall.search.domain.SkuModel;
+import cn.alphahub.mall.ware.vo.WareSkuVO;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -35,10 +33,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -52,6 +53,8 @@ import java.util.stream.Collectors;
 @Service
 public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoMapper, SpuInfo> implements SpuInfoService {
 
+    @Resource
+    private SearchClient searchClient;
     @Resource
     private SpuInfoDescService spuInfoDescService;
     @Resource
@@ -70,6 +73,12 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoMapper, SpuInfo> impl
     private SpuBoundsClient spuBoundsClient;
     @Resource
     private SkuFullReductionClient skuFullReductionClient;
+    @Resource
+    private WareSkuClient wareSkuClient;
+    @Resource
+    private BrandService brandService;
+    @Resource
+    private CategoryService categoryService;
 
     /**
      * 查询spu信息分页列表
@@ -140,17 +149,97 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoMapper, SpuInfo> impl
      * @return 成功返回true, 失败返回false
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean spuOnShelves(Long spuId) {
-        /*
-         * 要上架的商品列表
-         */
-        List<SkuModel> productOnShelvesList = new ArrayList<>();
-        /*
-         * 要上架的商品信息
-         */
-        SkuModel skuModel = new SkuModel();
+        // 组装要上架的商品信息
+        List<SkuInfo> skuInfoList = skuInfoService.getSkusBySpuId(spuId);
+        // 查询当前spu的所有规格属性（可以被检索）
+        List<ProductAttrValue> oldProductAttrValues = productAttrValueService.listSpuBySpuId(spuId);
+        List<Long> attrValueIdList = oldProductAttrValues.stream().map(ProductAttrValue::getAttrId).collect(Collectors.toList());
 
-        return false;
+        List<Long> searchAttrIds = attrService.querySearchAttrIds(attrValueIdList);
+        Set<Long> idSet = new LinkedHashSet<>(searchAttrIds);
+
+        List<Attrs> attrsList = oldProductAttrValues.stream()
+                .filter(productAttrValue -> idSet.contains(productAttrValue.getAttrId()))
+                .map(productAttrValue -> {
+                    Attrs attrs = new Attrs();
+                    BeanUtils.copyProperties(productAttrValue, attrs);
+                    return attrs;
+                }).collect(Collectors.toList());
+
+        // TODO 1.查看是否有库存
+        List<Long> skuIds = skuInfoList.stream().map(SkuInfo::getSkuId).collect(Collectors.toList());
+        Map<Long, Boolean> stockMap = new LinkedHashMap<>();
+        try {
+            BaseResult<List<WareSkuVO>> baseResult = wareSkuClient.getSkuHasStock(skuIds);
+            if (baseResult.getSuccess() && CollectionUtils.isNotEmpty(baseResult.getData())) {
+                stockMap = baseResult.getData().stream().collect(Collectors.toMap(WareSkuVO::getSkuId, WareSkuVO::getHasStock));
+            }
+        } catch (Exception e) {
+            log.error("远程查询库存失败：{}\n", e.getClass(), e);
+            e.printStackTrace();
+        }
+        // 组装要上架的商品列表
+        Map<Long, Boolean> finalStockMap = stockMap;
+        List<SkuModel> productOnShelvesList = skuInfoList.stream().map(sku -> {
+            SkuModel skuModel = new SkuModel();
+            // 根据spuId查出对应的所有sku信息，品牌名字
+            BeanUtils.copyProperties(sku, skuModel);
+
+            // 处理属性值不一样的数据
+            skuModel.setSkuPrice(sku.getPrice());
+            skuModel.setSkuImg(sku.getSkuDefaultImg());
+
+            // 设置库存信息
+            skuModel.setHasStock(CollectionUtils.isNotEmpty(finalStockMap) ? finalStockMap.get(sku.getSkuId()) : false);
+
+            // TODO 2.feign远程调用库存服务查询热度评分
+            skuModel.setHotScore(0L);
+
+            // 品牌相关信息
+            Brand brand = brandService.getById(sku.getBrandId());
+            skuModel.setBrandId(sku.getBrandId());
+            skuModel.setBrandName(Objects.nonNull(brand) ? brand.getName() : null);
+            skuModel.setBrandImg(Objects.nonNull(brand) ? brand.getLogo() : null);
+
+            // 查分类信息
+            Category category = categoryService.getById(sku.getCatalogId());
+            skuModel.setCatalogId(sku.getCatalogId());
+            skuModel.setCatalogName(Objects.nonNull(category) ? category.getName() : null);
+
+            // 设置检索属性
+            skuModel.setAttrs(attrsList);
+            return skuModel;
+        }).collect(Collectors.toList());
+
+        // TODO 把组装好要上架的商品信息发送给搜索服务: lejing-search
+        BaseResult<Boolean> result = searchClient.productStatusUp(productOnShelvesList);
+        String message = result.getMessage();
+        log.info("\n\t\t上架的商品信息发送给搜索服务的结果：{}\n", message);
+        // 上架成功，修改商品状态
+        updateSpuStatusAfterSaveToElasticsearch(result, spuId);
+        return !productOnShelvesList.isEmpty();
+    }
+
+    /**
+     * 上架成功，修改商品状态
+     *
+     * @param result 远程调用返回的封装结果
+     * @param spuId  spu id
+     */
+    private void updateSpuStatusAfterSaveToElasticsearch(BaseResult<Boolean> result, Long spuId) {
+        SpuInfo spuInfo = this.getById(spuId);
+        if (result.getSuccess()) {
+            // 上架成功
+            spuInfo.setPublishStatus(ProductConstant.StatusEnum.SPU_UP.getCode());
+        } else {
+            // 上架失败
+            //TODO 接口幂等性，重试机制
+            // spuInfo.setPublishStatus(ProductConstant.StatusEnum.NEW_SPU.getCode());
+        }
+        spuInfo.setUpdateTime(new Date());
+        this.updateById(spuInfo);
     }
 
     @Override
@@ -173,7 +262,6 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoMapper, SpuInfo> impl
                 .build();
         log.info("spu信息介绍: {}\n", spuInfoDesc);
         spuInfoDescService.saveSpuInfoDesc(spuInfoDesc);
-        //spuInfoDescService.save();
         // 3、保存spu的图片集 pms_spu_image
         List<String> images = vo.getImages();
         spuImagesService.saveBatch(spuInfoId, images);

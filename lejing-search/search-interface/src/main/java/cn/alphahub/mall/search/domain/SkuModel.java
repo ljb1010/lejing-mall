@@ -33,14 +33,14 @@ public class SkuModel implements Serializable {
     /**
      * 商品最小规格属性id - sku id
      */
-    @JsonSerialize(using = IdSerializer.class)
+    @Id
     @Field(type = FieldType.Long)
+    @JsonSerialize(using = IdSerializer.class)
     private Long skuId;
 
     /**
      * 商品标准单元id - spu id
      */
-    @Id
     @Field(type = FieldType.Long)
     @JsonSerialize(using = IdSerializer.class)
     private Long spuId;
@@ -89,13 +89,6 @@ public class SkuModel implements Serializable {
     private Long brandId;
 
     /**
-     * 商品分类id
-     */
-    @Field(type = FieldType.Long)
-    @JsonSerialize(using = IdSerializer.class)
-    private Long catalogId;
-
-    /**
      * 商品品牌名称
      */
     @Field(type = FieldType.Keyword)
@@ -107,6 +100,12 @@ public class SkuModel implements Serializable {
     @Field(type = FieldType.Keyword, index = false)
     private String brandImg;
 
+    /**
+     * 商品分类id
+     */
+    @Field(type = FieldType.Long)
+    @JsonSerialize(using = IdSerializer.class)
+    private Long catalogId;
     /**
      * 商品分类名称
      */

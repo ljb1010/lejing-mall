@@ -87,4 +87,16 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoMapper, SkuInfo> impl
         return pageResult.getPage(skuInfoList);
     }
 
+    /**
+     * 根据spuId查出对应的所有sku信息，品牌名字
+     *
+     * @param spuId spuId
+     * @return 所有sku信息
+     */
+    @Override
+    public List<SkuInfo> getSkusBySpuId(Long spuId) {
+        QueryWrapper<SkuInfo> queryWrapper = new QueryWrapper<>();
+        return this.list(queryWrapper.lambda().eq(SkuInfo::getSpuId, spuId));
+    }
+
 }

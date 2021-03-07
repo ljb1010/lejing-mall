@@ -3,7 +3,10 @@ package cn.alphahub.mall.ware.api;
 import cn.alphahub.common.core.domain.BaseResult;
 import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.mall.ware.domain.WareSku;
+import cn.alphahub.mall.ware.vo.WareSkuVO;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 商品库存-feign远程调用顶层api
@@ -15,6 +18,15 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("ware/waresku")
 public interface WareSkuApi {
+
+    /**
+     * 查看是否有库存
+     *
+     * @param skuIds sku id 集合
+     * @return 商品库存列表
+     */
+    @PostMapping("skuHasStock")
+    BaseResult<List<WareSkuVO>> getSkuHasStock(@RequestBody List<Long> skuIds);
 
     /**
      * 查询商品库存列表
@@ -34,6 +46,15 @@ public interface WareSkuApi {
             @RequestParam(value = "isAsc", defaultValue = "") String isAsc,
             WareSku wareSku
     );
+
+    /**
+     * 查询商品库存列表
+     *
+     * @param skuId sku id, 没有可以为null
+     * @return 商品库存列表
+     */
+    @GetMapping("/list/{skuId}")
+    BaseResult<PageResult<WareSku>> listBySkuId(@PathVariable("skuId") Long skuId);
 
     /**
      * 获取商品库存详情

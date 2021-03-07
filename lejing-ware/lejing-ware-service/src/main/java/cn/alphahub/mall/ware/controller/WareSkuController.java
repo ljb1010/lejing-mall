@@ -7,11 +7,14 @@ import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.mall.ware.domain.WareSku;
 import cn.alphahub.mall.ware.service.WareSkuService;
+import cn.alphahub.mall.ware.vo.WareSkuVO;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * 商品库存Controller
@@ -25,6 +28,18 @@ import java.util.Arrays;
 public class WareSkuController extends BaseController {
     @Resource
     private WareSkuService wareSkuService;
+
+    /**
+     * 查看是否有库存
+     *
+     * @param skuIds sku id 集合
+     * @return 商品库存列表
+     */
+    @PostMapping("skuHasStock")
+    BaseResult<List<WareSkuVO>> getSkuHasStock(@RequestBody List<Long> skuIds) {
+        List<WareSkuVO> vos = wareSkuService.getSkuHasStock(skuIds);
+        return CollectionUtils.isNotEmpty(vos) ? BaseResult.success(vos) : BaseResult.error();
+    }
 
     /**
      * 查询商品库存列表
@@ -46,6 +61,25 @@ public class WareSkuController extends BaseController {
     ) {
         PageDomain pageDomain = new PageDomain(page, rows, orderColumn, isAsc);
         PageResult<WareSku> pageResult = wareSkuService.queryPage(pageDomain, wareSku);
+        if (ObjectUtils.isNotEmpty(pageResult.getItems())) {
+            return BaseResult.ok(pageResult);
+        }
+        return BaseResult.fail(HttpStatus.NOT_FOUND, "查询结果为空");
+    }
+
+    /**
+     * 查询商品库存列表
+     *
+     * @param skuId sku id, 没有可以为null
+     * @return 商品库存列表
+     */
+    @GetMapping("/list/{skuId}")
+    public BaseResult<PageResult<WareSku>> listBySkuId(@PathVariable("skuId") Long skuId) {
+        PageDomain pageDomain = new PageDomain(1, 10, null, null);
+        PageResult<WareSku> pageResult = wareSkuService.queryPage(
+                pageDomain,
+                WareSku.builder().skuId(skuId).build()
+        );
         if (ObjectUtils.isNotEmpty(pageResult.getItems())) {
             return BaseResult.ok(pageResult);
         }

@@ -3,7 +3,10 @@ package cn.alphahub.mall.ware.service;
 import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
 import cn.alphahub.mall.ware.domain.WareSku;
+import cn.alphahub.mall.ware.vo.WareSkuVO;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * 商品库存Service接口
@@ -32,4 +35,12 @@ public interface WareSkuService extends IService<WareSku> {
      * @param skuNum 添加的库存量
      */
     Integer addStock(Long skuId, Long wareId, Integer skuNum);
+
+    /**
+     * 查看是否有库存
+     *
+     * @param skuIds sku id 集合
+     * @return 商品库存列表
+     */
+    List<WareSkuVO> getSkuHasStock(List<Long> skuIds);
 }
