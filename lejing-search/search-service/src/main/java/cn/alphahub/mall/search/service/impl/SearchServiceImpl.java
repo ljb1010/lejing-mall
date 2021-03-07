@@ -57,13 +57,13 @@ public class SearchServiceImpl implements SearchService {
         // res返回的是保存成功的SkuModel
         Iterable<SkuModel> res = restTemplate.save(skuModels);
         for (SkuModel skuModel : res) {
-            log.info("保存成功: " + skuModel);
+            log.info("保存成功: {}", skuModel);
             newRecords.add(skuModel);
         }
         System.out.println("\n");
         Set<SkuModel> failRecords = oldRecords.stream().filter(skuModel -> !newRecords.contains(skuModel)).collect(Collectors.toCollection(LinkedHashSet::new));
-        for (SkuModel failRecord : failRecords) {
-            log.info("保存失败：" + failRecord);
+        for (SkuModel skuModel : failRecords) {
+            log.info("保存失败：{}", skuModel);
         }
         return oldRecords.size() == newRecords.size();
     }
