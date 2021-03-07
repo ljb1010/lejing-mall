@@ -60,14 +60,14 @@ class ProductRepositoryTest {
     @Test
     void testGetIndex() {
         // 此方法已过时
-        Map<String, Object> mapping = restTemplate.getMapping(SkuModel.class);
+       /* Map<String, Object> mapping = restTemplate.getMapping(SkuModel.class);
         String prettyStr = JSONUtil.toJsonPrettyStr(mapping);
         System.out.println(prettyStr);
-        System.out.println("--------------------------------------------------");
+        System.out.println("--------------------------------------------------");*/
         // 通过restTemplate获取IndexOperations操作索引的实例
         IndexOperations indexOps = restTemplate.indexOps(SkuModel.class);
-        mapping = indexOps.getMapping();
-        prettyStr = JSONUtil.toJsonPrettyStr(mapping);
+        Map<String, Object> mapping = indexOps.getMapping();
+        String prettyStr = JSONUtil.toJsonPrettyStr(mapping);
         System.out.println(prettyStr);
         System.out.println();
         System.out.println(indexOps.getIndexCoordinates().getIndexName());
