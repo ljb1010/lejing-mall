@@ -5,7 +5,7 @@
 git clone https://github.com/Weasley-J/lejing-mall
 
 # 进入项目目录
-cd renren-admin-vue
+cd lejing-web-frontend/lejing-manage
 
 # 安装依赖
 npm install
