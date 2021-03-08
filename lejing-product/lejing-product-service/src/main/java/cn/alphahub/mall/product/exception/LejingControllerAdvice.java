@@ -47,7 +47,7 @@ public class LejingControllerAdvice {
      * 系统未知异常
      *
      * @param throwable 异常对象
-     * @return
+     * @return 异常提示
      */
     @ExceptionHandler(value = Throwable.class)
     public BaseResult<Object> handleException(Throwable throwable) {
@@ -55,7 +55,7 @@ public class LejingControllerAdvice {
         return BaseResult.error(
                 BusinessCodeEnum.UNKNOWN_EXCEPTION.getCode(),
                 BusinessCodeEnum.UNKNOWN_EXCEPTION.getMessage(),
-                throwable.getStackTrace()
-        );
+                "Caused by:" + throwable.getLocalizedMessage());
     }
+
 }

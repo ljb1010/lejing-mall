@@ -220,7 +220,7 @@ curl -XDELETE -u ${USER}:${PWD} http://${IP}:${PORT}/.monitoring-es-*
 #打开CMD终端
 cd lejing-web-frontend/lejing-portal
 # npm下载live-server启动门户网站, 指定门户网站的端口8080
-npm install -g live-server --registry=https://registry.npm.taobao.org && live-server --port=8080
+npm install -g live-server --registry=https://registry.npm.taobao.org && live-server --port=8002
 ```
 
 

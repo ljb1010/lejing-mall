@@ -1,4 +1,4 @@
-package cn.alphahub.mall.product.web;
+package cn.alphahub.mall.product.controller.web;
 
 import org.springframework.stereotype.Controller;
 

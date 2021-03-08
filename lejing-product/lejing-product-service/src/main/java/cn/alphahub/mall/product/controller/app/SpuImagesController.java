@@ -1,12 +1,12 @@
-package cn.alphahub.mall.product.controller;
+package cn.alphahub.mall.product.controller.app;
 
 import cn.alphahub.common.constant.HttpStatus;
 import cn.alphahub.common.core.controller.BaseController;
 import cn.alphahub.common.core.domain.BaseResult;
 import cn.alphahub.common.core.page.PageDomain;
 import cn.alphahub.common.core.page.PageResult;
-import cn.alphahub.mall.product.domain.UndoLog;
-import cn.alphahub.mall.product.service.UndoLogService;
+import cn.alphahub.mall.product.domain.SpuImages;
+import cn.alphahub.mall.product.service.SpuImagesService;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,38 +14,38 @@ import javax.annotation.Resource;
 import java.util.Arrays;
 
 /**
- * 撤销日志表Controller
+ * spu图片Controller
  *
  * @author Weasley J
  * @email 1432689025@qq.com
  * @date 2021-02-24 15:36:31
  */
 @RestController
-@RequestMapping("product/undolog")
-public class UndoLogController extends BaseController {
+@RequestMapping("product/spuimages")
+public class SpuImagesController extends BaseController {
     @Resource
-    private UndoLogService undoLogService;
+    private SpuImagesService spuImagesService;
 
     /**
-     * 查询撤销日志表列表
+     * 查询spu图片列表
      *
      * @param page        当前页码,默认第1页
      * @param rows        显示行数,默认10条
      * @param orderColumn 排序排序字段,默认不排序
      * @param isAsc       排序方式,desc或者asc
-     * @param undoLog     撤销日志表,查询字段选择性传入,默认为等值查询
-     * @return 撤销日志表分页数据
+     * @param spuImages   spu图片,查询字段选择性传入,默认为等值查询
+     * @return spu图片分页数据
      */
     @GetMapping("/list")
-    public BaseResult<PageResult<UndoLog>> list(
+    public BaseResult<PageResult<SpuImages>> list(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             @RequestParam(value = "rows", defaultValue = "10") Integer rows,
             @RequestParam(value = "orderColumn", defaultValue = "") String orderColumn,
             @RequestParam(value = "isAsc", defaultValue = "") String isAsc,
-            UndoLog undoLog
+            SpuImages spuImages
     ) {
         PageDomain pageDomain = new PageDomain(page, rows, orderColumn, isAsc);
-        PageResult<UndoLog> pageResult = undoLogService.queryPage(pageDomain, undoLog);
+        PageResult<SpuImages> pageResult = spuImagesService.queryPage(pageDomain, spuImages);
         if (ObjectUtils.isNotEmpty(pageResult.getItems())) {
             return BaseResult.ok(pageResult);
         }
@@ -53,50 +53,50 @@ public class UndoLogController extends BaseController {
     }
 
     /**
-     * 获取撤销日志表详情
+     * 获取spu图片详情
      *
-     * @param id 撤销日志表主键id
-     * @return 撤销日志表详细信息
+     * @param id spu图片主键id
+     * @return spu图片详细信息
      */
     @GetMapping("/info/{id}")
-    public BaseResult<UndoLog> info(@PathVariable("id") Long id) {
-        UndoLog undoLog = undoLogService.getById(id);
-        return ObjectUtils.anyNotNull(undoLog) ? BaseResult.ok(undoLog) : BaseResult.fail();
+    public BaseResult<SpuImages> info(@PathVariable("id") Long id) {
+        SpuImages spuImages = spuImagesService.getById(id);
+        return ObjectUtils.anyNotNull(spuImages) ? BaseResult.ok(spuImages) : BaseResult.fail();
     }
 
     /**
-     * 新增撤销日志表
+     * 新增spu图片
      *
-     * @param undoLog 撤销日志表元数据
+     * @param spuImages spu图片元数据
      * @return 成功返回true, 失败返回false
      */
     @PostMapping("/save")
-    public BaseResult<Boolean> save(@RequestBody UndoLog undoLog) {
-        boolean save = undoLogService.save(undoLog);
+    public BaseResult<Boolean> save(@RequestBody SpuImages spuImages) {
+        boolean save = spuImagesService.save(spuImages);
         return toOperationResult(save);
     }
 
     /**
-     * 修改撤销日志表
+     * 修改spu图片
      *
-     * @param undoLog 撤销日志表,根据id选择性更新
+     * @param spuImages spu图片,根据id选择性更新
      * @return 成功返回true, 失败返回false
      */
     @PutMapping("/update")
-    public BaseResult<Boolean> update(@RequestBody UndoLog undoLog) {
-        boolean update = undoLogService.updateById(undoLog);
+    public BaseResult<Boolean> update(@RequestBody SpuImages spuImages) {
+        boolean update = spuImagesService.updateById(spuImages);
         return toOperationResult(update);
     }
 
     /**
-     * 批量删除撤销日志表
+     * 批量删除spu图片
      *
-     * @param ids 撤销日志表id集合
+     * @param ids spu图片id集合
      * @return 成功返回true, 失败返回false
      */
     @DeleteMapping("/delete/{ids}")
     public BaseResult<Boolean> delete(@PathVariable Long[] ids) {
-        boolean delete = undoLogService.removeByIds(Arrays.asList(ids));
+        boolean delete = spuImagesService.removeByIds(Arrays.asList(ids));
         return toOperationResult(delete);
     }
 }
