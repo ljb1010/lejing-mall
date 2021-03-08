@@ -28,8 +28,8 @@
         <module>lejing-site-reserve</module>
         <module>lejing-search</module>
         <module>lejing-third-party</module>
-        <module>renren-admin</module>
-        <module>renren-generator</module>
+        <module>lejing-admin</module>
+        <module>lejing-generator</module>
     </modules>
 
     <properties>
