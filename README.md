@@ -149,7 +149,9 @@ chmod 0777 -vR *.sh && ./run_elk_install.sh
 >
 > `mvn package`的时候不能读取common里面的一些相关类的注释，因为`java`最终编译成字节码文件后会把所有注释都清理掉，也就是项目最终的class文件不包含任何注释
 
-1. `nacos MySQL`数据持久配置：`nacos-server/nacos-server-1.4.1/nacos/conf/application.properties`
+## 6.1 `nacos MySQL`数据持久配置
+
+文件相对路径：`nacos-server/nacos-server-1.4.1/nacos/conf/application.properties`
 
 ```properties
 ### If use MySQL as datasource:
@@ -164,15 +166,44 @@ db.user.0=root
 db.password.0=123456
 ```
 
-2. 服务启动顺序
+## 6.2 服务启动顺序
 
 - 启动`nacos`，进入终端：`nacos-server/nacos-server-1.4.1/nacos/run-nacos-standalone.bat`
 - 启动授权服务
 - 启动网关服务 `lejing-gateway`
 - 再启动其他相关服务
 
+
+
+## 6.3 `Elasticsearch`索引库清理
+
+使用`curl`命令模糊匹配删除在`shell`终端上执行:
+
+```shell
+# 全局变量，自行修改
+IP="192.168.40.132"
+PORT="9200"
+USER="elastic"
+PWD="123456"
+
+# 删除乐景商城的日志索引库
+curl -XDELETE -u ${USER}:${PWD} http://${IP}:${PORT}/lejing-*,renren-fast-*
+
+# 删除kibana的日志索引库
+curl -XDELETE -u ${USER}:${PWD} http://${IP}:${PORT}/.monitoring-kibana-*
+
+# 删除logstash的日志索引库
+curl -XDELETE -u ${USER}:${PWD} http://${IP}:${PORT}/.monitoring-logstash-*
+
+# 删除es的日志索引库
+curl -XDELETE -u ${USER}:${PWD} http://${IP}:${PORT}/.monitoring-es-*
+
+```
+
+
+
 # 7 Q&A
 
-1.  为什么分页不用`mybatis-plus`自带的`IPage`？
+## 7.1 为什么分页不用`mybatis-plus`自带的`IPage`？
 
-   `mybatis-plus`的`IPage`分页入参不利于项目的`API`文档输出，毕竟我们都不想手写接口文档，如果你喜欢手写接口文档，然后再填入什么`RAP`、`YApi`里面，我推荐你用回`Swagger`。
+`mybatis-plus`的`IPage`分页入参不利于项目的`API`文档输出，毕竟我们都不想手写接口文档，如果你喜欢手写接口文档，然后再填入什么`RAP`、`YApi`里面，我推荐你用回`Swagger`。

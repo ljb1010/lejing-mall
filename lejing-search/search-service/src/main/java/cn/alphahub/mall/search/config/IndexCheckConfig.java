@@ -42,11 +42,11 @@ public class IndexCheckConfig implements ApplicationRunner {
         boolean exists = indexOps.exists();
         if (!exists) {
             // 创建索引
-            boolean created = indexOps.create();
+            indexOps.create();
             // 为该IndexOperations绑定到的实体创建索引映射
             Document document = indexOps.createMapping();
             // 将映射写入此IndexOperations绑定到的类的索引
-            boolean putMapping = indexOps.putMapping();
+            indexOps.putMapping();
             indexName = indexOps.getIndexCoordinates().getIndexName();
             mapping = indexOps.getMapping();
             System.out.println("\t\t\t已创建Elasticsearch索引:\n"
