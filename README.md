@@ -177,7 +177,7 @@ db.password.0=123456
 
 ## 6.3 `Elasticsearch`索引库清理
 
-使用`curl`命令模糊匹配删除在`shell`终端上执行:
+使用`curl`命令模糊匹配删除，在`shell`终端上执行:
 
 ```shell
 # 全局变量，自行修改

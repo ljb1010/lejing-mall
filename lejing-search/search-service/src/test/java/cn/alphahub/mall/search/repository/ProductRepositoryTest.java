@@ -12,6 +12,7 @@ import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.data.elasticsearch.core.IndexOperations;
 
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Elasticsearch-增删改查测试类
@@ -135,6 +136,15 @@ class ProductRepositoryTest {
             page++;
         } while (rows == 100);
         */
+    }
 
+    @Test
+    void findById() {
+        Optional<SkuModel> skuModelOptional = productRepository.findById(1L);
+        boolean present = skuModelOptional.isPresent();
+        if (present) {
+            SkuModel skuModel = skuModelOptional.get();
+            System.out.println("skuModel = " + skuModel);
+        }
     }
 }
