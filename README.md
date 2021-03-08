@@ -166,7 +166,7 @@ db.user.0=root
 db.password.0=123456
 ```
 
-## 6.2 服务启动顺序
+## 6.2 各个服务启动顺序
 
 - 启动`nacos`，进入终端：`nacos-server/nacos-server-1.4.1/nacos/run-nacos-standalone.bat`
 - 启动授权服务
@@ -198,6 +198,29 @@ curl -XDELETE -u ${USER}:${PWD} http://${IP}:${PORT}/.monitoring-logstash-*
 # 删除es的日志索引库
 curl -XDELETE -u ${USER}:${PWD} http://${IP}:${PORT}/.monitoring-es-*
 
+```
+
+
+
+## 6.4  前端项目启动
+
+### 6.4.1 前端后台管理
+
+```shell
+#克隆项目，见lejing-web-frontend/lejing-manage/README.md文件
+```
+
+
+
+### 6.4.2 前端门户网站
+
+前端多页面`html`使用`live-server`运行：
+
+```shell
+#打开CMD终端
+cd lejing-web-frontend/lejing-portal
+# npm下载live-server启动门户网站, 指定门户网站的端口8080
+npm install -g live-server --registry=https://registry.npm.taobao.org && live-server --port=8080
 ```
 
 
