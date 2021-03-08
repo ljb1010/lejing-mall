@@ -109,6 +109,11 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
 
+        <!-- EasyPoi Excel Word简易工具类启动器 -->
+        <dependency>
+            <groupId>cn.afterturn</groupId>
+            <artifactId>easypoi-spring-boot-starter</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

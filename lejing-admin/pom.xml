@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>io.renren</groupId>
-    <artifactId>renren-admin</artifactId>
+    <artifactId>lejing-admin</artifactId>
     <version>3.0.0</version>
     <packaging>jar</packaging>
     <description>乐璟后台管理</description>

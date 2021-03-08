@@ -1,4 +1,8 @@
 spring:
+  web:
+    resources:
+      #控制api文档访问, smart-doc生成的html静态api文档，生产服务器不需要暴露文档
+      add-mappings: on
   jackson:
     default-property-inclusion: non_null
   datasource:
@@ -6,10 +10,6 @@ spring:
     url: jdbc:mysql://192.168.40.132:3306/lejing_pms?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
-  web:
-    resources:
-      #控制api文档访问, smart-doc生成的html静态api文档，生产服务器不需要暴露文档
-      add-mappings: on
   cloud:
     nacos:
       server-addr: 127.0.0.1:8848

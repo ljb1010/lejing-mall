@@ -12,6 +12,8 @@
 
     <artifactId>lejing-web-frontend</artifactId>
     <version>${lejing-mall.latest.version}</version>
+    <packaging>pom</packaging>
     <description>乐璟商城-前端项目</description>
+
 
 </project>

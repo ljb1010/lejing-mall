@@ -1,4 +1,8 @@
 spring:
+  web:
+    resources:
+      #控制api文档访问, smart-doc生成的html静态api文档
+      add-mappings: on
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://192.168.40.132:3306/lejing_pms?serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true&autoReconnect=true&allowMultiQueries=true
