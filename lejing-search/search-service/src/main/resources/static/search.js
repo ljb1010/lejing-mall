@@ -8,7 +8,7 @@ api.push({
 })
 api[0].list.push({
     order: '1',
-    desc: '获取商品搜索结果',
+    desc: '保存上架商品至Elasticsearch中',
 });
 api.push({
     alias: 'dict',
