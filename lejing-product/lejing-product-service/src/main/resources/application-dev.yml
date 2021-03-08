@@ -11,6 +11,9 @@ spring:
   cloud:
     nacos:
       server-addr: 127.0.0.1:8848
+  #开发环境禁用thymeleaf的缓存
+  thymeleaf:
+    cache: off
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
