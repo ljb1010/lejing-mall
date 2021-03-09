@@ -17,6 +17,9 @@ npm install --registry=https://registry.npm.taobao.org
 npm run dev
 ```
 
+# 项目打包
+npm run build
+
 浏览器访问 http://localhost:8001
 
 ## `Node` & `NPM` 版本
